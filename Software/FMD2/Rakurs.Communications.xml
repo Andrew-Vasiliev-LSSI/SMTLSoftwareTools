@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rakurs.Communications</name>
+    </assembly>
+    <members>
+        <member name="T:Rakurs.Communications.BytesConvert">
+            <summary>
+            Preforms conversions with Byte arrays
+            </summary>
+        </member>
+        <member name="M:Rakurs.Communications.BytesConvert.HexString(System.Byte[])">
+            <summary>
+            Convert byte array into Hex
+            </summary>
+            <param name="DataBytes">The array to convert</param>
+            <returns>String with Hex values</returns>
+        </member>
+        <member name="M:Rakurs.Communications.BytesConvert.TextString(System.Byte[])">
+            <summary>
+            Convert bytes to ASCII text
+            </summary>
+            <param name="DataBytes">The byte array to convert</param>
+            <returns>ASCII text</returns>
+        </member>
+        <member name="T:Rakurs.Communications.SerialSettings">
+            <summary>
+            A structure to hold the basic parameters of a serial connection
+            </summary>
+        </member>
+        <member name="F:Rakurs.Communications.SerialSettings.ComPort">
+            <summary>
+            
+            Name of the COM port
+            </summary>
+        </member>
+        <member name="F:Rakurs.Communications.SerialSettings.Baudrate">
+            <summary>
+            COM port baudrate
+            </summary>
+        </member>
+        <member name="F:Rakurs.Communications.SerialSettings.ReadBufferSize">
+            <summary>
+            Size in bytes of the input package
+            </summary>
+        </member>
+        <member name="F:Rakurs.Communications.SerialSettings.WriteBufferSize">
+            <summary>
+            Size in bytes of the output package
+            </summary>
+        </member>
+        <member name="T:Rakurs.Communications.SerialIO">
+            <summary>
+            Provides basic serial IO functionality
+            </summary>
+        </member>
+        <member name="M:Rakurs.Communications.SerialIO.#ctor">
+            <summary>
+            Constructor to open the communication port with default settings
+            </summary>
+        </member>
+        <member name="M:Rakurs.Communications.SerialIO.#ctor(System.String,System.Int32)">
+            <summary>
+            Constructor that assigns port name and baudrate
+            before opening the COM port
+            </summary>
+            <param name="COMPort">COM Port name</param>
+            <param name="Baudrate">COM Port baudrate</param>
+        </member>
+        <member name="M:Rakurs.Communications.SerialIO.#ctor(Rakurs.Communications.SerialSettings)">
+            <summary>
+            Constructor that assigns the COM port settings 
+            using the SerialSettings structure
+            </summary>
+            <param name="Settings">Default values for the COM port</param>
+        </member>
+        <member name="F:Rakurs.Communications.SerialIO.SerialMaster">
+            <summary>
+            Local serial communication module
+            </summary>
+        </member>
+        <member name="P:Rakurs.Communications.SerialIO.Settings">
+            <summary>
+            Sets or gets the serial communication settings
+            Restarts Com port if set
+            </summary>
+        </member>
+        <member name="P:Rakurs.Communications.SerialIO.Logger">
+            <summary>
+            Sets or gets the Logger status, 
+            active logger writes all data transactions 
+            to a file in a directory specified by the LogPath property
+            </summary>
+        </member>
+        <member name="P:Rakurs.Communications.SerialIO.LogPath">
+            <summary>
+            Sets or gets the path where log file is written
+            </summary>
+        </member>
+        <member name="M:Rakurs.Communications.SerialIO.SerialMaster_DataReceived(System.Object,System.IO.Ports.SerialDataReceivedEventArgs)">
+            <summary>
+            Occurs when new data is recieved
+            </summary>
+        </member>
+        <member name="M:Rakurs.Communications.SerialIO.SerialMaster_ErrorReceived(System.Object,System.IO.Ports.SerialErrorReceivedEventArgs)">
+            <summary>
+            Occurs when a communication error is detected
+            </summary>
+        </member>
+        <member name="F:Rakurs.Communications.SerialIO.IntialTimeout">
+            <summary>
+            The intial timeout in ms
+            </summary>
+        </member>
+        <member name="F:Rakurs.Communications.SerialIO.Timeout">
+            <summary>
+            Read timeout in ms
+            </summary>
+        </member>
+        <member name="F:Rakurs.Communications.SerialIO.Now">
+            <summary>
+            Uptime in ms
+            </summary>
+        </member>
+        <member name="F:Rakurs.Communications.SerialIO.QueryMode">
+            <summary>
+            Indicates Query mode is active
+            </summary>
+        </member>
+        <member name="F:Rakurs.Communications.SerialIO.PredictionMode">
+            <summary>
+            Indicates that the amount of bytes to be recieved is known
+            </summary>
+        </member>
+        <member name="F:Rakurs.Communications.SerialIO.BytesExpected">
+            <summary>
+            Amount of bytes expected on the reciever
+            </summary>
+        </member>
+        <member name="M:Rakurs.Communications.SerialIO.Query(System.Byte[],System.Int32)">
+            <summary>
+            Sends bytes and waits for a reply
+            </summary>
+            <param name="Message">Bytes array to send</param>
+            <param name="Timeout">Time in ms between bytes</param>
+            <returns>Array of bytes</returns>
+        </member>
+        <member name="M:Rakurs.Communications.SerialIO.Query(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Message">Bytes array to send</param>
+            <param name="Timeout">Time in ms between bytes</param>
+            <param name="BytesToExpect">Amount of bytes expected</param>
+            <returns>Array of bytes</returns>
+        </member>
+        <member name="M:Rakurs.Communications.SerialIO.GetBytes">
+            <summary>
+            Reads all bytes in the reciever buffer
+            NewData proprty is set to false
+            </summary>
+            <returns>Array of bytes</returns>
+        </member>
+        <member name="M:Rakurs.Communications.SerialIO.SendBytes(System.Byte[])">
+            <summary>
+            Send a byte array
+            NewData proprty is set to false
+            </summary>
+            <param name="DataBytes">The bytes to be sent</param>
+        </member>
+        <member name="T:Rakurs.Communications.SerialIO.ClosePortDelegate">
+            <summary>
+            Close serial connection
+            </summary>
+            
+        </member>
+    </members>
+</doc>

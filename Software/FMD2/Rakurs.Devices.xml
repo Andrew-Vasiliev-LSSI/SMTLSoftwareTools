@@ -1,0 +1,337 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rakurs.Devices</name>
+    </assembly>
+    <members>
+        <member name="T:Rakurs.Devices.Device">
+            <summary>
+            Implements a low-level abstract device
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.Device.#ctor">
+            <summary>
+            Constructor that creates an instance of an unknown device
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.Device.#ctor(System.String,System.String)">
+            <summary>
+            Constructor that assign all device properties aside Ports
+            </summary>
+            <param name="DeviceName">Device name</param>
+            <param name="DeviceType">Device type or model description string</param>
+        </member>
+        <member name="M:Rakurs.Devices.Device.#ctor(System.String,System.String,Rakurs.Devices.DevicePortCollection)">
+            <summary>
+            Assigns all device properties
+            </summary>
+            <param name="DeviceName">Device name</param>
+            <param name="DeviceType">Device type or model description string</param>
+            <param name="DevicePorts">Array of device communication ports</param>
+        </member>
+        <member name="P:Rakurs.Devices.Device.Name">
+            <summary>
+            Sets or gets the name of the device
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.Device.Type">
+            <summary>
+            Sets or gets the device type
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.Device.Ports">
+            <summary>
+            Collection of device ports
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.Device.Query(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Sends a byte array to a device and waits for reply
+            </summary>
+            <param name="Message">Byte array to send</param>
+            <param name="Port">Device port index</param>
+            <param name="Timeout">Timeout in miliseconds</param>
+            <returns>Byte array</returns>
+        </member>
+        <member name="M:Rakurs.Devices.Device.Query(System.Byte[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sends a byte array to a device and waits for reply
+            </summary>
+            <param name="Message">Byte array to send</param>
+            <param name="Port">Device port index</param>
+            <param name="Timeout">Timeout in miliseconds</param>
+            <param name="BytesToExpect">Amount of bytes expected to return</param>
+            <returns>Byte array</returns>
+        </member>
+        <member name="M:Rakurs.Devices.Device.Query(System.Byte[],System.String,System.Int32)">
+            <summary>
+            Sends a byte array to a device and waits for reply
+            </summary>
+            <param name="Message">Byte array to send</param>
+            <param name="PortName">Device port index</param>
+            <param name="Timeout">Timeout in miliseconds</param>
+            <returns>Byte array</returns>
+        </member>
+        <member name="M:Rakurs.Devices.Device.Query(Rakurs.Devices.DeviceMessage,System.Int32)">
+            <summary>
+            Sends a DeviceMessage to a device and waits for reply
+            </summary>
+            <param name="Message">DeviceMessage object</param>
+            <param name="Port">Device port index</param>
+            <returns>Recieved byte array</returns>
+        </member>
+        <member name="M:Rakurs.Devices.Device.Query(Rakurs.Devices.DeviceMessage,System.Int32,System.Int32)">
+            <summary>
+            Sends a DeviceMessage to a device and waits for reply
+            </summary>
+            <param name="Message">DeviceMessage object</param>
+            <param name="Port">Device port index</param>
+            <param name="BytesToExpect">Amount of bytes expected to return</param>
+            <returns>Recieved byte array</returns>
+        </member>
+        <member name="M:Rakurs.Devices.Device.Query(Rakurs.Devices.DeviceMessage,System.String)">
+            <summary>
+            Sends a DeviceMessage to a device and waits for reply
+            </summary>
+            <param name="Message">DeviceMessage object</param>
+            <param name="PortName">Device port index</param>
+            <returns>Recieved byte array</returns>
+        </member>
+        <member name="T:Rakurs.Devices.DeviceMessage">
+            <summary>
+            Implements a device message, consisting of a byte array
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DeviceMessage.Item(System.Int32)">
+            <summary>
+            Allows accessing each of the bytes in the array by index
+            </summary>
+            <param name="Index">The index to set/get</param>
+            <returns>Byte from the Message</returns>
+        </member>
+        <member name="M:Rakurs.Devices.DeviceMessage.#ctor(System.Byte[])">
+            <summary>
+            Initializes DeviceMessage with a byte message array
+            </summary>
+            <param name="Message">Bytes array</param>
+        </member>
+        <member name="P:Rakurs.Devices.DeviceMessage.Timeout">
+            <summary>
+            Sets or gets the DeviceMessage timeout in miliseconds
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DeviceMessage.AllBytes">
+            <summary>
+            Sets or gets all Message bytes
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DeviceMessage.Count">
+            <summary>
+            Gets the amount of bytes in the DeviceMessage
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DeviceMessage.CommandBytes">
+            <summary>
+            Sets or gets the command bytes array
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DeviceMessage.DataBytes">
+            <summary>
+            Sets or gets the data bytes array
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DeviceMessage.AddressBytes">
+            <summary>
+            Sets or gets the address bytes array
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DeviceMessage.ChecksumBytes">
+            <summary>
+            Sets or gets the checksum bytes array
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.DeviceMessage.SetCommandBytesRange(System.Int32,System.Int32)">
+            <summary>
+            Set the bytes range for the command portion of a device message
+            </summary>
+            <param name="FirstByte">First byte index</param>
+            <param name="LastByte">Last byte index</param>
+        </member>
+        <member name="M:Rakurs.Devices.DeviceMessage.SetChecksumBytesRange(System.Int32,System.Int32)">
+            <summary>
+            Set the bytes range for the checksum portion of a device message
+            </summary>
+            <param name="FirstByte">First byte index</param>
+            <param name="LastByte">Last byte index</param>
+        </member>
+        <member name="M:Rakurs.Devices.DeviceMessage.SetAddressBytesRange(System.Int32,System.Int32)">
+            <summary>
+            Set the bytes range for the address portion of a device message
+            </summary>
+            <param name="FirstByte">First byte index</param>
+            <param name="LastByte">Last byte index</param>
+        </member>
+        <member name="M:Rakurs.Devices.DeviceMessage.SetDataBytesRange(System.Int32,System.Int32)">
+            <summary>
+            Set the bytes range for the data portion of a device message
+            </summary>
+            <param name="FirstByte">First byte index</param>
+            <param name="LastByte">Last byte index</param>
+        </member>
+        <member name="T:Rakurs.Devices.DevicePort">
+            <summary>
+            Describes the settings of a communication port
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.DevicePort.#ctor">
+            <summary>
+            Init class with default settings
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.DevicePort.#ctor(System.String,System.String,System.Int32,System.UInt32)">
+            <summary>
+            Init class with user settings
+            </summary>
+            <param name="Name">Name for the port</param>
+            <param name="Com">Com port name</param>
+            <param name="Baud">Baudrate</param>
+            <param name="Addr">Address of the port</param>
+        </member>
+        <member name="P:Rakurs.Devices.DevicePort.PortName">
+            <summary>
+            Sets or gets the name of the port (ID)
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DevicePort.ComPort">
+            <summary>
+            Sets or gets the COM port used
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DevicePort.Baudrate">
+            <summary>
+            Sets or gets the baudrate for this port
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DevicePort.Address">
+            <summary>
+            Sets or gets the address of the device
+            </summary>
+        </member>
+        <member name="T:Rakurs.Devices.DevicePortCollection">
+            <summary>
+            Implements a collection of DevicePort classes
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DevicePortCollection.Item(System.String)">
+            <summary>
+            Return a specific DevicePort by its Name
+            </summary>
+            <param name="Name">The Port Name to get or set</param>
+            <returns></returns>
+        </member>
+        <member name="P:Rakurs.Devices.DevicePortCollection.Item(System.Int32)">
+            <summary>
+            Return a specific DevicePort by its index
+            </summary>
+            <param name="Index">The index to get or set</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.Devices.DevicePortCollection.#ctor">
+            <summary>
+            Creates an empty collection
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.DevicePortCollection.#ctor(System.Int32)">
+            <summary>
+            Creates and initializes a fixed size collection
+            </summary>
+            <param name="DevicePorts"></param>
+        </member>
+        <member name="P:Rakurs.Devices.DevicePortCollection.Count">
+            <summary>
+            Gets the number of DevicePorts in the collection
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.DevicePortCollection.LastDevicePort">
+            <summary>
+            Sets or Gets the last item in the collection
+            </summary>
+        </member>
+        <member name="F:Rakurs.Devices.DevicePortCollection.NoSuchIndexException">
+            <summary>
+            Thrown when a non existant index is requested
+            </summary>
+        </member>
+        <member name="F:Rakurs.Devices.DevicePortCollection.NoSuchNameException">
+            <summary>
+            Thrown when a non existant item name is requested
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.DevicePortCollection.Add(Rakurs.Devices.DevicePort)">
+            <summary>
+            Add a new DevicePort to collection
+            </summary>
+            <param name="NewPort">The DevicePort to add</param>
+        </member>
+        <member name="M:Rakurs.Devices.DevicePortCollection.AddCollection(Rakurs.Devices.DevicePortCollection)">
+            <summary>
+            Add a DevicePortCollection to collection
+            </summary>
+            <param name="NewCollection">The DevicePortCollection to add</param>
+        </member>
+        <member name="M:Rakurs.Devices.DevicePortCollection.RemoveIndex(System.Int32)">
+            <summary>
+            Remove DevicePort from collection
+            </summary>
+            <param name="Index">Index to remove </param>
+        </member>
+        <member name="M:Rakurs.Devices.DevicePortCollection.Clear">
+            <summary>
+            Clears all items
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.DevicePortCollection.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Get enumerator object
+            </summary>
+            <returns>Enumerator object</returns>
+        </member>
+        <member name="T:Rakurs.Devices.Enumerator">
+            <summary>
+            Implements methods required by the IEnumerable class
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.Enumerator.#ctor(Rakurs.Devices.DevicePort[])">
+            <summary>
+            Assigns default values
+            </summary>
+            <param name="EnumPorts">The DevicePort array to enumerate</param>
+        </member>
+        <member name="F:Rakurs.Devices.Enumerator.Ports">
+            <summary>
+            Local DevicePort array
+            </summary>
+        </member>
+        <member name="F:Rakurs.Devices.Enumerator.Cursor">
+            <summary>
+            Array cursor
+            </summary>
+        </member>
+        <member name="P:Rakurs.Devices.Enumerator.Current">
+            <summary>
+            Returns the current object in the array.
+            </summary>
+        </member>
+        <member name="M:Rakurs.Devices.Enumerator.MoveNext">
+            <summary>
+            Moves the cursor forward
+            </summary>
+            <returns>False if end is reached</returns>
+        </member>
+        <member name="M:Rakurs.Devices.Enumerator.Reset">
+            <summary>
+            Resets cursor
+            </summary>
+        </member>
+    </members>
+</doc>

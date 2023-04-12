@@ -1,0 +1,272 @@
+﻿[
+    {
+        "groupID": 1,
+        "name": "eventSensor",
+        "desc": "Событие, вызванное сенсором",
+        "events": [
+            {
+                "id": 1,
+                "name": "FaultResetSensor",
+                "desc": "Сброс неисправности",
+                "severity": "Information"
+            },
+            {
+                "id": 2,
+                "name": "MalfunctionSensor",
+                "desc": "Неисправность",
+                "severity": "Warning"
+            },
+            {
+                "id": 3,
+                "name": "SubstitutionModeEnabledSensor",
+                "desc": "Включен режим подмены",
+                "severity": "Information"
+            },
+            {
+                "id": 4,
+                "name": "SubstitutionModeDisabledSensor",
+                "desc": "Отключен режим подмены",
+                "severity": "Information"
+            },
+            {
+                "id": 5,
+                "name": "SensorEnabledSensor",
+                "desc": "Датчик включен",
+                "severity": "Information"
+            },
+            {
+                "id": 6,
+                "name": "SensorExcludedSensor",
+                "desc": "Датчик исключен",
+                "severity": "Information"
+            },
+            {
+                "id": 7,
+                "name": "ChangingBottomScaleSensor",
+                "desc": "Изменение низа шкалы",
+                "severity": "Information"
+            },
+            {
+                "id": 8,
+                "name": "ChangingTopScaleSensor",
+                "desc": "Изменение верха шкалы",
+                "severity": "Information"
+            },
+            {
+                "id": 9,
+                "name": "ChangingLSensor",
+                "desc": "Изменение НПУ",
+                "severity": "Information"
+            },
+            {
+                "id": 10,
+                "name": "ChangingHSensor",
+                "desc": "Изменение ВПУ",
+                "severity": "Information"
+            },
+            {
+                "id": 11,
+                "name": "ChangingLLSensor",
+                "desc": "Изменение НАУ",
+                "severity": "Information"
+            },
+            {
+                "id": 12,
+                "name": "ChangingHHSensor",
+                "desc": "Изменение ВАУ",
+                "severity": "Information"
+            },
+            {
+                "id": 13,
+                "name": "ChangedValueSubstitutionSensor",
+                "desc": "Изменено значение для подмены",
+                "severity": "Information"
+            },
+            {
+                "id": 14,
+                "name": "SensorSelectedControlControllerSensor",
+                "desc": "Датчик выбран для управления регулятором",
+                "severity": "Information"
+            },
+            {
+                "id": 15,
+                "name": "CanceledSelectedControlControllerSensor",
+                "desc": "Отменен выбор датчика для управления регулятором",
+                "severity": "Information"
+            }
+        ]
+    },
+    {
+        "groupID": 101,
+        "name": "ApplicationCommon",
+        "desc": "Общее состояние приложения",
+        "events": [
+            {
+                "id": 1,
+                "name": "ApplicationStarted",
+                "desc": "Приложение запущено",
+                "severity": "Information"
+            },
+            {
+                "id": 2,
+                "name": "ApplicationStopped",
+                "desc": "Приложение остановлено",
+                "severity": "Information"
+            },
+            {
+                "id": 3,
+                "name": "ApplicationRebooted",
+                "desc": "Перезагрузка прибора",
+                "severity": "Information"
+            },
+            {
+                "id": 4,
+                "name": "PeripheralsTestActivated",
+                "desc": "Тестирование периферии",
+                "severity": "Information"
+            }
+        ]
+    },
+    {
+        "groupID": 102,
+        "name": "ApplicationSecurity",
+        "desc": "Безопасность приложения",
+        "events": [
+            {
+                "id": 1,
+                "name": "UnauthorizedAccess",
+                "desc": "Попытка несанкционированного доступа",
+                "severity": "Warning"
+            }
+        ]
+    },
+    {
+        "groupID": 103,
+        "name": "ApplicationWork",
+        "desc": "Работа приложения",
+        "events": [
+            {
+                "id": 1,
+                "name": "NodeActivated",
+                "desc": "Узел активирован",
+                "severity": "Information"
+            },
+            {
+                "id": 2,
+                "name": "NodeBlocked",
+                "desc": "Узел заблокирован",
+                "severity": "Information"
+            },
+            {
+                "id": 3,
+                "name": "NodeInTestMode",
+                "desc": "Узел в режиме тестирования",
+                "severity": "Information"
+            },
+            {
+                "id": 4,
+                "name": "NodeInTestBlockedMode",
+                "desc": "Узел заблокирован в режиме тестирования",
+                "severity": "Information"
+            },
+            {
+                "id": 5,
+                "name": "NodeDeactivated",
+                "desc": "Узел деактивирован",
+                "severity": "Information"
+            },
+            {
+                "id": 11,
+                "name": "HealthOk",
+                "desc": "Узел работоспособен",
+                "severity": "Information"
+            },
+            {
+                "id": 12,
+                "name": "HealthWarning",
+                "desc": "Узел сообщил о проблеме",
+                "severity": "Warning"
+            },
+            {
+                "id": 13,
+                "name": "HealthAlarm",
+                "desc": "Узел сообщил о критической ошибке",
+                "severity": "Alarm"
+            },
+            {
+                "id": 21,
+                "name": "PhyHealthOk",
+                "desc": "Устройство работоспособно",
+                "severity": "Information"
+            },
+            {
+                "id": 22,
+                "name": "PhyHealthWarning",
+                "desc": "Устройство сообщило о проблеме",
+                "severity": "Warning"
+            },
+            {
+                "id": 23,
+                "name": "PhyHealthAlarm",
+                "desc": "Устройство сообщило о критической ошибке",
+                "severity": "Alarm"
+            }
+        ]
+    },
+    {
+        "groupID": 104,
+        "name": "ApplicationConfiguration",
+        "desc": "Конфигурация приложения",
+        "events": [
+            {
+                "id": 1,
+                "name": "NetworkInterfaceSettingsEdited",
+                "desc": "Настройки сетевых интерфейсов изменены",
+                "severity": "Information"
+            },
+            {
+                "id": 2,
+                "name": "TimeSyncSettingsEdited",
+                "desc": "Настройки синхронизации времени изменены",
+                "severity": "Information"
+            },
+            {
+                "id": 3,
+                "name": "PreinstalledConfigActivated",
+                "desc": "Предустановленная конфигурация активирована",
+                "severity": "Information"
+            },
+            {
+                "id": 4,
+                "name": "ConfigFileUploaded",
+                "desc": "Файл конфигурации загружен",
+                "severity": "Information"
+            }
+        ]
+    },
+    {
+        "groupID": 111,
+        "name": "Metrology",
+        "desc": "Метрология",
+        "events": [
+            {
+                "id": 1,
+                "name": "CalibrationModeActivated",
+                "desc": "Режим калибровки активирован",
+                "severity": "Information"
+            },
+            {
+                "id": 2,
+                "name": "CalibrationModeDisactivated",
+                "desc": "Режим калибровки деактивирован",
+                "severity": "Information"
+            },
+            {
+                "id": 3,
+                "name": "CalibrationCoefficientSettingsEdited",
+                "desc": "Настройки калибровочных коэффициентов изменены",
+                "severity": "Information"
+            }
+        ]
+    }
+]

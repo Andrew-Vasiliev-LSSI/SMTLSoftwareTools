@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rakurs.Xdml</name>
+    </assembly>
+    <members>
+        <member name="T:Rakurs.Xdml.XdmlReader">
+            <summary>
+            Provides methods to read Xdml files
+            </summary>
+        </member>
+        <member name="M:Rakurs.Xdml.XdmlReader.#ctor">
+            <summary>
+            Default Xdml constructor
+            </summary>
+        </member>
+        <member name="P:Rakurs.Xdml.XdmlReader.XdmlVersion">
+            <summary>
+            Gets the supported Xdml version
+            </summary>
+        </member>
+        <member name="F:Rakurs.Xdml.XdmlReader.UnknownFormatException">
+            <summary>
+            Thrown when the version of the file being read 
+            is different from the Xdml reader version
+            </summary>
+        </member>
+        <member name="M:Rakurs.Xdml.XdmlReader.OpenFile(System.String)">
+            <summary>
+            Opens and Xdml file and returns a Device varible 
+            </summary>
+            <param name="XdmlFile">Full path to the Xdml file</param>
+            <returns>Device varible with settings from the Xdml file</returns>
+        </member>
+        <member name="T:Rakurs.Xdml.XdmlWriter">
+            <summary>
+            Provides methods to write Xdml files
+            </summary>
+        </member>
+        <member name="M:Rakurs.Xdml.XdmlWriter.#ctor">
+            <summary>
+            Default Xdml constructor
+            </summary>
+        </member>
+        <member name="P:Rakurs.Xdml.XdmlWriter.XdmlVersion">
+            <summary>
+            Gets the supported Xdml version
+            </summary>
+        </member>
+        <member name="F:Rakurs.Xdml.XdmlWriter.UnknownFormatException">
+            <summary>
+            Thrown when the version of the file being read 
+            is different from the Xdml reader version
+            </summary>
+        </member>
+        <member name="M:Rakurs.Xdml.XdmlWriter.WriteFile(Rakurs.Devices.Device,System.String)">
+            <summary>
+            Writes settings into an Xdml file from a Device object
+            </summary>
+            <param name="XdmlDevice">Device object to write</param>
+            <param name="XdmlFile">File path where the Xdml will be created</param>
+        </member>
+    </members>
+</doc>

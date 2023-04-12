@@ -1,0 +1,1204 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rakurs.CCD</name>
+    </assembly>
+    <members>
+        <member name="T:Rakurs.CCD.ccdDevice">
+            <summary>
+            Implements a generic CCD device
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.#ctor(System.String,System.String)">
+            <summary>
+            Constructor that assign all device properties aside Ports
+            </summary>
+            <param name="DeviceName">Device name</param>
+            <param name="DeviceType">Device type or model description string</param>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.#ctor(System.String,System.String,Rakurs.Devices.DevicePortCollection)">
+            <summary>
+            Assigns all device properties
+            </summary>
+            <param name="DeviceName">Device name</param>
+            <param name="DeviceType">Device type or model description string</param>
+            <param name="DevicePorts">Array of device communication ports</param>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.#ctor(Rakurs.CCD.ccdDevice)">
+            <summary>
+            Construct ccdDevice from Device
+            </summary>
+            <param name="NewDevice">Device object to convert</param>
+        </member>
+        <member name="E:Rakurs.CCD.ccdDevice.DeviceFound">
+            <summary>
+            Occurs when a device is found during a search procedure
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.ccdDevice.DeviceFoundHandler">
+            <summary>
+            Type of method excecuted upon a DeviceFound event
+            </summary>
+            <param name="Sender">Instance of the sender class</param>
+            <param name="Arguments">SearchArgs arguments</param>
+        </member>
+        <member name="E:Rakurs.CCD.ccdDevice.SearchNext">
+            <summary>
+            Occurs when one search option is checked
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.ccdDevice.SearchNextHandler">
+            <summary>
+            Type of method excecuted upon a SearchNext event
+            </summary>
+            <param name="Sender">Instance of the sender class</param>
+            <param name="Arguments">Standard arguments</param>
+        </member>
+        <member name="F:Rakurs.CCD.ccdDevice.WrongReplyException">
+            <summary>
+            Thrown when a reply message has an incorrect format
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.ccdDevice.BadCrcException">
+            <summary>
+            Thrown when the checksum doesn't match
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.ccdDevice.DeviceNotFound">
+            <summary>
+            Thrown when no device is found during a search procedure
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.ccdDevice.ConnectionLost">
+            <summary>
+            Thrown when device stops responding requests
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.ccdDevice.ContinueSearch">
+            <summary>
+            Checked after firing a SearchNext event, 
+            if false, search is halted.
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.QueryCCD(System.Int32,System.Int32,System.Byte[],System.Byte,System.Byte,System.Int32)">
+            <summary>
+            Sends a package to a CCD device and waits for reply 
+            </summary>
+            <param name="Port">Port number of the device to use</param>
+            <param name="Timeout">Timeout in ms for the Query</param>
+            <param name="Parameters">Array of bytes to send as parameters</param>
+            <param name="Command">Command type</param>
+            <param name="Reply">Expected reply type</param>
+            <param name="ReplyLength">Expected reply length</param>
+            <returns>Returns a ccdDeviceMessage, containing the reply</returns>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.GetFirmwareDate(System.Int32,System.Int32)">
+            <summary>
+            Querys a CCD device for 
+            a Firmware build date and time
+            </summary>
+            <param name="Port">Port number of the device to use</param>
+            <param name="Timeout">Timeout in ms for the Query</param>
+            <returns>Date and time String</returns>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.GetDeviceType(System.Int32,System.Int32)">
+            <summary>
+            Gets the byte indicating the device type
+            </summary>
+            <param name="Port">Port number of the device to use</param>
+            <param name="Timeout">Timeout in ms for the Query</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.Exists(System.Int32,System.Int32)">
+            <summary>
+            Checks if a device exists
+            </summary>
+            <param name="Port">Port number of the device to use</param>
+            <param name="Timeout">Timeout in ms for the Query</param>
+            <returns>True if exists</returns>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.LoadFromFile(System.String)">
+            <summary>
+            Loads device settings from an Xdml file
+            </summary>
+            <param name="Path">Location of the file</param>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.WriteToFile(System.String)">
+            <summary>
+            Writes device configuration to an Xdml file
+            </summary>
+            <param name="Path">Where to write the file</param>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.StopSearch">
+            <summary>
+            Tells the Search method to stop as soon as possible
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.Search(System.Int32,System.String,System.Int32)">
+            <summary>
+            Look for devices on a specific Com port at a specific baudrate
+            </summary>
+            <param name="Timeout">Timeout value for each search option</param>
+            <param name="Baudrate">The baudrate to search at</param>
+            <param name="ComPort">Com port to search</param>
+            <returns>DevicePorts for all found devices</returns>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.Search(System.Int32,System.String)">
+            <summary>
+            Look for devices on a specific COM port at all CCD Baudrates
+            </summary>
+            <param name="Timeout">Timeout value for each search option</param>
+            <param name="ComPort">Com port to search</param>
+            <returns>DevicePorts for all found devices</returns>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.Search(System.Int32,System.Int32)">
+            <summary>
+            Look for devices on all COM ports at a specific baudrate
+            </summary>
+            <param name="Timeout">Timeout value for each search option</param>
+            <param name="Baudrate">Baudrate at which the search is preformed</param>
+            <returns>DevicePorts for all found devices</returns>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.Search(System.Int32)">
+            <summary>
+            Look for devices on all COM ports and CCD Baudrates
+            </summary>
+            <param name="Timeout">Timeout value for each search option</param>
+            <returns>DevicePorts for all found devices</returns>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.GetConfiguration(System.Int32,System.Int32)">
+            <summary>
+            Returns the addresses and baudrates configuration for a CCD device
+            </summary>
+            <param name="Port">Port number of the device to use</param>
+            <param name="Timeout">Timeout in ms for the Query</param>
+            <returns>Collection of 2 DevicePorts where the ComPort property is empty</returns>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.SetConfiguration(System.Int32,System.Int32,System.Byte,System.Byte,Rakurs.CCD.Baudrates,Rakurs.CCD.Baudrates)">
+            <summary>
+            Sets configuration for addresses and baudrates of a CCD device
+            </summary>
+            <param name="Port">Port number of the device to use</param>
+            <param name="Timeout">Timeout in ms for the Query</param>
+            <param name="PrimaryAddress">Address of primary port</param>
+            <param name="SecondaryAddress">Address of secondary port</param>
+            <param name="PrimayBaudrate">Number of the baudrate to use for primary port</param>
+            <param name="SecondaryBaudrate">Number of the baudrate to use for secondary port</param>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.GetDateTime(System.Int32,System.Int32)">
+            <summary>
+            Gets the internal DateTime of a CCD device
+            </summary>
+            <param name="Port">Port number of the device to use</param>
+            <param name="Timeout">Timeout in ms for the Query</param>
+            <returns>DateTime instance, representing the internal Date and Time of a CCD device</returns>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDevice.SetDateTime(System.Int32,System.Int32,System.DateTime)">
+            <summary>
+            Sets the date and time to a CCD device
+            </summary>
+            <param name="Port">Port number of the device to use</param>
+            <param name="Timeout">Timeout in ms for the Query</param>
+            <param name="NewDate">DateTime object to set</param>
+        </member>
+        <member name="T:Rakurs.CCD.SearchArgs">
+            <summary>
+            Defines arguments returned 
+            to a DeviceFound event handler
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.SearchArgs.#ctor">
+            <summary>
+            Default construcotr
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.SearchArgs.#ctor(Rakurs.Devices.DevicePort)">
+            <summary>
+            Initializes class with default port
+            </summary>
+            <param name="ArgPort">The current device port</param>
+        </member>
+        <member name="P:Rakurs.CCD.SearchArgs.CurrentPort">
+            <summary>
+            Sets or gets the DevicePort object
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.Baudrates">
+            <summary>
+            Standard CCD baudrates
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.ccdDeviceMessage">
+            <summary>
+            Implements the DeviceMessage class in libCCD
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDeviceMessage.#ctor(System.Byte[])">
+            <summary>
+            Creates the Message from an array of bytes
+            and calculates checksum
+            (Good for writing commands)
+            </summary>
+            <param name="NewDataBytes">Array of bytes</param>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDeviceMessage.#ctor(System.Byte[],System.Boolean)">
+            <summary>
+            Creates the Message from an array of bytes 
+            with the ability to check the CRC of the input array.
+            Doesn't calculates CRC.
+            (Good for reading replies)
+            </summary>
+            <param name="NewDataBytes">Array of bytes</param>
+            <param name="CheckCRC">Indicates whether to check CRC</param>
+        </member>
+        <member name="F:Rakurs.CCD.ccdDeviceMessage.BadCrcException">
+            <summary>
+            Thrown when a message with 
+            bad CRC is being constructed
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.ccdDeviceMessage.WrongMessageLengthException">
+            <summary>
+            Thrown when the length of the message is incorrect
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.ccdDeviceMessage.RefreshCRC">
+            <summary>
+            Recalculates the checksum for the message
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol">
+            <summary>
+             Definitions that represent EmBoot modbus map
+             Addresses are grouped into structures,
+             structures usually have the following fields:
+             StartAddr - the address of the first flag/register of a group
+             InputNum/CoilNum/InputNum - the amount of the flags/registers in the group
+             names of particular flags, registers
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.ApplicationAddr">
+            <summary>
+            Constants definition block
+            start addresses for definition blocks (coil block, input block etc.)
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.GeneralCommands">
+            <summary>
+             Command coils structure: 
+             setting these coils to 1 forces command execution
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.GeneralCommands.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.GeneralCommands.CoilNum">
+            <summary>
+             Amount of coils in the group
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.GeneralCommands.Reset">
+            <summary>
+             Reset coil
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.GeneralCommands.CheckPassword">
+            <summary>
+             CheckPassword coil
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.GeneralCommands.SaveBlock">
+            <summary>
+             Save block and check checksum coil
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.GeneralCommands.CalcFirmwareCRC">
+            <summary>
+             Check firmware checksum and firmware readiness coil
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.GeneralCommands.StartFirmware">
+            <summary>
+             Start firmware coil
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.StateFlags">
+            <summary>
+             Input flags structure
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.StateFlags.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.StateFlags.InputNum">
+            <summary>
+             Amount of inputs in the group
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.StateFlags.SelfCheckError">
+            <summary>
+             Self check error flag
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.StateFlags.InitError">
+            <summary>
+             Initialization error flag
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.StateFlags.WrongPassword">
+            <summary>
+             Wrong password flag
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.StateFlags.BlockCRCError">
+            <summary>
+             Block checksum error flag
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.StateFlags.FirmwareCRCError">
+            <summary>
+             Firmware checksum error flag
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.StateFlags.FirmwareReady">
+            <summary>
+             Firmware ready flag
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.DateAndCode">
+            <summary>
+             Input registers group that represents firmware date and code
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.DateAndCode.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.DateAndCode.RegsNum">
+            <summary>
+             Amount of registers
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.BlockSizeInput">
+            <summary>
+             Input registers group that represent maximum allowed block size
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.BlockSizeInput.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.BlockSizeInput.RegsNum">
+            <summary>
+             Amount of registers
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.StartTimeout">
+            <summary>
+             Firmware start timeout
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.StartTimeout.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.StartTimeout.RegsNum">
+            <summary>
+             Amount of registers
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.DownloadAddress">
+            <summary>
+             The address to download the firmware
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.DownloadAddress.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.DownloadAddress.RegsNum">
+            <summary>
+             Amount of registers
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.MaxFirmwareSize">
+            <summary>
+             Maximum firmware size
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.MaxFirmwareSize.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.MaxFirmwareSize.RegsNum">
+            <summary>
+             Amount of registers
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.FirmwareSize">
+            <summary>
+             Firmware size
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.FirmwareSize.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.FirmwareSize.RegsNum">
+            <summary>
+             Amount of registers
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.FirmwareCRC">
+            <summary>
+             Firmware size
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.FirmwareCRC.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.FirmwareCRC.RegsNum">
+            <summary>
+             Amount of registers
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.Password">
+            <summary>
+             Password for downloading firmware
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.Password.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.Password.RegsNum">
+            <summary>
+             Amount of registers
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.BlockCRC">
+            <summary>
+             Data block checksum
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.BlockCRC.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.BlockCRC.RegsNum">
+            <summary>
+             Amount of registers
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.BlockNumber">
+            <summary>
+             Data block number
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.BlockNumber.StartAddr">
+            <summary>
+             Group start address
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.BlockNumber.RegsNum">
+            <summary>
+             Amount of registers
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.EmBootProtocol.Timing">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.EmBootProtocol.Timing.DefaultTimeout">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.DMCModbusDevice">
+            <summary>
+            Implements a generic modbus enabled DMC device
+            </summary>
+        </member>
+        <member name="E:Rakurs.CCD.DMCModbusDevice.DeviceFound">
+            <summary>
+            Occurs when a device is found during a search procedure
+            </summary>
+        </member>
+        <member name="E:Rakurs.CCD.DMCModbusDevice.SearchNext">
+            <summary>
+            Occurs when one search option is checked
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.DMCModbusDevice.GetPort">
+            <summary>
+            Type of method excecuted upon a SearchNext event
+            </summary>
+            <param name="Sender">Instance of the sender class</param>
+            <param name="Arguments">Standard arguments</param>
+        </member>
+        <member name="T:Rakurs.CCD.PerseusDevice">
+            <summary>
+             Perseus device class - is a type of modbus device that gives easier methods
+             for communication with "21"-type devices
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.#ctor">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.#ctor(System.String,System.String)">
+            <summary>
+            </summary>
+            <param name="DeviceName"></param>
+            <param name="DeviceType"></param>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.#ctor(System.String,System.String,Rakurs.Devices.DevicePortCollection)">
+            <summary>
+            </summary>
+            <param name="DeviceName"></param>
+            <param name="DeviceType"></param>
+            <param name="DevicePorts"></param>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.#ctor(Rakurs.CCD.PerseusDevice)">
+            <summary>
+            </summary>
+            <param name="NewDevice"></param>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.#ctor(Rakurs.CCD.ccdDevice)">
+            <summary>
+            </summary>
+            <param name="NewDevice"></param>
+        </member>
+        <member name="E:Rakurs.CCD.PerseusDevice.DeviceFound">
+            <summary>
+            Occurs when a device is found during a search procedure
+            </summary>
+        </member>
+        <member name="E:Rakurs.CCD.PerseusDevice.SearchNext">
+            <summary>
+            Occurs when one search option is checked
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.PerseusDevice.TableCRC">
+            <summary>
+            Type of method excecuted upon a SearchNext event
+            </summary>
+            <param name="Sender">Instance of the sender class</param>
+            <param name="Arguments">Standard arguments</param>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetBoolValueInput(System.UInt16)">
+            <summary>
+             Gets the value of the input flag, selected by Addr param
+            </summary>
+            <param name="Addr">The address of the input flag in the device modbus map</param>
+            <returns>The value of the flag</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetBoolValuesInput(System.UInt16,System.UInt16)">
+            <summary>
+             Gets an array of input flags, selected by Addr and ValueNumber params
+            </summary>
+            <param name="Addr">The address of the first input flag in the modbud map</param>
+            <param name="ValueNumber">The amount of the input flags</param>
+            <returns>Bool array of input flags values</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetBoolValueCoil(System.UInt16)">
+            <summary>
+             Gets the value of the coil flag, selected by Addr param
+            </summary>
+            <param name="Addr">The address of the coil flag in the device modbus map</param>
+            <returns>The value of the flag</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetBoolValuesCoil(System.UInt16,System.UInt16)">
+            <summary>
+             Gets an array of coil flags, selected by Addr and ValueNumber params
+            </summary>
+            <param name="Addr">The address of the first coil flag in modbus map</param>
+            <param name="ValueNumber">The amount of the coil flags</param>
+            <returns>Bool array of coil flags values</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetBoolValue(System.UInt16,System.Boolean)">
+            <summary>
+             Sets a value of the coil selected by Addr param
+            </summary>
+            <param name="Addr">The address of the coil flag in modbus map</param>
+            <param name="Value">The demanded value of the coil</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetBoolValues(System.UInt16,System.Boolean[])">
+            <summary>
+             Sets values of the coils selected by Addr param
+            </summary>
+            <param name="Addr">The address of the first</param>
+            <param name="Values">Array of demanded coil flags values</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetUInt16ValueInput(System.UInt16)">
+            <summary>
+             Gets a value of an input register selected by Addr param
+            </summary>
+            <param name="Addr">The address of the input register</param>
+            <returns>An UInt16 value of the input register</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetUInt16ValuesInput(System.UInt16,System.UInt16)">
+            <summary>
+             Gets an array of input register values selected by Addr and ValueNumber params
+            </summary>
+            <param name="Addr">The address of the first input register</param>
+            <param name="ValueNumber">The amount of the registers</param>
+            <returns>An UInt16 array of the input register values</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetInt16ValueInput(System.UInt16)">
+            <summary>
+             Gets a value of an input register selected by Addr param
+            </summary>
+            <param name="Addr">The address of the input register</param>
+            <returns>An Int16 value of the input register</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetInt16ValuesInput(System.UInt16,System.UInt16)">
+            <summary>
+             Gets an array of input register values selected by Addr and ValueNumber params
+            </summary>
+            <param name="Addr">The address of the first input register</param>
+            <param name="ValueNumber">The amount of the registers</param>
+            <returns>An Int16 array of the input register values</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetUInt32ValueInput(System.UInt16)">
+            <summary>
+             Gets a value of a pair of input registers selected by Addr param
+            </summary>
+            <param name="Addr">The address of the first input register</param>
+            <returns>An UInt32 value of the input registers pair</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetUInt32ValuesInput(System.UInt16,System.UInt16)">
+            <summary>
+             Gets an array of input register pair values selected by Addr and ValueNumber params
+            </summary>
+            <param name="Addr">The address of the first input register</param>
+            <param name="ValueNumber">The demande amount of values</param>
+            <returns>An UInt32 array of the input register pair values</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetInt32ValueInput(System.UInt16)">
+            <summary>
+             Gets a value of a pair of input registers selected by Addr param
+            </summary>
+            <param name="Addr">The address of the first input register</param>
+            <returns>An Int32 value of the input registers pair</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetInt32ValuesInput(System.UInt16,System.UInt16)">
+            <summary>
+             Gets an array of input register pair values selected by Addr and ValueNumber params
+            </summary>
+            <param name="Addr">The address of the first input register</param>
+            <param name="ValueNumber">The demande amount of values</param>
+            <returns>An Int32 array of the input register pair values</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetStringInput(System.UInt16,System.UInt16)">
+            <summary>
+             Gets an array of input registers
+            </summary>
+            <param name="Addr">The address of the first input register</param>
+            <param name="StringLength">The demanded length of the string</param>
+            <returns>The string representation of the input register array values</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetStringHolding(System.UInt16,System.UInt16)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="StringLength"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetUInt16ValueHolding(System.UInt16)">
+            <summary>
+             Gets a value of an holding register selected by Addr param
+            </summary>
+            <param name="Addr">The address of the holding register</param>
+            <returns>An UInt16 value of the holding register</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetUInt16Value(System.UInt16,System.UInt16)">
+            <summary>
+             Gets a value of an holding register selected by Addr param
+            </summary>
+            <param name="Addr">The address of the holding register</param>
+            <param name="Value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetUInt16ValuesHolding(System.UInt16,System.UInt16)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="ValueNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetUInt16Values(System.UInt16,System.UInt16[])">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="Values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetInt16ValueHolding(System.UInt16)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetInt16Value(System.UInt16,System.Int16)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="Value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetInt16ValuesHolding(System.UInt16,System.UInt16)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="ValueNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetInt16Values(System.UInt16,System.Int16[])">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="Values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetUInt32ValueHolding(System.UInt16)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetUInt32Value(System.UInt16,System.UInt32)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="Value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetUInt32ValuesHolding(System.UInt16,System.UInt16)">
+            <summary>
+            
+            </summary>
+            <param name="Addr"></param>
+            <param name="ValueNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetUInt32Values(System.UInt16,System.UInt32[])">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="Values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetInt32ValueHolding(System.UInt16)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetInt32Value(System.UInt16,System.Int32)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="Value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetInt32ValuesHolding(System.UInt16,System.UInt16)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="ValueNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetInt32Values(System.UInt16,System.Int32[])">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="Values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetByteArray(System.UInt16,System.Byte[])">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="Values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetCharArray(System.UInt16,System.Char[])">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="Values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.SetStringValue(System.UInt16,System.String)">
+            <summary>
+            </summary>
+            <param name="Addr"></param>
+            <param name="Value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.UInt16ToUInt32(System.UInt16[])">
+            <summary>
+            
+            </summary>
+            <param name="Input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.UInt32ToUInt16(System.UInt32[])">
+            <summary>
+            
+            </summary>
+            <param name="Input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.ByteArrayToUInt16Array(System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="Input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.CharArrayToUInt16Array(System.Char[])">
+            <summary>
+            
+            </summary>
+            <param name="Input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.UInt16ToCharArray(System.UInt16[])">
+            <summary>
+            
+            </summary>
+            <param name="Input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.StringToUInt16Array(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="Input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.UInt16ToString(System.UInt16[])">
+            <summary>
+            
+            </summary>
+            <param name="Input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.UInt16ToInt32(System.UInt16[])">
+            <summary>
+            
+            </summary>
+            <param name="Input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.Int32ToUInt16(System.Int32[])">
+            <summary>
+            
+            </summary>
+            <param name="Input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.ForceReset">
+            <summary>
+             Reset
+            </summary>
+            <returns>true if succeeds, false if fails</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.ForcePasswordCheck">
+            <summary>
+             Check password
+            </summary>
+            <returns>true if succeeds, false if fails</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.ForceBlockSave">
+            <summary>
+             Forces block save and block CRC check
+            </summary>
+            <returns>true if succeeds, false if fails</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.ForceCheckFirmwareCRC">
+            <summary>
+             Check firmware CRC and firmware readiness
+            </summary>
+            <returns>true if succeeds, false if fails</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.StartFirmware">
+            <summary>
+             Start firmware
+            </summary>
+            <returns>true if succeeds, false if fails</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.CheckErrors">
+            <summary>
+             Checks selfcheck- and initialization errors.
+            </summary>
+            <returns>returns true if both error flags are not set, false if any is set</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.IsPasswordWrong">
+            <summary>
+             Checks wrong password flag
+            </summary>
+            <returns>returns true if password if wrong, false if correct</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.IsBlockCRCWrong">
+            <summary>
+             Checks wrong block crc flag
+            </summary>
+            <returns>returns true if crc is wrong, false if correct</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.IsFirmwareCRCWrong">
+            <summary>
+             Checks wrong firmware crc flag
+            </summary>
+            <returns>returns true if crc is wrong, false if correct</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.IsFirmwareReady">
+            <summary>
+             Checks if firmware is ready
+            </summary>
+            <returns>returns true if firmware is ready, false if correct</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.WriteIniParams(System.UInt32,System.UInt32,System.String)">
+            <summary>
+             Saves ini params to holding registers:
+            </summary>
+            <param name="CurFirmwareSize">Current firmware size</param>
+            <param name="CurFirmwareCRC">Current firmware crc</param>
+            <param name="CurPassword">Current password</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.WriteFirmwareSize(System.UInt32)">
+            <summary>
+            </summary>
+            <param name="CurFirmwareSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.WriteFirmwareCRC(System.UInt32)">
+            <summary>
+            </summary>
+            <param name="CurCRC"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.WriteLargeDataBlock(System.UInt16,System.UInt16,System.Byte[])">
+            <summary>
+             Saves data block
+            </summary>
+            <param name="CurNumber">Current block number</param>
+            <param name="CurLength">Current block length</param>
+            <param name="CurBlock">Current data block</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.WriteEmbootPassword(System.String)">
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetFirmwareDate">
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetBlockSize">
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetTimeout">
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetDownloadingAddress">
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.GetMaxFirmwareSize">
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.IniDowload(System.String,System.String)">
+            <summary>
+            </summary>
+            <param name="CurPath"></param>
+            <param name="CurPassword"></param>
+            <returns>0 if succeeds, error code if fails</returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.CheckInitialization">
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.DownloadFirmware">
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.CheckDownloadResults">
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rakurs.CCD.PerseusDevice.Download(System.String,System.String)">
+            <summary>
+            </summary>
+            <param name="CurPath"></param>
+            <param name="CurPassword"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Rakurs.CCD.Protocol">
+            <summary>
+            Contains command and reply codes for CCD devices
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.Protocol.GetFirmwareDate">
+            <summary>
+            Gets firmware date and time
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.GetFirmwareDate.Command">
+            <summary>
+            Command code
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.GetFirmwareDate.CommandLength">
+            <summary>
+            Command length
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.GetFirmwareDate.Reply">
+            <summary>
+            Reply code
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.GetFirmwareDate.ReplyLength">
+            <summary>
+            Reply Length
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.Protocol.Config">
+            <summary>
+            Gets or sets device configuration
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.Config.Command">
+            <summary>
+            Command code
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.Config.CommandLength">
+            <summary>
+            Command length
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.Config.Reply">
+            <summary>
+            Reply code
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.Config.ReplyLength">
+            <summary>
+            Reply length
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.Protocol.GetDateTime">
+            <summary>
+            Gets device Real Time Clock (RTC) status
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.GetDateTime.Command">
+            <summary>
+            Command code
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.GetDateTime.CommandLength">
+            <summary>
+            Command length
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.GetDateTime.Reply">
+            <summary>
+            Reply code
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.GetDateTime.ReplyLength">
+            <summary>
+            Reply length
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.Protocol.SetDateTime">
+            <summary>
+            Sets device Real Time Clock (RTC) status
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.SetDateTime.Command">
+            <summary>
+            Command code
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.SetDateTime.CommandLength">
+            <summary>
+            Command length
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.SetDateTime.Reply">
+            <summary>
+            Reply code
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.SetDateTime.ReplyLength">
+            <summary>
+            Reply length
+            </summary>
+        </member>
+        <member name="T:Rakurs.CCD.Protocol.DateAndCode">
+            <summary>
+            Gets date and code
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.DateAndCode.StartAddr">
+            <summary>
+            Start address for firmware date and device code for all 21-st devices
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.DateAndCode.RegsNum">
+            <summary>
+            Amount of registers to represent firmware date and device code for all 21-st devices
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.TypeByte">
+            <summary>
+            Number of the byte containing 
+            the device type in a FirmwareDate reply
+            </summary>
+        </member>
+        <member name="F:Rakurs.CCD.Protocol.MinimumMessageSize">
+            <summary>
+            The minimum size of a message
+            </summary>
+        </member>
+    </members>
+</doc>

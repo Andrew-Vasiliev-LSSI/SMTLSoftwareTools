@@ -1,0 +1,53 @@
+[
+  {
+    "SensorName": "ДВЗ 50",
+    "MeasurementType": "Воздушный зазор",
+    "ChannelType": "1",
+    "SensorType": "3",
+    "InputMultiplier": "0.01",
+    "Sensitivity": "0",
+    "FailStMin": "0.9",
+    "FailStMax": "5.1"
+  },
+  {
+    "SensorName": "ДВП-1000П-0,7/200",
+    "MeasurementType": "Абсолютная вибрация",
+    "ChannelType": "1",
+    "SensorType": "2",
+    "InputMultiplier": "0.25",
+    "Sensitivity": "0",
+    "FailStMin": "0.9",
+    "FailStMax": "5.1"
+  },
+  {
+    "SensorName": "ДБВ-ОБ=20=2000-0/20-30/Д10",
+    "MeasurementType": "Относительная вибрация",
+    "ChannelType": "1",
+    "SensorType": "2",
+    "InputMultiplier": "1",
+    "Sensitivity": "0",
+    "FailStMin": "0.9",
+    "FailStMax": "5.1"
+  },
+  {
+    "SensorName": "ICP",
+    "MeasurementType": "Вибрация лобовых частей",
+    "ChannelType": "0",
+    "SensorType": "0",
+    "InputMultiplier": "0.001",
+    "Sensitivity": "100",
+    "FailStMin": "0.9",
+    "FailStMax": "12.5"
+  },
+  {
+    "SensorName": "FOA",
+    "MeasurementType": "Вибрация лобовых частей",
+    "ChannelType": "0",
+    "SensorType": "0",
+    "InputMultiplier": "0.001",
+    "Sensitivity": "100",
+    "FailStMin": "5",
+    "FailStMax": "8"
+  }
+
+]
