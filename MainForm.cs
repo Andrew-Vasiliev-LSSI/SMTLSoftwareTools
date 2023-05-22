@@ -16,6 +16,7 @@ using System.Text.Json;
 using System.Runtime.CompilerServices;
 using System.Collections;
 using SMTLSoftwareTools.TCP;
+using SMTLSoftwareTools.AutoCalibration;
 
 namespace SMTLSoftwareTools
 {
@@ -60,6 +61,11 @@ namespace SMTLSoftwareTools
             {
                 Form configManagement = new ConfigManagmentForm(client);
                 configManagement.Show();
+            }
+            else if (rbtAutoCalibration.Checked == true)
+            {
+                Form autoCalibration = new Calibration(client);
+                autoCalibration.Show();
             }
         }
 

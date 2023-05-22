@@ -54,6 +54,7 @@ namespace SMTLSoftwareTools
             this.btAs01Show = new System.Windows.Forms.Button();
             this.btAs01Calibr = new System.Windows.Forms.Button();
             this.btExit = new System.Windows.Forms.Button();
+            this.rbtAutoCalibration = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -185,6 +186,7 @@ namespace SMTLSoftwareTools
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rbtAutoCalibration);
             this.panel1.Controls.Add(this.rbtDeviceConfig);
             this.panel1.Controls.Add(this.rbtConfigManagement);
             this.panel1.Controls.Add(this.rbtSetpoint);
@@ -192,14 +194,14 @@ namespace SMTLSoftwareTools
             this.panel1.Enabled = false;
             this.panel1.Location = new System.Drawing.Point(125, 137);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(235, 111);
+            this.panel1.Size = new System.Drawing.Size(235, 131);
             this.panel1.TabIndex = 0;
             // 
             // rbtDeviceConfig
             // 
             this.rbtDeviceConfig.AutoSize = true;
             this.rbtDeviceConfig.Checked = true;
-            this.rbtDeviceConfig.Location = new System.Drawing.Point(17, 91);
+            this.rbtDeviceConfig.Location = new System.Drawing.Point(17, 111);
             this.rbtDeviceConfig.Name = "rbtDeviceConfig";
             this.rbtDeviceConfig.Size = new System.Drawing.Size(143, 17);
             this.rbtDeviceConfig.TabIndex = 3;
@@ -323,6 +325,17 @@ namespace SMTLSoftwareTools
             this.btExit.UseVisualStyleBackColor = true;
             this.btExit.Click += new System.EventHandler(this.btExit_Click);
             // 
+            // rbtAutoCalibration
+            // 
+            this.rbtAutoCalibration.AutoSize = true;
+            this.rbtAutoCalibration.Location = new System.Drawing.Point(17, 72);
+            this.rbtAutoCalibration.Name = "rbtAutoCalibration";
+            this.rbtAutoCalibration.Size = new System.Drawing.Size(172, 17);
+            this.rbtAutoCalibration.TabIndex = 4;
+            this.rbtAutoCalibration.TabStop = true;
+            this.rbtAutoCalibration.Text = "Автоматическая калибровка";
+            this.rbtAutoCalibration.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -373,6 +386,7 @@ namespace SMTLSoftwareTools
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button btAs01Show;
         private System.Windows.Forms.Button btAs01Calibr;
+        private System.Windows.Forms.RadioButton rbtAutoCalibration;
     }
 }
 

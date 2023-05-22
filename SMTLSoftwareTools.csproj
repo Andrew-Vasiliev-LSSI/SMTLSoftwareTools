@@ -92,6 +92,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoCalibration\Calibration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoCalibration\Calibration.Designer.cs">
+      <DependentUpon>Calibration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AutoCalibration\FlukeConnect.cs" />
+    <Compile Include="AutoCalibration\VoltageInputCalibration.cs" />
     <Compile Include="ConfigManagment\ConfigManagmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +132,9 @@
     </Compile>
     <Compile Include="SSH\SSHClient.cs" />
     <Compile Include="TCP\TcpClientClass.cs" />
+    <EmbeddedResource Include="AutoCalibration\Calibration.resx">
+      <DependentUpon>Calibration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConfigManagment\ConfigManagmentForm.resx">
       <DependentUpon>ConfigManagmentForm.cs</DependentUpon>
     </EmbeddedResource>
