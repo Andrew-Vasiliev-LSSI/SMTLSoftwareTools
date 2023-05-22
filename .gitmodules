@@ -1,0 +1,3 @@
+[submodule "aean-tools"]
+	path = aean-tools
+	url = git@github.com:rakurs-automation/aean-tools.git

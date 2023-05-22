@@ -55,6 +55,13 @@ namespace SMTLSoftwareTools.SensorConfig
             return res;
         }
 
+        // Выполнение Http запроса для перезапуска измерительного сервера
+        public async Task restartingMeasuringServer()
+        {
+            string address = "http://" + Ip + "/api/attributedata?path=Application/LPHD1.ResetSrv:Oper_ctlVal&value=true";
+            await executingGetRequest(address);
+        }
+
         // Подключение и авторизация
         public void authorization()
         {
@@ -116,3 +123,5 @@ namespace SMTLSoftwareTools.SensorConfig
         }
     }
 }
+// Перезапуск измерительного сервера
+// http://192.168.0.1/api/attributedata?path=Application/LPHD1.ResetSrv:Oper_ctlVal&value=true
