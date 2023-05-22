@@ -110,6 +110,7 @@ namespace SMTLSoftwareTools.SensorConfig
         private async void btWrite_Click(object sender, EventArgs e)
         {
             await sensorWriteRead("write");
+            await ClientSensors.restartingMeasuringServer();
         }
         #endregion
         #region Выбор датчика
