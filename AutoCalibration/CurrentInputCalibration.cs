@@ -17,7 +17,6 @@ namespace SMTLSoftwareTools.AutoCalibration
         {
             ClientCalibration = client;
             Calibrator = calibrator;
-            Calibrator.SetOperMode();
         }
 
         public new async Task prepareCalibration()

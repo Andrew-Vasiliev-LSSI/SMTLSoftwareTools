@@ -134,6 +134,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                     }
                 }
                 btStartCurrentInput.Enabled = true;
+                btRepeatVoltage.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -154,6 +155,11 @@ namespace SMTLSoftwareTools.AutoCalibration
         }
 
         private async void btStartCurrentInput_Click(object sender, EventArgs e)
+        {
+            await currentCalibration();
+        }
+
+        private async Task currentCalibration()
         {
             try
             {
@@ -196,7 +202,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             }
         }
 
-        private async void btRepeat_Click(object sender, EventArgs e)
+        private async void btVoltageRepeat_Click(object sender, EventArgs e)
         {
             dataGridViewResultVoltage.Rows.Clear();
             fillView();
