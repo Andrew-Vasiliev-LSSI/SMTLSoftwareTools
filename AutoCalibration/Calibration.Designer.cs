@@ -38,17 +38,28 @@
             this.lstPorts = new System.Windows.Forms.ComboBox();
             this.lstBaudrate = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lbInfoVoltage = new System.Windows.Forms.Label();
+            this.dataGridViewResultVoltage = new System.Windows.Forms.DataGridView();
             this.btStartVoltageInput = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dataGridViewResultCurrent = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btStartCurrentInput = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.btStartCurrentOutput = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControlCalibr.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxConnect.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultVoltage)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultCurrent)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -148,6 +159,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.lbInfoVoltage);
+            this.tabPage2.Controls.Add(this.dataGridViewResultVoltage);
             this.tabPage2.Controls.Add(this.btStartVoltageInput);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -156,6 +169,30 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Калибровка входов по напряжению";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // lbInfoVoltage
+            // 
+            this.lbInfoVoltage.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lbInfoVoltage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lbInfoVoltage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbInfoVoltage.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lbInfoVoltage.Location = new System.Drawing.Point(381, 84);
+            this.lbInfoVoltage.Name = "lbInfoVoltage";
+            this.lbInfoVoltage.Size = new System.Drawing.Size(349, 21);
+            this.lbInfoVoltage.TabIndex = 6;
+            this.lbInfoVoltage.Text = "      ";
+            // 
+            // dataGridViewResultVoltage
+            // 
+            this.dataGridViewResultVoltage.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewResultVoltage.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column4});
+            this.dataGridViewResultVoltage.Location = new System.Drawing.Point(381, 137);
+            this.dataGridViewResultVoltage.Name = "dataGridViewResultVoltage";
+            this.dataGridViewResultVoltage.Size = new System.Drawing.Size(349, 150);
+            this.dataGridViewResultVoltage.TabIndex = 1;
             // 
             // btStartVoltageInput
             // 
@@ -170,23 +207,46 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.dataGridViewResultCurrent);
             this.tabPage3.Controls.Add(this.btStartCurrentInput);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(1111, 554);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Калибровка входов по току";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // dataGridViewResultCurrent
+            // 
+            this.dataGridViewResultCurrent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewResultCurrent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4});
+            this.dataGridViewResultCurrent.Location = new System.Drawing.Point(429, 202);
+            this.dataGridViewResultCurrent.Name = "dataGridViewResultCurrent";
+            this.dataGridViewResultCurrent.Size = new System.Drawing.Size(253, 150);
+            this.dataGridViewResultCurrent.TabIndex = 2;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Коменсация в режиме тока";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Погрешность";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
             // btStartCurrentInput
             // 
             this.btStartCurrentInput.AutoSize = true;
+            this.btStartCurrentInput.Enabled = false;
             this.btStartCurrentInput.Location = new System.Drawing.Point(498, 481);
             this.btStartCurrentInput.Name = "btStartCurrentInput";
             this.btStartCurrentInput.Size = new System.Drawing.Size(115, 23);
             this.btStartCurrentInput.TabIndex = 1;
             this.btStartCurrentInput.Text = "Начать калибровку";
             this.btStartCurrentInput.UseVisualStyleBackColor = true;
+            this.btStartCurrentInput.Click += new System.EventHandler(this.btStartCurrentInput_Click);
             // 
             // tabPage4
             // 
@@ -207,6 +267,7 @@
             this.btStartCurrentOutput.TabIndex = 1;
             this.btStartCurrentOutput.Text = "Начать калибровку";
             this.btStartCurrentOutput.UseVisualStyleBackColor = true;
+            this.btStartCurrentOutput.Click += new System.EventHandler(this.btStartCurrentOutput_Click);
             // 
             // btClose
             // 
@@ -217,6 +278,21 @@
             this.btClose.Text = "Выход";
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Калибровочный коэффициент";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Смещение ко входу. В";
+            this.Column2.Name = "Column2";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Погрешность. мВ";
+            this.Column4.Name = "Column4";
             // 
             // Calibration
             // 
@@ -233,8 +309,10 @@
             this.groupBoxConnect.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultVoltage)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultCurrent)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
@@ -259,5 +337,14 @@
         private System.Windows.Forms.Button btStartVoltageInput;
         private System.Windows.Forms.Button btStartCurrentInput;
         private System.Windows.Forms.Button btStartCurrentOutput;
+        private System.Windows.Forms.DataGridView dataGridViewResultVoltage;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.DataGridView dataGridViewResultCurrent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.Label lbInfoVoltage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
     }
 }

@@ -16,38 +16,40 @@ namespace SMTLSoftwareTools.AutoCalibration
 {
     internal class VoltageInputCalibration
     {
-        private static HttpClientClass ClientCalibration;
-        private static FlukeConnect Calibrator;
-        private const int numberOfChannels = 4;
-        private const int cycleDelay = 500;
-        private const int cycleCount = 5;
-        private const double UinpMin = 1000;
-        private const double UinpMax = 12000;
+        public Label LabelInfo { get; set; }
 
-        private  double[] Umin = new double[numberOfChannels];
-        private double[] Umax = new double[numberOfChannels];
+        public static HttpClientClass ClientCalibration;
+        public static FlukeConnect Calibrator;
 
-        int[] coefficients = new int[numberOfChannels];
-        double[] offsets = new double[numberOfChannels];
-        double[] measureLow = new double[numberOfChannels];
-        double[] measureHigh = new double[numberOfChannels];
+        public const double InpMinValue = 1;
+        public const double InpMaxValue = 12;
+
+        public double[] MinValue = new double[numberOfChannels];
+        public double[] MaxValue = new double[numberOfChannels];
+
+        public int[] coefficients = new int[numberOfChannels];
+        public double[] offsets = new double[numberOfChannels];
+        //public double[] measureLow = new double[numberOfChannels];
+        //public double[] measureHigh = new double[numberOfChannels];
+
+        public const int numberOfChannels = 4;
+        public const int cycleDelay = 1000;
+        public const int cycleCount = 10;
+
         public VoltageInputCalibration(HttpClientClass client, FlukeConnect calibrator)
         {
             ClientCalibration = client;
             Calibrator = calibrator;
-            Calibrator.SetOperMode();
         }
         public async Task prepareCalibration()
         {
             string request, chNum;
-
-            for (int ch = 0; ch < numberOfChannels; ch++)
+            try
             {
-                chNum = (ch + 1).ToString();
-
-                try
+                for (int ch = 0; ch < numberOfChannels; ch++)
                 {
-                    request = "SCVB" + chNum + "." + "InputMultiplier" + "&value=" + "0.001"; 
+                    chNum = (ch + 1).ToString();
+                    request = "SCVB" + chNum + "." + "InputMultiplier" + "&value=" + "0.001";
                     await ClientCalibration.parameterExecutedRequest(request);
                     request = "SCVB" + chNum + "." + "CalibrKoef" + "&value=" + "1000";
                     await ClientCalibration.parameterExecutedRequest(request);
@@ -56,87 +58,109 @@ namespace SMTLSoftwareTools.AutoCalibration
                     request = "SCVB" + chNum + "." + "CompensationCurrent" + "&value=" + "1";
                     await ClientCalibration.parameterExecutedRequest(request);
                     request = "SCVB" + chNum + "." + "ChannelType" + "&value=" + "0";
-                    await ClientCalibration.parameterExecutedRequest(request);                   
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    await ClientCalibration.parameterExecutedRequest(request);
+
+                    await restartAs02Server();
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private async Task restartAs02Server()
+        {
+            LabelInfo.Text = "Перезапуск измерительного сервера";
+            await ClientCalibration.restartingMeasuringServer();
+            System.Threading.Thread.Sleep(10000);
         }
 
         public async Task<int[]> calculateCoefficients()
         {
-            double[] UminTemp[] = new double[numberOfChannels];
-            double[] UmaxTemp[] = new double[numberOfChannels];
-            measureLow = await lowerMeasurement();
-            measureHigh = await upperMeasurement();
-            for (int i = 0; i < cycleCount; i++)
-            {
-                UminTemp[i] += measureLow[i];
-                UmaxTemp[i] += measureHigh[i];
-            }
+            MinValue = await valueMeasurement(InpMinValue, FlukeUnit.V);
+            MaxValue = await valueMeasurement(InpMaxValue, FlukeUnit.V);
 
             for (int i = 0; i < numberOfChannels; i++)
             {
-                UminTemp[i] /= cycleCount;
-                UmaxTemp[i] /= cycleCount;
-                Umin[i] = UminTemp[i];
-                Umax[i] = UmaxTemp[i];
-                coefficients[i] = (int)(((UinpMax - UinpMin) / (Umax[i] - Umin[i])) * 1000);
+                coefficients[i] = (int)(((InpMaxValue - InpMinValue) / (MaxValue[i] - MinValue[i])) * 1000);
             }
             return coefficients;
         }
 
         public double[] calculateOffsets()
         {
-            for (int i =0; i < numberOfChannels; i++)
+            for (int i = 0; i < numberOfChannels; i++)
             {
-                offsets[i] =UinpMax -((coefficients[i] * Umax[i]) / 1000);  
+                offsets[i] = InpMaxValue - ((coefficients[i] * MaxValue[i]) / 1000);
             }
             return offsets;
         }
-        private async Task<double[]> lowerMeasurement()
+
+        public async Task settingCoefficients()
         {
-            double[] lower = new double[numberOfChannels];
+            string requestCoeff, requestOffset, chNum, val;
             try
             {
-                Calibrator.SetOutput(UinpMin, FlukeUnit.mV);
-                System.Threading.Thread.Sleep(5000);
-                for (int i = 0; i < numberOfChannels; i++)
+
+                for (int ch = 0; ch < numberOfChannels; ch++)
                 {
-                    for (int j = 0; j < cycleCount; j++)
-                    {
-                        string param = "SCVB" + (i + 1).ToString() + ".VbrRawVal";
-                        lower[j] = await getResponse(param);
-                        System.Threading.Thread.Sleep(cycleDelay);
-                    }
+                    chNum = (ch + 1).ToString();
+
+                    val = coefficients[ch].ToString();
+                    requestCoeff = "SCVB" + chNum + "." + "CalibrKoef" + "&value=" + val;
+                    await ClientCalibration.parameterExecutedRequest(requestCoeff);
+
+                    val = offsets[ch].ToString();
+                    requestOffset = "SCVB" + chNum + "." + "InputOffset" + "&value=" + val;
+                    await ClientCalibration.parameterExecutedRequest(requestOffset);
+
+
                 }
+                await restartAs02Server();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return null;
             }
-
-            return lower;
         }
 
-        private async Task<double[]> upperMeasurement()
+
+        public async Task<double[]> errorCalculation()
         {
-            double[] upper = new double[numberOfChannels];
+            double[] errors = new double[numberOfChannels];
+
+            MaxValue = await valueMeasurement(InpMaxValue, FlukeUnit.V);
+
+            for (int ch = 0; ch < numberOfChannels; ch++)
+            {
+                errors[ch] = Math.Abs(InpMaxValue - MaxValue[ch]) * 1000;
+            }
+
+            return errors;
+        }
+
+
+        private async Task<double[]> valueMeasurement(double value, FlukeUnit unit)
+        {
+            double[] result = new double[numberOfChannels];
+            double temp = 0;
             try
             {
-                Calibrator.SetOutput(UinpMax, FlukeUnit.mV);
-                System.Threading.Thread.Sleep(5000);
+                calibratorOutputSet(value, unit);
+
                 for (int i = 0; i < numberOfChannels; i++)
                 {
                     for (int j = 0; j < cycleCount; j++)
                     {
                         string param = "SCVB" + (i + 1).ToString() + ".VbrRawVal";
-                        upper[j] = await getResponse(param);
+                        temp += await getResponse(param);
                         System.Threading.Thread.Sleep(cycleDelay);
+                        LabelInfo.Text = "Измерение заначения " + value.ToString() + ". канал " + (i + 1).ToString() + " измерение:" + (j + 1).ToString();
                     }
+                    result[i] = temp / cycleCount;
+                    temp = 0;
                 }
             }
             catch (Exception ex)
@@ -145,10 +169,19 @@ namespace SMTLSoftwareTools.AutoCalibration
                 return null;
             }
 
-            return upper;
+            LabelInfo.Text = "";
+            return result;
         }
 
-        private async Task<double> getResponse(string param)
+        private void calibratorOutputSet(double value, FlukeUnit unit)
+        {
+            LabelInfo.Text = "Установка выходного значения калибратора";
+            Calibrator.SetOutput(value, unit);
+            System.Threading.Thread.Sleep(5000);
+        }
+
+
+        public async Task<double> getResponse(string param)
         {
             string temp = await ClientCalibration.parameterExecutedRequest(param);
             double result = responseToDouble(temp);
@@ -162,7 +195,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             CultureInfo cultureInfoOrig = System.Threading.Thread.CurrentThread.CurrentUICulture;
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
-            double result; 
+            double result;
             if (double.TryParse(var, out result))
             {
                 //Возвращаем локализацию, чтобы ничего не сломать
