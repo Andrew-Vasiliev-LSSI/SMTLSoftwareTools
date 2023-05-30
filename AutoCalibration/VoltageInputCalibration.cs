@@ -70,13 +70,19 @@ namespace SMTLSoftwareTools.AutoCalibration
 
         }
 
-        private async Task restartAs02Server()
+        public async Task restartAs02Server()
         {
-            LabelInfo.Text = "Перезапуск измерительного сервера";
+            LabelInfo.Text = "Перезапуск измерительного сервера. (5 сек.)";
             await ClientCalibration.restartingMeasuringServer();
-            System.Threading.Thread.Sleep(10000);
+            await Task.Delay(5000);
         }
 
+        public async Task calibratorOutputSet(double value, FlukeUnit unit)
+        {
+            LabelInfo.Text = "Установка выходного значения калибратора (20 сек.)";
+            Calibrator.SetOutput(value, unit);
+            await Task.Delay(20000);
+        }
         public async Task<int[]> calculateCoefficients()
         {
             MinValue = await valueMeasurement(InpMinValue, FlukeUnit.V);
@@ -100,6 +106,9 @@ namespace SMTLSoftwareTools.AutoCalibration
 
         public async Task settingCoefficients()
         {
+            CultureInfo cultureInfoOrig = System.Threading.Thread.CurrentThread.CurrentUICulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
             string requestCoeff, requestOffset, chNum, val;
             try
             {
@@ -115,13 +124,13 @@ namespace SMTLSoftwareTools.AutoCalibration
                     val = offsets[ch].ToString();
                     requestOffset = "SCVB" + chNum + "." + "InputOffset" + "&value=" + val;
                     await ClientCalibration.parameterExecutedRequest(requestOffset);
-
-
                 }
+                System.Threading.Thread.CurrentThread.CurrentUICulture = cultureInfoOrig;
                 await restartAs02Server();
             }
             catch (Exception ex)
             {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = cultureInfoOrig;
                 MessageBox.Show(ex.Message);
             }
         }
@@ -148,7 +157,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             double temp = 0;
             try
             {
-                calibratorOutputSet(value, unit);
+                await calibratorOutputSet(value, unit);
 
                 for (int i = 0; i < numberOfChannels; i++)
                 {
@@ -156,7 +165,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                     {
                         string param = "SCVB" + (i + 1).ToString() + ".VbrRawVal";
                         temp += await getResponse(param);
-                        System.Threading.Thread.Sleep(cycleDelay);
+                        await Task.Delay(cycleDelay);
                         LabelInfo.Text = "Измерение заначения " + value.ToString() + ". канал " + (i + 1).ToString() + " измерение:" + (j + 1).ToString();
                     }
                     result[i] = temp / cycleCount;
@@ -172,14 +181,6 @@ namespace SMTLSoftwareTools.AutoCalibration
             LabelInfo.Text = "";
             return result;
         }
-
-        private void calibratorOutputSet(double value, FlukeUnit unit)
-        {
-            LabelInfo.Text = "Установка выходного значения калибратора";
-            Calibrator.SetOutput(value, unit);
-            System.Threading.Thread.Sleep(5000);
-        }
-
 
         public async Task<double> getResponse(string param)
         {

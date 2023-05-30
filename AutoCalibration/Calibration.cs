@@ -28,6 +28,11 @@ namespace SMTLSoftwareTools.AutoCalibration
             InitializeComponent();
             HttpClientCalibration = client;
             LoadListboxes();
+            fillView();
+        }
+
+        private void fillView()
+        {
             for (int i = 0; i < 4; i++)
             {
                 dataGridViewResultVoltage.Rows.Add();
@@ -96,6 +101,11 @@ namespace SMTLSoftwareTools.AutoCalibration
 
         private async void btStartVoltageInput_Click(object sender, EventArgs e)
         {
+            await voltageCalibration();
+        }
+
+        private async Task voltageCalibration()
+        {
             try
             {
                 Calibrator.SetOperMode();
@@ -104,7 +114,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                 int[] coefficients = await voltageInputCalibration.calculateCoefficients();
                 double[] offsets = voltageInputCalibration.calculateOffsets();
                 await voltageInputCalibration.settingCoefficients();
-                double[] errors = await voltageInputCalibration.errorCalculation();             
+                double[] errors = await voltageInputCalibration.errorCalculation();
 
                 showResults(dataGridViewResultVoltage, 0, coefficients);
                 showResults(dataGridViewResultVoltage, 1, offsets);
@@ -184,6 +194,14 @@ namespace SMTLSoftwareTools.AutoCalibration
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private async void btRepeat_Click(object sender, EventArgs e)
+        {
+            dataGridViewResultVoltage.Rows.Clear();
+            fillView();
+            await voltageCalibration();
+
         }
     }
 }

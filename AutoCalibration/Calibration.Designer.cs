@@ -53,6 +53,7 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btRepeat = new System.Windows.Forms.Button();
             this.tabControlCalibr.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxConnect.SuspendLayout();
@@ -159,6 +160,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btRepeat);
             this.tabPage2.Controls.Add(this.lbInfoVoltage);
             this.tabPage2.Controls.Add(this.dataGridViewResultVoltage);
             this.tabPage2.Controls.Add(this.btStartVoltageInput);
@@ -199,7 +201,7 @@
             this.btStartVoltageInput.AutoSize = true;
             this.btStartVoltageInput.Location = new System.Drawing.Point(498, 481);
             this.btStartVoltageInput.Name = "btStartVoltageInput";
-            this.btStartVoltageInput.Size = new System.Drawing.Size(115, 23);
+            this.btStartVoltageInput.Size = new System.Drawing.Size(133, 23);
             this.btStartVoltageInput.TabIndex = 0;
             this.btStartVoltageInput.Text = "Начать калибровку";
             this.btStartVoltageInput.UseVisualStyleBackColor = true;
@@ -294,6 +296,17 @@
             this.Column4.HeaderText = "Погрешность. мВ";
             this.Column4.Name = "Column4";
             // 
+            // btRepeat
+            // 
+            this.btRepeat.AutoSize = true;
+            this.btRepeat.Location = new System.Drawing.Point(498, 422);
+            this.btRepeat.Name = "btRepeat";
+            this.btRepeat.Size = new System.Drawing.Size(133, 23);
+            this.btRepeat.TabIndex = 7;
+            this.btRepeat.Text = "Повторить калибровку";
+            this.btRepeat.UseVisualStyleBackColor = true;
+            this.btRepeat.Click += new System.EventHandler(this.btRepeat_Click);
+            // 
             // Calibration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -346,5 +359,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.Button btRepeat;
     }
 }
