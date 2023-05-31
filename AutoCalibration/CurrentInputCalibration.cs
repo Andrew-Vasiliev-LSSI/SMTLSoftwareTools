@@ -2,6 +2,7 @@
 using SMTLSoftwareTools.SensorConfig;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace SMTLSoftwareTools.AutoCalibration
 {
     internal class CurrentInputCalibration : VoltageInputCalibration
     {
-        public new const double InpMaxValue = 12000;
+        public new const double InpMaxValue = 12;
         public double[] compensations = new double[numberOfChannels];
         public CurrentInputCalibration(HttpClientClass client, FlukeConnect calibrator) : base(client, calibrator)
         {
@@ -37,8 +38,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                     request = "SCVB" + chNum + "." + "ChannelType" + "&value=" + "1";
                     await ClientCalibration.parameterExecutedRequest(request);
 
-                    await ClientCalibration.restartingMeasuringServer();
-                    System.Threading.Thread.Sleep(5000);
+                    await restartAs02Server();
                 }
                 catch (Exception ex)
                 {
@@ -47,85 +47,57 @@ namespace SMTLSoftwareTools.AutoCalibration
             }
         }
 
-        public async Task<double[]> calculateCompensations()
+        public async Task settingCompenstaions()
         {
-            calibratorSettings(InpMaxValue);
-            System.Threading.Thread.Sleep(5000);
+            CultureInfo cultureInfoOrig = System.Threading.Thread.CurrentThread.CurrentUICulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
-            await measureValue();
-
-            for (int i = 0; i < numberOfChannels; i++)
-            {
-                compensations[i] = MaxValue[i] / InpMaxValue;
-            }
- 
-            return compensations;
-        }
-
-        private async Task measureValue()
-        {
-            double[] upper = new double[numberOfChannels];
-            double[] ImaxTemp = new double[numberOfChannels];
-
+            string request, chNum, val;
             try
             {
-                calibratorSettings(InpMaxValue);
-                System.Threading.Thread.Sleep(5000);
 
-                for (int i = 0; i < numberOfChannels; i++)
+                for (int ch = 0; ch < numberOfChannels; ch++)
                 {
-                    for (int j = 0; j < cycleCount; j++)
-                    {
-                        string param = "SCVB" + (i + 1).ToString() + ".VbrRawVal";
-                        upper[j] = await getResponse(param);
-                        System.Threading.Thread.Sleep(cycleDelay);
-                    }
-                }
-                for (int i = 0; i < cycleCount; i++)
-                {
-                    ImaxTemp[i] += upper[i];
-                }
+                    chNum = (ch + 1).ToString();
 
-                for (int i = 0; i < numberOfChannels; i++)
-                {
-                    ImaxTemp[i] /= cycleCount;
-                    MaxValue[i] = ImaxTemp[i];
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public async Task settingCompensations()
-        {
-            string request, chNum, val;
-
-            for (int ch = 0; ch < numberOfChannels; ch++)
-            {
-                chNum = (ch + 1).ToString();
-
-                try
-                {
                     val = compensations[ch].ToString();
                     request = "SCVB" + chNum + "." + "CompensationCurrent" + "&value=" + val;
                     await ClientCalibration.parameterExecutedRequest(request);
-
-                    await ClientCalibration.restartingMeasuringServer();
-                    System.Threading.Thread.Sleep(5000);
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                System.Threading.Thread.CurrentThread.CurrentUICulture = cultureInfoOrig;
+                await restartAs02Server();
+            }
+            catch (Exception ex)
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = cultureInfoOrig;
+                MessageBox.Show(ex.Message);
             }
         }
-
-        public new void calibratorSettings(double value)
+        public async Task<double[]> calculateCompensations()
         {
-            Calibrator.SetOutput(value, FlukeUnit.μA);
+            MaxValue = await valueMeasurement(InpMaxValue, FlukeUnit.mA);
+
+            for (int i = 0; i < numberOfChannels; i++)
+            {
+                compensations[i] = (InpMaxValue * 1000) / MaxValue[i]; 
+            }
+             return compensations;
         }
+
+        public new async Task<double[]> errorCalculation()
+        {
+            double[] errors = new double[numberOfChannels];
+
+            MaxValue = await valueMeasurement(InpMaxValue, FlukeUnit.mA);
+
+            for (int ch = 0; ch < numberOfChannels; ch++)
+            {
+                errors[ch] = Math.Abs(InpMaxValue * 1000 - MaxValue[ch]);
+            }
+
+            return errors;
+        }
+
 
 
     }

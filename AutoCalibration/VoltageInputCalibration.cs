@@ -81,6 +81,7 @@ namespace SMTLSoftwareTools.AutoCalibration
         {
             LabelInfo.Text = "Установка выходного значения калибратора (20 сек.)";
             Calibrator.SetOutput(value, unit);
+            Calibrator.SetOperMode();
             await Task.Delay(20000);
         }
         public async Task<int[]> calculateCoefficients()
@@ -151,7 +152,7 @@ namespace SMTLSoftwareTools.AutoCalibration
         }
 
 
-        private async Task<double[]> valueMeasurement(double value, FlukeUnit unit)
+        public async Task<double[]> valueMeasurement(double value, FlukeUnit unit)
         {
             double[] result = new double[numberOfChannels];
             double temp = 0;

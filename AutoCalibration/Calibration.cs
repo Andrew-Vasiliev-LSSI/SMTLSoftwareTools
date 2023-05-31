@@ -18,7 +18,7 @@ using System.Linq.Expressions;
 namespace SMTLSoftwareTools.AutoCalibration
 {
     public partial class Calibration : Form
-    {
+    {                             
         private static HttpClientClass HttpClientCalibration;
         private static FlukeConnect Calibrator;
         VoltageInputCalibration voltageInputCalibration;
@@ -28,15 +28,15 @@ namespace SMTLSoftwareTools.AutoCalibration
             InitializeComponent();
             HttpClientCalibration = client;
             LoadListboxes();
-            fillView();
+            fillView(dataGridViewResultVoltage);
+            fillView(dataGridViewResultCurrent);
         }
 
-        private void fillView()
+        private void fillView(DataGridView view)
         {
             for (int i = 0; i < 4; i++)
             {
-                dataGridViewResultVoltage.Rows.Add();
-                dataGridViewResultCurrent.Rows.Add();
+                view.Rows.Add();
             }
         }
 
@@ -83,7 +83,8 @@ namespace SMTLSoftwareTools.AutoCalibration
                 string info = Calibrator.GetInfoDevice();
                 voltageInputCalibration = new VoltageInputCalibration(HttpClientCalibration, Calibrator);
                 voltageInputCalibration.LabelInfo = this.lbInfoVoltage;
-                //currentInputCalibration = new CurrentInputCalibration(HttpClientCalibration, Calibrator);
+                currentInputCalibration = new CurrentInputCalibration(HttpClientCalibration, Calibrator);
+                currentInputCalibration.LabelInfo = this.lbInfoCurrent;
 
                 lbInfo.Text = info;
             }
@@ -120,25 +121,30 @@ namespace SMTLSoftwareTools.AutoCalibration
                 showResults(dataGridViewResultVoltage, 1, offsets);
                 showResults(dataGridViewResultVoltage, 2, errors);
 
-                for (int i = 0; i < errors.Length; i++)
-                {
-                    DataGridViewCell cell = this.dataGridViewResultVoltage.Rows[i].Cells[2];
-                    if (errors[i] > 20)
-                    {
-                        cell.Style.BackColor = Color.Red;
-                    }
-                    else
-                    {
-                        cell.Style.BackColor = Color.Green;
-
-                    }
-                }
+                errorCheck(errors, dataGridViewResultVoltage, 2, 20);
                 btStartCurrentInput.Enabled = true;
                 btRepeatVoltage.Enabled = true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void errorCheck(double[] errors, DataGridView view, int column, double threshold)
+        {
+            for (int i = 0; i < errors.Length; i++)
+            {
+                DataGridViewCell cell = view.Rows[i].Cells[column];
+                if (errors[i] > threshold)
+                {
+                    cell.Style.BackColor = Color.Red;
+                }
+                else
+                {
+                    cell.Style.BackColor = Color.Green;
+
+                }
             }
         }
 
@@ -163,26 +169,17 @@ namespace SMTLSoftwareTools.AutoCalibration
         {
             try
             {
+                Calibrator.SetOperMode();
                 await currentInputCalibration.prepareCalibration();
                 double[] compensations = await currentInputCalibration.calculateCompensations();
+                await currentInputCalibration.settingCompenstaions();
                 double[] errors = await currentInputCalibration.errorCalculation();
 
                 showResults(dataGridViewResultCurrent, 0, compensations);
                 showResults(dataGridViewResultCurrent, 1, errors);
 
-                for (int i = 0; i < errors.Length; i++)
-                {
-                    DataGridViewCell cell = this.dataGridViewResultCurrent.Rows[i].Cells[1];
-                    if (errors[i] > 80)
-                    {
-                        cell.Style.BackColor = Color.Red;
-                    }
-                    else
-                    {
-                        cell.Style.BackColor = Color.Green;
-
-                    }
-                }
+                errorCheck(errors, dataGridViewResultCurrent, 1, 80);
+                btRepeatCurrent.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -205,9 +202,15 @@ namespace SMTLSoftwareTools.AutoCalibration
         private async void btVoltageRepeat_Click(object sender, EventArgs e)
         {
             dataGridViewResultVoltage.Rows.Clear();
-            fillView();
+            fillView(dataGridViewResultVoltage);
             await voltageCalibration();
+        }
 
+        private async void btRepeatCurrent_Click(object sender, EventArgs e)
+        {
+            dataGridViewResultCurrent.Rows.Clear();
+            fillView(dataGridViewResultCurrent);
+            await currentCalibration();
         }
     }
 }

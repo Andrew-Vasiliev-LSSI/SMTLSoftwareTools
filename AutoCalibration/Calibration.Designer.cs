@@ -38,6 +38,7 @@
             this.lstPorts = new System.Windows.Forms.ComboBox();
             this.lstBaudrate = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.btRepeatVoltage = new System.Windows.Forms.Button();
             this.lbInfoVoltage = new System.Windows.Forms.Label();
             this.dataGridViewResultVoltage = new System.Windows.Forms.DataGridView();
@@ -47,14 +48,16 @@
             this.btStartVoltageInput = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dataGridViewResultCurrent = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btStartCurrentInput = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.btStartCurrentOutput = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbInfoCurrent = new System.Windows.Forms.Label();
+            this.btRepeatCurrent = new System.Windows.Forms.Button();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControlCalibr.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxConnect.SuspendLayout();
@@ -174,12 +177,21 @@
             this.tabPage2.Text = "Калибровка входов по напряжению";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // btRepeat
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(381, 68);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(133, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Информация о процессе";
+            // 
+            // btRepeatVoltage
             // 
             this.btRepeatVoltage.AutoSize = true;
             this.btRepeatVoltage.Enabled = false;
             this.btRepeatVoltage.Location = new System.Drawing.Point(498, 422);
-            this.btRepeatVoltage.Name = "btRepeat";
+            this.btRepeatVoltage.Name = "btRepeatVoltage";
             this.btRepeatVoltage.Size = new System.Drawing.Size(133, 23);
             this.btRepeatVoltage.TabIndex = 7;
             this.btRepeatVoltage.Text = "Повторить калибровку";
@@ -238,6 +250,9 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btRepeatCurrent);
+            this.tabPage3.Controls.Add(this.label2);
+            this.tabPage3.Controls.Add(this.lbInfoCurrent);
             this.tabPage3.Controls.Add(this.dataGridViewResultCurrent);
             this.tabPage3.Controls.Add(this.btStartCurrentInput);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -257,23 +272,12 @@
             this.dataGridViewResultCurrent.Size = new System.Drawing.Size(253, 150);
             this.dataGridViewResultCurrent.TabIndex = 2;
             // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Коменсация в режиме тока";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Погрешность";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
             // btStartCurrentInput
             // 
             this.btStartCurrentInput.AutoSize = true;
-            this.btStartCurrentInput.Enabled = false;
-            this.btStartCurrentInput.Location = new System.Drawing.Point(498, 481);
+            this.btStartCurrentInput.Location = new System.Drawing.Point(489, 481);
             this.btStartCurrentInput.Name = "btStartCurrentInput";
-            this.btStartCurrentInput.Size = new System.Drawing.Size(115, 23);
+            this.btStartCurrentInput.Size = new System.Drawing.Size(133, 23);
             this.btStartCurrentInput.TabIndex = 1;
             this.btStartCurrentInput.Text = "Начать калибровку";
             this.btStartCurrentInput.UseVisualStyleBackColor = true;
@@ -310,14 +314,48 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
-            // label1
+            // label2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(381, 68);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Информация о процессе";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(388, 109);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(133, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Информация о процессе";
+            // 
+            // lbInfoCurrent
+            // 
+            this.lbInfoCurrent.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lbInfoCurrent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lbInfoCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbInfoCurrent.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lbInfoCurrent.Location = new System.Drawing.Point(381, 125);
+            this.lbInfoCurrent.Name = "lbInfoCurrent";
+            this.lbInfoCurrent.Size = new System.Drawing.Size(349, 21);
+            this.lbInfoCurrent.TabIndex = 9;
+            this.lbInfoCurrent.Text = "      ";
+            // 
+            // btRepeatCurrent
+            // 
+            this.btRepeatCurrent.AutoSize = true;
+            this.btRepeatCurrent.Enabled = false;
+            this.btRepeatCurrent.Location = new System.Drawing.Point(489, 425);
+            this.btRepeatCurrent.Name = "btRepeatCurrent";
+            this.btRepeatCurrent.Size = new System.Drawing.Size(133, 23);
+            this.btRepeatCurrent.TabIndex = 11;
+            this.btRepeatCurrent.Text = "Повторить калибровку";
+            this.btRepeatCurrent.UseVisualStyleBackColor = true;
+            this.btRepeatCurrent.Click += new System.EventHandler(this.btRepeatCurrent_Click);
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Коменсация в режиме тока";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Погрешность мкА";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
             // Calibration
             // 
@@ -365,13 +403,16 @@
         private System.Windows.Forms.DataGridView dataGridViewResultVoltage;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.DataGridView dataGridViewResultCurrent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.Label lbInfoVoltage;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.Button btRepeatVoltage;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbInfoCurrent;
+        private System.Windows.Forms.Button btRepeatCurrent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
     }
 }
