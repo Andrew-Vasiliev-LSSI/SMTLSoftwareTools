@@ -98,6 +98,7 @@
     <Compile Include="AutoCalibration\Calibration.Designer.cs">
       <DependentUpon>Calibration.cs</DependentUpon>
     </Compile>
+    <Compile Include="AutoCalibration\CalibrationAnalogOutputs.cs" />
     <Compile Include="AutoCalibration\CurrentInputCalibration.cs" />
     <Compile Include="AutoCalibration\FlukeConnect.cs" />
     <Compile Include="AutoCalibration\VoltageInputCalibration.cs" />
