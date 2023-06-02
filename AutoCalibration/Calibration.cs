@@ -23,6 +23,7 @@ namespace SMTLSoftwareTools.AutoCalibration
         private static FlukeConnect Calibrator;
         VoltageInputCalibration voltageInputCalibration;
         CurrentInputCalibration currentInputCalibration;
+        CalibrationAnalogOutputs calibrationAnalogOutputs;
         public Calibration(HttpClientClass client)
         {
             InitializeComponent();
@@ -85,6 +86,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                 voltageInputCalibration.LabelInfo = this.lbInfoVoltage;
                 currentInputCalibration = new CurrentInputCalibration(HttpClientCalibration, Calibrator);
                 currentInputCalibration.LabelInfo = this.lbInfoCurrent;
+                calibrationAnalogOutputs = new CalibrationAnalogOutputs(HttpClientCalibration, Calibrator);
 
                 lbInfo.Text = info;
             }
@@ -187,11 +189,12 @@ namespace SMTLSoftwareTools.AutoCalibration
             }
         }
 
-        private void btStartCurrentOutput_Click(object sender, EventArgs e)
+        private async void btStartCurrentOutput_Click(object sender, EventArgs e)
         {
             try
             {
-
+                await calibrationAnalogOutputs.prepareCalibration(1);
+                await calibrationAnalogOutputs.calibrations(1);
             }
             catch (Exception ex)
             {
