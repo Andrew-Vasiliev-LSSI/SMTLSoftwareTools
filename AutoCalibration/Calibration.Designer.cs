@@ -47,17 +47,31 @@
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btStartVoltageInput = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btRepeatCurrent = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbInfoCurrent = new System.Windows.Forms.Label();
             this.dataGridViewResultCurrent = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btStartCurrentInput = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.dataGridViewResultOutput4 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewResultOutput3 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewResultOutput2 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lbInfoOutput = new System.Windows.Forms.Label();
+            this.dataGridViewResultOutput1 = new System.Windows.Forms.DataGridView();
+            this.prameter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btStartCurrentOutput = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lbInfoCurrent = new System.Windows.Forms.Label();
-            this.btRepeatCurrent = new System.Windows.Forms.Button();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControlCalibr.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxConnect.SuspendLayout();
@@ -66,6 +80,10 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultCurrent)).BeginInit();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultOutput4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultOutput3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultOutput2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultOutput1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlCalibr
@@ -74,7 +92,7 @@
             this.tabControlCalibr.Controls.Add(this.tabPage2);
             this.tabControlCalibr.Controls.Add(this.tabPage3);
             this.tabControlCalibr.Controls.Add(this.tabPage4);
-            this.tabControlCalibr.Location = new System.Drawing.Point(6, 1);
+            this.tabControlCalibr.Location = new System.Drawing.Point(4, 1);
             this.tabControlCalibr.Name = "tabControlCalibr";
             this.tabControlCalibr.SelectedIndex = 0;
             this.tabControlCalibr.Size = new System.Drawing.Size(1119, 580);
@@ -164,6 +182,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.BackColor = System.Drawing.Color.White;
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.btRepeatVoltage);
             this.tabPage2.Controls.Add(this.lbInfoVoltage);
@@ -175,7 +194,7 @@
             this.tabPage2.Size = new System.Drawing.Size(1111, 554);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Калибровка входов по напряжению";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage2.Enter += new System.EventHandler(this.tabPage2_Enter);
             // 
             // label1
             // 
@@ -190,7 +209,7 @@
             // 
             this.btRepeatVoltage.AutoSize = true;
             this.btRepeatVoltage.Enabled = false;
-            this.btRepeatVoltage.Location = new System.Drawing.Point(498, 422);
+            this.btRepeatVoltage.Location = new System.Drawing.Point(489, 422);
             this.btRepeatVoltage.Name = "btRepeatVoltage";
             this.btRepeatVoltage.Size = new System.Drawing.Size(133, 23);
             this.btRepeatVoltage.TabIndex = 7;
@@ -212,6 +231,11 @@
             // 
             // dataGridViewResultVoltage
             // 
+            this.dataGridViewResultVoltage.AllowUserToAddRows = false;
+            this.dataGridViewResultVoltage.AllowUserToDeleteRows = false;
+            this.dataGridViewResultVoltage.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewResultVoltage.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridViewResultVoltage.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewResultVoltage.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewResultVoltage.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -240,7 +264,7 @@
             // btStartVoltageInput
             // 
             this.btStartVoltageInput.AutoSize = true;
-            this.btStartVoltageInput.Location = new System.Drawing.Point(498, 481);
+            this.btStartVoltageInput.Location = new System.Drawing.Point(489, 481);
             this.btStartVoltageInput.Name = "btStartVoltageInput";
             this.btStartVoltageInput.Size = new System.Drawing.Size(133, 23);
             this.btStartVoltageInput.TabIndex = 0;
@@ -250,6 +274,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.BackColor = System.Drawing.Color.White;
             this.tabPage3.Controls.Add(this.btRepeatCurrent);
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.lbInfoCurrent);
@@ -260,17 +285,68 @@
             this.tabPage3.Size = new System.Drawing.Size(1111, 554);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Калибровка входов по току";
+            this.tabPage3.Enter += new System.EventHandler(this.tabPage3_Enter);
+            // 
+            // btRepeatCurrent
+            // 
+            this.btRepeatCurrent.AutoSize = true;
+            this.btRepeatCurrent.Enabled = false;
+            this.btRepeatCurrent.Location = new System.Drawing.Point(489, 422);
+            this.btRepeatCurrent.Name = "btRepeatCurrent";
+            this.btRepeatCurrent.Size = new System.Drawing.Size(133, 23);
+            this.btRepeatCurrent.TabIndex = 11;
+            this.btRepeatCurrent.Text = "Повторить калибровку";
+            this.btRepeatCurrent.UseVisualStyleBackColor = true;
+            this.btRepeatCurrent.Click += new System.EventHandler(this.btRepeatCurrent_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(378, 68);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(133, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Информация о процессе";
+            // 
+            // lbInfoCurrent
+            // 
+            this.lbInfoCurrent.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lbInfoCurrent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lbInfoCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbInfoCurrent.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lbInfoCurrent.Location = new System.Drawing.Point(381, 84);
+            this.lbInfoCurrent.Name = "lbInfoCurrent";
+            this.lbInfoCurrent.Size = new System.Drawing.Size(349, 21);
+            this.lbInfoCurrent.TabIndex = 9;
+            this.lbInfoCurrent.Text = "      ";
             // 
             // dataGridViewResultCurrent
             // 
+            this.dataGridViewResultCurrent.AllowUserToAddRows = false;
+            this.dataGridViewResultCurrent.AllowUserToDeleteRows = false;
+            this.dataGridViewResultCurrent.AllowUserToResizeColumns = false;
+            this.dataGridViewResultCurrent.AllowUserToResizeRows = false;
+            this.dataGridViewResultCurrent.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewResultCurrent.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridViewResultCurrent.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewResultCurrent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewResultCurrent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4});
-            this.dataGridViewResultCurrent.Location = new System.Drawing.Point(429, 202);
+            this.dataGridViewResultCurrent.Location = new System.Drawing.Point(429, 137);
             this.dataGridViewResultCurrent.Name = "dataGridViewResultCurrent";
             this.dataGridViewResultCurrent.Size = new System.Drawing.Size(253, 150);
             this.dataGridViewResultCurrent.TabIndex = 2;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Коменсация в режиме тока";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Погрешность мкА";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
             // btStartCurrentInput
             // 
@@ -285,6 +361,12 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.dataGridViewResultOutput4);
+            this.tabPage4.Controls.Add(this.dataGridViewResultOutput3);
+            this.tabPage4.Controls.Add(this.dataGridViewResultOutput2);
+            this.tabPage4.Controls.Add(this.label3);
+            this.tabPage4.Controls.Add(this.lbInfoOutput);
+            this.tabPage4.Controls.Add(this.dataGridViewResultOutput1);
             this.tabPage4.Controls.Add(this.btStartCurrentOutput);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -292,6 +374,130 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Калибровка токовых выходов";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // dataGridViewResultOutput4
+            // 
+            this.dataGridViewResultOutput4.AllowUserToAddRows = false;
+            this.dataGridViewResultOutput4.AllowUserToDeleteRows = false;
+            this.dataGridViewResultOutput4.AllowUserToResizeColumns = false;
+            this.dataGridViewResultOutput4.AllowUserToResizeRows = false;
+            this.dataGridViewResultOutput4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewResultOutput4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewResultOutput4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8});
+            this.dataGridViewResultOutput4.Location = new System.Drawing.Point(847, 155);
+            this.dataGridViewResultOutput4.Name = "dataGridViewResultOutput4";
+            this.dataGridViewResultOutput4.Size = new System.Drawing.Size(247, 150);
+            this.dataGridViewResultOutput4.TabIndex = 15;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "Параметр";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "Значение";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // dataGridViewResultOutput3
+            // 
+            this.dataGridViewResultOutput3.AllowUserToAddRows = false;
+            this.dataGridViewResultOutput3.AllowUserToDeleteRows = false;
+            this.dataGridViewResultOutput3.AllowUserToResizeColumns = false;
+            this.dataGridViewResultOutput3.AllowUserToResizeRows = false;
+            this.dataGridViewResultOutput3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewResultOutput3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewResultOutput3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6});
+            this.dataGridViewResultOutput3.Location = new System.Drawing.Point(570, 155);
+            this.dataGridViewResultOutput3.Name = "dataGridViewResultOutput3";
+            this.dataGridViewResultOutput3.Size = new System.Drawing.Size(247, 150);
+            this.dataGridViewResultOutput3.TabIndex = 14;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Параметр";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "Значение";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
+            // dataGridViewResultOutput2
+            // 
+            this.dataGridViewResultOutput2.AllowUserToAddRows = false;
+            this.dataGridViewResultOutput2.AllowUserToDeleteRows = false;
+            this.dataGridViewResultOutput2.AllowUserToResizeColumns = false;
+            this.dataGridViewResultOutput2.AllowUserToResizeRows = false;
+            this.dataGridViewResultOutput2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewResultOutput2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewResultOutput2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dataGridViewResultOutput2.Location = new System.Drawing.Point(293, 155);
+            this.dataGridViewResultOutput2.Name = "dataGridViewResultOutput2";
+            this.dataGridViewResultOutput2.Size = new System.Drawing.Size(247, 150);
+            this.dataGridViewResultOutput2.TabIndex = 13;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Параметр";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Значение";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(310, 68);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(133, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Информация о процессе";
+            // 
+            // lbInfoOutput
+            // 
+            this.lbInfoOutput.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lbInfoOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lbInfoOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbInfoOutput.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lbInfoOutput.Location = new System.Drawing.Point(310, 84);
+            this.lbInfoOutput.Name = "lbInfoOutput";
+            this.lbInfoOutput.Size = new System.Drawing.Size(491, 21);
+            this.lbInfoOutput.TabIndex = 11;
+            // 
+            // dataGridViewResultOutput1
+            // 
+            this.dataGridViewResultOutput1.AllowUserToAddRows = false;
+            this.dataGridViewResultOutput1.AllowUserToDeleteRows = false;
+            this.dataGridViewResultOutput1.AllowUserToResizeColumns = false;
+            this.dataGridViewResultOutput1.AllowUserToResizeRows = false;
+            this.dataGridViewResultOutput1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewResultOutput1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewResultOutput1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.prameter,
+            this.value});
+            this.dataGridViewResultOutput1.Location = new System.Drawing.Point(16, 155);
+            this.dataGridViewResultOutput1.Name = "dataGridViewResultOutput1";
+            this.dataGridViewResultOutput1.Size = new System.Drawing.Size(247, 150);
+            this.dataGridViewResultOutput1.TabIndex = 2;
+            // 
+            // prameter
+            // 
+            this.prameter.HeaderText = "Параметр";
+            this.prameter.Name = "prameter";
+            // 
+            // value
+            // 
+            this.value.HeaderText = "Значение";
+            this.value.Name = "value";
             // 
             // btStartCurrentOutput
             // 
@@ -314,49 +520,6 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(388, 109);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(133, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Информация о процессе";
-            // 
-            // lbInfoCurrent
-            // 
-            this.lbInfoCurrent.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lbInfoCurrent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lbInfoCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lbInfoCurrent.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lbInfoCurrent.Location = new System.Drawing.Point(381, 125);
-            this.lbInfoCurrent.Name = "lbInfoCurrent";
-            this.lbInfoCurrent.Size = new System.Drawing.Size(349, 21);
-            this.lbInfoCurrent.TabIndex = 9;
-            this.lbInfoCurrent.Text = "      ";
-            // 
-            // btRepeatCurrent
-            // 
-            this.btRepeatCurrent.AutoSize = true;
-            this.btRepeatCurrent.Enabled = false;
-            this.btRepeatCurrent.Location = new System.Drawing.Point(489, 425);
-            this.btRepeatCurrent.Name = "btRepeatCurrent";
-            this.btRepeatCurrent.Size = new System.Drawing.Size(133, 23);
-            this.btRepeatCurrent.TabIndex = 11;
-            this.btRepeatCurrent.Text = "Повторить калибровку";
-            this.btRepeatCurrent.UseVisualStyleBackColor = true;
-            this.btRepeatCurrent.Click += new System.EventHandler(this.btRepeatCurrent_Click);
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Коменсация в режиме тока";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Погрешность мкА";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
             // Calibration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -378,6 +541,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultCurrent)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultOutput4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultOutput3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultOutput2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultOutput1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -414,5 +581,19 @@
         private System.Windows.Forms.Button btRepeatCurrent;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridView dataGridViewResultOutput1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbInfoOutput;
+        private System.Windows.Forms.DataGridViewTextBoxColumn prameter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn value;
+        private System.Windows.Forms.DataGridView dataGridViewResultOutput4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridView dataGridViewResultOutput3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridView dataGridViewResultOutput2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     }
 }

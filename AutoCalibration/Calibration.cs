@@ -18,27 +18,32 @@ using System.Linq.Expressions;
 namespace SMTLSoftwareTools.AutoCalibration
 {
     public partial class Calibration : Form
-    {                             
+    {
+        public const int numberChannels = 4;
         private static HttpClientClass HttpClientCalibration;
-        private static FlukeConnect Calibrator;
+        private static FlukeConnect Calibrator = new FlukeConnect();
         VoltageInputCalibration voltageInputCalibration;
         CurrentInputCalibration currentInputCalibration;
         CalibrationAnalogOutputs calibrationAnalogOutputs;
+        
+        DataGridView[] viewArray = new DataGridView[4];
         public Calibration(HttpClientClass client)
         {
             InitializeComponent();
             HttpClientCalibration = client;
             LoadListboxes();
-            fillView(dataGridViewResultVoltage);
-            fillView(dataGridViewResultCurrent);
-        }
+            dataGridViewResultVoltage.RowCount = numberChannels;
+            dataGridViewResultCurrent.RowCount = numberChannels;
 
-        private void fillView(DataGridView view)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                view.Rows.Add();
-            }
+            viewArray[0] = dataGridViewResultOutput1;
+            viewArray[1] = dataGridViewResultOutput2;
+            viewArray[2] = dataGridViewResultOutput3;
+            viewArray[3] = dataGridViewResultOutput4;
+ 
+            disableControlsPage(1);
+            disableControlsPage(2);
+            disableControlsPage(3);
+ 
         }
 
         private void LoadListboxes()
@@ -72,13 +77,30 @@ namespace SMTLSoftwareTools.AutoCalibration
             }
         }
 
+        private void disableControlsPage(int indexPage)
+        {
+            foreach (Control control in tabControlCalibr.TabPages[indexPage].Controls)
+            {
+                control.Enabled = false;
+            }
+        }
+
+        private void enableControlsPage(int indexPage)
+        {
+            foreach (Control control in tabControlCalibr.TabPages[indexPage].Controls)
+            {
+                control.Enabled = true;
+            }
+        }
+
+
         private void btConnect_Click(object sender, EventArgs e)
         {
             try
             {
-                Calibrator = new FlukeConnect();
                 string port = lstPorts.SelectedItem as string;
                 int speed = Int32.Parse(lstBaudrate.SelectedItem as string);
+                Calibrator.ClosePort();
                 Calibrator.BaudRate = speed;
                 Calibrator.Initialize(port);
                 string info = Calibrator.GetInfoDevice();
@@ -87,6 +109,10 @@ namespace SMTLSoftwareTools.AutoCalibration
                 currentInputCalibration = new CurrentInputCalibration(HttpClientCalibration, Calibrator);
                 currentInputCalibration.LabelInfo = this.lbInfoCurrent;
                 calibrationAnalogOutputs = new CalibrationAnalogOutputs(HttpClientCalibration, Calibrator);
+                calibrationAnalogOutputs.LabelInfo = this.lbInfoOutput;
+                calibrationAnalogOutputs.ViewArray = this.viewArray;
+                enableControlsPage(1);
+                enableControlsPage(3);
 
                 lbInfo.Text = info;
             }
@@ -124,7 +150,6 @@ namespace SMTLSoftwareTools.AutoCalibration
                 showResults(dataGridViewResultVoltage, 2, errors);
 
                 errorCheck(errors, dataGridViewResultVoltage, 2, 20);
-                btStartCurrentInput.Enabled = true;
                 btRepeatVoltage.Enabled = true;
             }
             catch (Exception ex)
@@ -193,8 +218,57 @@ namespace SMTLSoftwareTools.AutoCalibration
         {
             try
             {
-                await calibrationAnalogOutputs.prepareCalibration(1);
-                await calibrationAnalogOutputs.calibrations(1);
+                int ch = 1;
+                bool repeat = false;
+                await calibrationAnalogOutputs.prepareCalibration();
+
+                do
+                {
+                    DialogResult result = MessageBox.Show("Подключи аналоговый выход " + ch.ToString() + " к входу калибратора", "Переключение входов", MessageBoxButtons.OKCancel);
+                    if (result == DialogResult.OK)
+                    {
+                        bool test = calibrationAnalogOutputs.switchingTest(ch);
+                        if (test == true)
+                        {
+                            double error = await calibrationAnalogOutputs.calibrations(ch);
+                            viewArray[ch - 1].Rows.Add("Погрешность мкА", error);
+                            if (error <= 20.0)
+                            {
+                                viewArray[ch - 1].Rows[4].Cells[1].Style.BackColor = Color.Green;
+                                repeat = false;
+                            }
+                            else
+                            {
+                                viewArray[ch - 1].Rows[4].Cells[1].Style.BackColor = Color.Red;
+                                repeat = true; 
+                            }
+
+                            if (repeat)
+                            {
+                                result = MessageBox.Show("Повторить калибровку выхода " + ch.ToString() + " ?", "Повторная калибровка", MessageBoxButtons.OKCancel);
+                                if (result == DialogResult.OK)
+                                {
+                                   await calibrationAnalogOutputs.zeroCurrentSetting(ch);
+                                }
+                                else if (result == DialogResult.Cancel)
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                ch++;
+                            }
+ 
+                        }
+                    }
+                    else if (result == DialogResult.Cancel)
+                    {
+                        break;
+                    }
+                } while(ch <= numberChannels);
+
+                lbInfoOutput.Text = "Калибровка всех аналоговых выходов завершена";
             }
             catch (Exception ex)
             {
@@ -205,15 +279,25 @@ namespace SMTLSoftwareTools.AutoCalibration
         private async void btVoltageRepeat_Click(object sender, EventArgs e)
         {
             dataGridViewResultVoltage.Rows.Clear();
-            fillView(dataGridViewResultVoltage);
+            dataGridViewResultVoltage.RowCount = 4;
             await voltageCalibration();
         }
 
         private async void btRepeatCurrent_Click(object sender, EventArgs e)
         {
             dataGridViewResultCurrent.Rows.Clear();
-            fillView(dataGridViewResultCurrent);
+            dataGridViewResultCurrent.RowCount = 4;
             await currentCalibration();
+        }
+
+        private void tabPage2_Enter(object sender, EventArgs e)
+        {
+            btRepeatVoltage.Enabled = false;
+        }
+
+        private void tabPage3_Enter(object sender, EventArgs e)
+        {
+            btRepeatCurrent.Enabled = false;
         }
     }
 }
