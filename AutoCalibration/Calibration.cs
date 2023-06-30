@@ -227,7 +227,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                     DialogResult result = MessageBox.Show("Подключи аналоговый выход " + ch.ToString() + " к входу калибратора", "Переключение входов", MessageBoxButtons.OKCancel);
                     if (result == DialogResult.OK)
                     {
-                        bool test = calibrationAnalogOutputs.switchingTest(ch);
+                        bool test = calibrationAnalogOutputs.switchingTest();
                         if (test == true)
                         {
                             double error = await calibrationAnalogOutputs.calibrations(ch);

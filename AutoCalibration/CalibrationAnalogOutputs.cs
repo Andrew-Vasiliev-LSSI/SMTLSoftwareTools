@@ -71,7 +71,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             request = "GGIO1." + "AnSetOut" + ch + ":" + "Oper_ctlVal_f&value=" + initValue.ToString();
             await executeRequest(request);
         }
-        public bool switchingTest(int ch)
+        public bool switchingTest()
         {
             bool check = true;
             double value;
