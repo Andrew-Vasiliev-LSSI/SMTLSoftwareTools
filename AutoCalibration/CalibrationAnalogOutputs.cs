@@ -36,8 +36,6 @@ namespace SMTLSoftwareTools.AutoCalibration
         public async Task prepareCalibration()
         {
             string request;
-
-          
             try
             {
                 Calibrator.ActiveLoopPower(true);
@@ -121,7 +119,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                 await executeRequest(request);
                 ViewArray[ch - 1].Rows.Add("Imax", maxOutput.ToString());
 
-                double error = await errorCalculation(ch);
+                double error = await errorCalculation(ch, true);
                 //Возвращаем локализацию, чтобы ничего не сломать
                 System.Threading.Thread.CurrentThread.CurrentUICulture = cultureInfoOrig;
                 return error;
@@ -135,16 +133,21 @@ namespace SMTLSoftwareTools.AutoCalibration
 
 
 
-        public async Task<double> errorCalculation(int ch)
+        public async Task<double> errorCalculation(int ch, bool show)
         {
             double result, value;
             string chNum = ch.ToString();
+
+            Calibrator.ActiveLoopPower(true);
             string request = "GGIO1." + "AnSetOut" + chNum + ":" + "Oper_ctlVal_f&value=" + currentTestValue.ToString();
             await executeRequest(request);
             string message = "Измерение выходного тока при установленом токе" + currentTestValue.ToString() + " мА." + " Выход " + chNum.ToString() + " измерение: ";
             value = await measureValue(message);
             result = Math.Abs(currentTestValue - value) * 1000;
-            LabelInfo.Text = "Калибровка выхода " + chNum.ToString() + " закончена";
+            if (show)
+                LabelInfo.Text = "Калибровка выхода " + chNum.ToString() + " закончена";
+            else
+                LabelInfo.Text = "Проверка погрешности выхода " + chNum.ToString() + " закончена";
             return result;
         }
 

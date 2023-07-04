@@ -30,7 +30,7 @@ namespace SMTLSoftwareTools.AutoCalibration
 
                 try
                 {
-                    request = "SCVB" + chNum + "." + "InputMultiplier" + "&value=" + "4";
+                    request = "SCVB" + chNum + "." + "InputMultiplier" + "&value=" + "0.004";
                     await ClientCalibration.parameterExecutedRequest(request);
                     await ClientCalibration.parameterExecutedRequest(request);
                     request = "SCVB" + chNum + "." + "CompensationCurrent" + "&value=" + "1";
@@ -87,16 +87,69 @@ namespace SMTLSoftwareTools.AutoCalibration
         public new async Task<double[]> errorCalculation()
         {
             double[] errors = new double[numberOfChannels];
+            string request, chNum;
 
-            MaxValue = await valueMeasurement(InpMaxValue, FlukeUnit.mA);
-
-            for (int ch = 0; ch < numberOfChannels; ch++)
+            try
             {
-                errors[ch] = Math.Abs(InpMaxValue * 1000 - MaxValue[ch]);
+                for (int ch = 0; ch <= numberOfChannels; ch++)
+                {
+                    chNum = (ch + 1).ToString();
+                    request = "SCVB" + chNum + "." + "InputMultiplier" + "&value=" + "0.004";
+                    await ClientCalibration.parameterExecutedRequest(request);
+                    request = "SCVB" + chNum + "." + "ChannelType" + "&value=" + "1";
+                    await ClientCalibration.parameterExecutedRequest(request);
+                }
+                await restartAs02Server();
+
+                MaxValue = await valueMeasurement(InpMaxValue, FlukeUnit.mA);
+
+                for (int ch = 0; ch < numberOfChannels; ch++)
+                {
+                    errors[ch] = Math.Abs(InpMaxValue - MaxValue[ch]) * 1000;
+                }
+
+                return errors;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return errors;
             }
 
-            return errors;
         }
+
+        /*
+                    string request, chNum;
+                    double[] errors = new double[numberOfChannels];
+                    try
+                    {
+
+                        for (int ch = 0; ch <= numberOfChannels; ch++)
+                        {
+                            chNum = (ch + 1).ToString();
+                            request = "SCVB" + chNum + "." + "InputMultiplier" + "&value=" + "0.001";
+                            await ClientCalibration.parameterExecutedRequest(request);
+                            request = "SCVB" + chNum + "." + "ChannelType" + "&value=" + "0";
+                            await ClientCalibration.parameterExecutedRequest(request);
+                        }
+
+                        MaxValue = await valueMeasurement(InpMaxValue, FlukeUnit.V);
+
+                        for (int ch = 0; ch < numberOfChannels; ch++)
+                        {
+                            errors[ch] = Math.Abs(InpMaxValue - MaxValue[ch]) * 1000;
+                        }
+
+                        return errors;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        return errors;
+                    }
+
+                }
+        */
 
 
 

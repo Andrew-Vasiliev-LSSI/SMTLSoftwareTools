@@ -25,7 +25,7 @@ namespace SMTLSoftwareTools.AutoCalibration
         VoltageInputCalibration voltageInputCalibration;
         CurrentInputCalibration currentInputCalibration;
         CalibrationAnalogOutputs calibrationAnalogOutputs;
-        
+
         DataGridView[] viewArray = new DataGridView[4];
         public Calibration(HttpClientClass client)
         {
@@ -39,11 +39,11 @@ namespace SMTLSoftwareTools.AutoCalibration
             viewArray[1] = dataGridViewResultOutput2;
             viewArray[2] = dataGridViewResultOutput3;
             viewArray[3] = dataGridViewResultOutput4;
- 
+
             disableControlsPage(1);
             disableControlsPage(2);
             disableControlsPage(3);
- 
+
         }
 
         private void LoadListboxes()
@@ -112,6 +112,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                 calibrationAnalogOutputs.LabelInfo = this.lbInfoOutput;
                 calibrationAnalogOutputs.ViewArray = this.viewArray;
                 enableControlsPage(1);
+                enableControlsPage(2);
                 enableControlsPage(3);
 
                 lbInfo.Text = info;
@@ -137,7 +138,6 @@ namespace SMTLSoftwareTools.AutoCalibration
         {
             try
             {
-                Calibrator.SetOperMode();
                 await voltageInputCalibration.prepareCalibration();
 
                 int[] coefficients = await voltageInputCalibration.calculateCoefficients();
@@ -151,6 +151,7 @@ namespace SMTLSoftwareTools.AutoCalibration
 
                 errorCheck(errors, dataGridViewResultVoltage, 2, 20);
                 btRepeatVoltage.Enabled = true;
+                enableControlsPage(2);
             }
             catch (Exception ex)
             {
@@ -240,7 +241,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                             else
                             {
                                 viewArray[ch - 1].Rows[4].Cells[1].Style.BackColor = Color.Red;
-                                repeat = true; 
+                                repeat = true;
                             }
 
                             if (repeat)
@@ -248,7 +249,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                                 result = MessageBox.Show("Повторить калибровку выхода " + ch.ToString() + " ?", "Повторная калибровка", MessageBoxButtons.OKCancel);
                                 if (result == DialogResult.OK)
                                 {
-                                   await calibrationAnalogOutputs.zeroCurrentSetting(ch);
+                                    await calibrationAnalogOutputs.zeroCurrentSetting(ch);
                                 }
                                 else if (result == DialogResult.Cancel)
                                 {
@@ -259,14 +260,14 @@ namespace SMTLSoftwareTools.AutoCalibration
                             {
                                 ch++;
                             }
- 
+
                         }
                     }
                     else if (result == DialogResult.Cancel)
                     {
                         break;
                     }
-                } while(ch <= numberChannels);
+                } while (ch <= numberChannels);
 
                 lbInfoOutput.Text = "Калибровка всех аналоговых выходов завершена";
             }
@@ -299,6 +300,76 @@ namespace SMTLSoftwareTools.AutoCalibration
         {
             btRepeatCurrent.Enabled = false;
         }
+
+
+        private async void btCheckVoltage_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                double[] errors = await voltageInputCalibration.errorCalculation();
+                showResults(dataGridViewResultVoltage, 2, errors);
+                errorCheck(errors, dataGridViewResultVoltage, 2, 20);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private async void btCheckCurrent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                double[] errors = await currentInputCalibration.errorCalculation();
+
+                showResults(dataGridViewResultCurrent, 1, errors);
+
+                errorCheck(errors, dataGridViewResultCurrent, 1, 80);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private async void btCheckAnalog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int ch = 1;
+                do
+                {
+                    DialogResult result = MessageBox.Show("Подключи аналоговый выход " + ch.ToString() + " к входу калибратора", "Переключение входов", MessageBoxButtons.OKCancel);
+                    if (result == DialogResult.OK)
+                    {
+                        double error = await calibrationAnalogOutputs.errorCalculation(ch, false);
+
+                        viewArray[ch - 1].Rows.Add("Погрешность мкА", error);
+                        if (error <= 20.0)
+                        {
+                            viewArray[ch - 1].Rows[0].Cells[1].Style.BackColor = Color.Green;
+                        }
+                        else
+                        {
+                            viewArray[ch - 1].Rows[0].Cells[1].Style.BackColor = Color.Red;
+                        }
+                        ch++;
+                    }
+                    else if (result == DialogResult.Cancel)
+                    {
+                        break;
+                    }
+                } while (ch <= numberChannels);
+
+                lbInfoOutput.Text = "Проверка пргрешности всех аналоговых выходов завершена";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
     }
-}
+    }
 

@@ -79,10 +79,10 @@ namespace SMTLSoftwareTools.AutoCalibration
 
         public async Task calibratorOutputSet(double value, FlukeUnit unit)
         {
-            LabelInfo.Text = "Установка выходного значения калибратора (20 сек.)";
+            LabelInfo.Text = "Установка выходного значения калибратора (10 сек.)";
             Calibrator.SetOutput(value, unit);
             Calibrator.SetOperMode();
-            await Task.Delay(20000);
+            await Task.Delay(10000);
         }
         public async Task<int[]> calculateCoefficients()
         {
@@ -139,16 +139,35 @@ namespace SMTLSoftwareTools.AutoCalibration
 
         public async Task<double[]> errorCalculation()
         {
+            string request, chNum;
             double[] errors = new double[numberOfChannels];
+            try {
 
-            MaxValue = await valueMeasurement(InpMaxValue, FlukeUnit.V);
+                for (int ch = 0; ch <= numberOfChannels; ch++)
+                {
+                    chNum = (ch + 1).ToString();
+                    request = "SCVB" + chNum + "." + "InputMultiplier" + "&value=" + "0.001";
+                    await ClientCalibration.parameterExecutedRequest(request);
+                    request = "SCVB" + chNum + "." + "ChannelType" + "&value=" + "0";
+                    await ClientCalibration.parameterExecutedRequest(request);
+                }
+                await restartAs02Server();
 
-            for (int ch = 0; ch < numberOfChannels; ch++)
+                MaxValue = await valueMeasurement(InpMaxValue, FlukeUnit.V);
+
+                for (int ch = 0; ch < numberOfChannels; ch++)
+                {
+                    errors[ch] = Math.Abs(InpMaxValue - MaxValue[ch]) * 1000;
+                }
+
+                return errors;
+            }
+            catch (Exception ex)
             {
-                errors[ch] = Math.Abs(InpMaxValue - MaxValue[ch]) * 1000;
+                MessageBox.Show(ex.Message);
+                return errors;
             }
 
-            return errors;
         }
 
 

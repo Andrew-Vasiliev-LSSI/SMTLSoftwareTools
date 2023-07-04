@@ -38,6 +38,7 @@
             this.lstPorts = new System.Windows.Forms.ComboBox();
             this.lstBaudrate = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btCheckVoltage = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btRepeatVoltage = new System.Windows.Forms.Button();
             this.lbInfoVoltage = new System.Windows.Forms.Label();
@@ -47,6 +48,7 @@
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btStartVoltageInput = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btCheckCurrent = new System.Windows.Forms.Button();
             this.btRepeatCurrent = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lbInfoCurrent = new System.Windows.Forms.Label();
@@ -55,6 +57,7 @@
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btStartCurrentInput = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.btCheckAnalog = new System.Windows.Forms.Button();
             this.dataGridViewResultOutput4 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -183,6 +186,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.White;
+            this.tabPage2.Controls.Add(this.btCheckVoltage);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.btRepeatVoltage);
             this.tabPage2.Controls.Add(this.lbInfoVoltage);
@@ -195,6 +199,17 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Калибровка входов по напряжению";
             this.tabPage2.Enter += new System.EventHandler(this.tabPage2_Enter);
+            // 
+            // btCheckVoltage
+            // 
+            this.btCheckVoltage.AutoSize = true;
+            this.btCheckVoltage.Location = new System.Drawing.Point(489, 351);
+            this.btCheckVoltage.Name = "btCheckVoltage";
+            this.btCheckVoltage.Size = new System.Drawing.Size(141, 23);
+            this.btCheckVoltage.TabIndex = 9;
+            this.btCheckVoltage.Text = "Проверить погрешности";
+            this.btCheckVoltage.UseVisualStyleBackColor = true;
+            this.btCheckVoltage.Click += new System.EventHandler(this.btCheckVoltage_Click);
             // 
             // label1
             // 
@@ -275,6 +290,7 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.White;
+            this.tabPage3.Controls.Add(this.btCheckCurrent);
             this.tabPage3.Controls.Add(this.btRepeatCurrent);
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.lbInfoCurrent);
@@ -286,6 +302,17 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Калибровка входов по току";
             this.tabPage3.Enter += new System.EventHandler(this.tabPage3_Enter);
+            // 
+            // btCheckCurrent
+            // 
+            this.btCheckCurrent.AutoSize = true;
+            this.btCheckCurrent.Location = new System.Drawing.Point(489, 351);
+            this.btCheckCurrent.Name = "btCheckCurrent";
+            this.btCheckCurrent.Size = new System.Drawing.Size(141, 23);
+            this.btCheckCurrent.TabIndex = 12;
+            this.btCheckCurrent.Text = "Проверить погрешности";
+            this.btCheckCurrent.UseVisualStyleBackColor = true;
+            this.btCheckCurrent.Click += new System.EventHandler(this.btCheckCurrent_Click);
             // 
             // btRepeatCurrent
             // 
@@ -361,6 +388,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.btCheckAnalog);
             this.tabPage4.Controls.Add(this.dataGridViewResultOutput4);
             this.tabPage4.Controls.Add(this.dataGridViewResultOutput3);
             this.tabPage4.Controls.Add(this.dataGridViewResultOutput2);
@@ -374,6 +402,18 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Калибровка токовых выходов";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // btCheckAnalog
+            // 
+            this.btCheckAnalog.AutoSize = true;
+            this.btCheckAnalog.Enabled = false;
+            this.btCheckAnalog.Location = new System.Drawing.Point(489, 383);
+            this.btCheckAnalog.Name = "btCheckAnalog";
+            this.btCheckAnalog.Size = new System.Drawing.Size(141, 23);
+            this.btCheckAnalog.TabIndex = 16;
+            this.btCheckAnalog.Text = "Проверить погрешности";
+            this.btCheckAnalog.UseVisualStyleBackColor = true;
+            this.btCheckAnalog.Click += new System.EventHandler(this.btCheckAnalog_Click);
             // 
             // dataGridViewResultOutput4
             // 
@@ -595,5 +635,8 @@
         private System.Windows.Forms.DataGridView dataGridViewResultOutput2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.Button btCheckVoltage;
+        private System.Windows.Forms.Button btCheckCurrent;
+        private System.Windows.Forms.Button btCheckAnalog;
     }
 }
