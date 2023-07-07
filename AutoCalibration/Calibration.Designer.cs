@@ -75,6 +75,7 @@
             this.btStartCurrentOutput = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.cbEnableCheckErrors = new System.Windows.Forms.CheckBox();
             this.tabControlCalibr.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxConnect.SuspendLayout();
@@ -103,6 +104,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.cbEnableCheckErrors);
             this.tabPage1.Controls.Add(this.groupBoxConnect);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -560,6 +562,16 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
+            // cbEnableCheckErrors
+            // 
+            this.cbEnableCheckErrors.AutoSize = true;
+            this.cbEnableCheckErrors.Location = new System.Drawing.Point(452, 252);
+            this.cbEnableCheckErrors.Name = "cbEnableCheckErrors";
+            this.cbEnableCheckErrors.Size = new System.Drawing.Size(207, 17);
+            this.cbEnableCheckErrors.TabIndex = 4;
+            this.cbEnableCheckErrors.Text = "Разрешить проверку погрешностей";
+            this.cbEnableCheckErrors.UseVisualStyleBackColor = true;
+            // 
             // Calibration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -571,6 +583,7 @@
             this.Text = "Автоматическая калибровка ";
             this.tabControlCalibr.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.groupBoxConnect.ResumeLayout(false);
             this.groupBoxConnect.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -638,5 +651,6 @@
         private System.Windows.Forms.Button btCheckVoltage;
         private System.Windows.Forms.Button btCheckCurrent;
         private System.Windows.Forms.Button btCheckAnalog;
+        private System.Windows.Forms.CheckBox cbEnableCheckErrors;
     }
 }

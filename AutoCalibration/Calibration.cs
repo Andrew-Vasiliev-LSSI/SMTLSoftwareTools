@@ -14,6 +14,7 @@ using SMTLSoftwareTools.SensorConfig;
 using SMTLSoftwareTools.AutoCalibration;
 using System.Data.Common;
 using System.Linq.Expressions;
+using System.IO;
 
 namespace SMTLSoftwareTools.AutoCalibration
 {
@@ -111,9 +112,23 @@ namespace SMTLSoftwareTools.AutoCalibration
                 calibrationAnalogOutputs = new CalibrationAnalogOutputs(HttpClientCalibration, Calibrator);
                 calibrationAnalogOutputs.LabelInfo = this.lbInfoOutput;
                 calibrationAnalogOutputs.ViewArray = this.viewArray;
-                enableControlsPage(1);
-                enableControlsPage(2);
-                enableControlsPage(3);
+                if (cbEnableCheckErrors.Checked == true)
+                {
+                    enableControlsPage(1);
+                    enableControlsPage(2);
+                    enableControlsPage(3);
+
+                }
+                else
+                {
+                    enableControlsPage(1);
+                    enableControlsPage(3);
+                }
+
+                string path = Path.Combine(Environment.CurrentDirectory, "Communicator");
+                string fileName = path + @"\config\1_Basic_conf_test.db";
+                byte[] fileBytes = File.ReadAllBytes(fileName);
+                HttpClientCalibration.UploadFile(fileBytes);
 
                 lbInfo.Text = info;
             }
