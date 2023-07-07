@@ -136,11 +136,17 @@ namespace SMTLSoftwareTools.AutoCalibration
         public async Task<double> errorCalculation(int ch, bool show)
         {
             double result, value;
+            string request ;
             string chNum = ch.ToString();
 
             Calibrator.ActiveLoopPower(true);
-            string request = "GGIO1." + "AnSetOut" + chNum + ":" + "Oper_ctlVal_f&value=" + currentTestValue.ToString();
+
+            request = "GGIO1.CalibrationMode&value=true";
             await executeRequest(request);
+
+            request = "GGIO1." + "AnSetOut" + chNum + ":" + "Oper_ctlVal_f&value=" + currentTestValue.ToString();
+            await executeRequest(request);
+
             string message = "Измерение выходного тока при установленом токе" + currentTestValue.ToString() + " мА." + " Выход " + chNum.ToString() + " измерение: ";
             value = await measureValue(message);
             result = Math.Abs(currentTestValue - value) * 1000;
