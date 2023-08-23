@@ -72,17 +72,17 @@ namespace SMTLSoftwareTools.AutoCalibration
 
         public async Task restartAs02Server()
         {
-            LabelInfo.Text = "Перезапуск измерительного сервера. (5 сек.)";
+            LabelInfo.Text = "Перезапуск измерительного сервера. (10 сек.)";
             await ClientCalibration.restartingMeasuringServer();
-            await Task.Delay(5000);
+            await Task.Delay(10000);
         }
 
         public async Task calibratorOutputSet(double value, FlukeUnit unit)
         {
-            LabelInfo.Text = "Установка выходного значения калибратора (10 сек.)";
+            LabelInfo.Text = "Установка выходного значения калибратора (20 сек.)";
             Calibrator.SetOutput(value, unit);
             Calibrator.SetOperMode();
-            await Task.Delay(10000);
+            await Task.Delay(20000);
         }
         public async Task<int[]> calculateCoefficients()
         {
@@ -186,7 +186,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                         string param = "SCVB" + (i + 1).ToString() + ".VbrRawVal";
                         temp += await getResponse(param);
                         await Task.Delay(cycleDelay);
-                        LabelInfo.Text = "Измерение заначения " + value.ToString() + ". канал " + (i + 1).ToString() + " измерение:" + (j + 1).ToString();
+                        LabelInfo.Text = "Измерение значения " + value.ToString() + ". канал " + (i + 1).ToString() + " измерение:" + (j + 1).ToString();
                     }
                     result[i] = temp / cycleCount;
                     temp = 0;
