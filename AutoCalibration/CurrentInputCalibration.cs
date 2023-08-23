@@ -79,7 +79,7 @@ namespace SMTLSoftwareTools.AutoCalibration
 
             for (int i = 0; i < numberOfChannels; i++)
             {
-                compensations[i] = (InpMaxValue * 1000) / MaxValue[i]; 
+                compensations[i] = (InpMaxValue) / MaxValue[i]; 
             }
              return compensations;
         }
