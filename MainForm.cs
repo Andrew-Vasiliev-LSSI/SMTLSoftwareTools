@@ -147,10 +147,17 @@ namespace SMTLSoftwareTools
             proc.StartInfo.Arguments = "";
             proc.Start();
         }
-        
 
+        private void btAiConfig_Click(object sender, EventArgs e)
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, "MidasToolsAI24");
+            Process proc = new Process();
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.FileName = path + @"\Aean.MidasTools.exe";
+            proc.StartInfo.Arguments = "";
+            proc.Start();
 
-        
+        }
     }
  
 }

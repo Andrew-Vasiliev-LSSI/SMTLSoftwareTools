@@ -30,7 +30,7 @@ namespace SMTLSoftwareTools
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPageAS02 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lbVersion = new System.Windows.Forms.Label();
             this.textBoxVersion = new System.Windows.Forms.TextBox();
@@ -42,52 +42,56 @@ namespace SMTLSoftwareTools
             this.lbIP = new System.Windows.Forms.Label();
             this.btExecute = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbtAutoCalibration = new System.Windows.Forms.RadioButton();
             this.rbtDeviceConfig = new System.Windows.Forms.RadioButton();
             this.rbtConfigManagement = new System.Windows.Forms.RadioButton();
             this.rbtSetpoint = new System.Windows.Forms.RadioButton();
             this.rbtSensorConfig = new System.Windows.Forms.RadioButton();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btRAitConfig = new System.Windows.Forms.Button();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabPageRT24 = new System.Windows.Forms.TabPage();
+            this.btRtConfig = new System.Windows.Forms.Button();
+            this.tabPageFMD2 = new System.Windows.Forms.TabPage();
             this.btFmdConfig = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPageAS01 = new System.Windows.Forms.TabPage();
             this.btAs01Show = new System.Windows.Forms.Button();
             this.btAs01Calibr = new System.Windows.Forms.Button();
             this.btExit = new System.Windows.Forms.Button();
-            this.rbtAutoCalibration = new System.Windows.Forms.RadioButton();
+            this.tabPageAI24 = new System.Windows.Forms.TabPage();
+            this.btAiConfig = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabPageAS02.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.tabPageRT24.SuspendLayout();
+            this.tabPageFMD2.SuspendLayout();
+            this.tabPageAS01.SuspendLayout();
+            this.tabPageAI24.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPageAS02);
+            this.tabControl1.Controls.Add(this.tabPageRT24);
+            this.tabControl1.Controls.Add(this.tabPageAI24);
+            this.tabControl1.Controls.Add(this.tabPageFMD2);
+            this.tabControl1.Controls.Add(this.tabPageAS01);
             this.tabControl1.Location = new System.Drawing.Point(50, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(493, 410);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // tabPageAS02
             // 
-            this.tabPage1.Controls.Add(this.panel2);
-            this.tabPage1.Controls.Add(this.btExecute);
-            this.tabPage1.Controls.Add(this.panel1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(485, 384);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "AS02";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPageAS02.Controls.Add(this.panel2);
+            this.tabPageAS02.Controls.Add(this.btExecute);
+            this.tabPageAS02.Controls.Add(this.panel1);
+            this.tabPageAS02.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAS02.Name = "tabPageAS02";
+            this.tabPageAS02.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAS02.Size = new System.Drawing.Size(485, 384);
+            this.tabPageAS02.TabIndex = 0;
+            this.tabPageAS02.Text = "AS02";
+            this.tabPageAS02.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -197,6 +201,17 @@ namespace SMTLSoftwareTools
             this.panel1.Size = new System.Drawing.Size(235, 131);
             this.panel1.TabIndex = 0;
             // 
+            // rbtAutoCalibration
+            // 
+            this.rbtAutoCalibration.AutoSize = true;
+            this.rbtAutoCalibration.Location = new System.Drawing.Point(17, 72);
+            this.rbtAutoCalibration.Name = "rbtAutoCalibration";
+            this.rbtAutoCalibration.Size = new System.Drawing.Size(172, 17);
+            this.rbtAutoCalibration.TabIndex = 4;
+            this.rbtAutoCalibration.TabStop = true;
+            this.rbtAutoCalibration.Text = "Автоматическая калибровка";
+            this.rbtAutoCalibration.UseVisualStyleBackColor = true;
+            // 
             // rbtDeviceConfig
             // 
             this.rbtDeviceConfig.AutoSize = true;
@@ -242,37 +257,37 @@ namespace SMTLSoftwareTools
             this.rbtSensorConfig.Text = "Конфигурация датчиков";
             this.rbtSensorConfig.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tabPageRT24
             // 
-            this.tabPage2.Controls.Add(this.btRAitConfig);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(485, 384);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "RT24/AI24";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPageRT24.Controls.Add(this.btRtConfig);
+            this.tabPageRT24.Location = new System.Drawing.Point(4, 22);
+            this.tabPageRT24.Name = "tabPageRT24";
+            this.tabPageRT24.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageRT24.Size = new System.Drawing.Size(485, 384);
+            this.tabPageRT24.TabIndex = 1;
+            this.tabPageRT24.Text = "RT24";
+            this.tabPageRT24.UseVisualStyleBackColor = true;
             // 
-            // btRAitConfig
+            // btRtConfig
             // 
-            this.btRAitConfig.Location = new System.Drawing.Point(170, 171);
-            this.btRAitConfig.Name = "btRAitConfig";
-            this.btRAitConfig.Size = new System.Drawing.Size(145, 42);
-            this.btRAitConfig.TabIndex = 1;
-            this.btRAitConfig.Text = "Конфигурация прибора";
-            this.btRAitConfig.UseVisualStyleBackColor = true;
-            this.btRAitConfig.Click += new System.EventHandler(this.btRtConfig_Click);
+            this.btRtConfig.Location = new System.Drawing.Point(170, 171);
+            this.btRtConfig.Name = "btRtConfig";
+            this.btRtConfig.Size = new System.Drawing.Size(145, 42);
+            this.btRtConfig.TabIndex = 1;
+            this.btRtConfig.Text = "Конфигурация прибора";
+            this.btRtConfig.UseVisualStyleBackColor = true;
+            this.btRtConfig.Click += new System.EventHandler(this.btRtConfig_Click);
             // 
-            // tabPage4
+            // tabPageFMD2
             // 
-            this.tabPage4.Controls.Add(this.btFmdConfig);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(485, 384);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "FMD2";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabPageFMD2.Controls.Add(this.btFmdConfig);
+            this.tabPageFMD2.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFMD2.Name = "tabPageFMD2";
+            this.tabPageFMD2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFMD2.Size = new System.Drawing.Size(485, 384);
+            this.tabPageFMD2.TabIndex = 3;
+            this.tabPageFMD2.Text = "FMD2";
+            this.tabPageFMD2.UseVisualStyleBackColor = true;
             // 
             // btFmdConfig
             // 
@@ -284,16 +299,16 @@ namespace SMTLSoftwareTools
             this.btFmdConfig.UseVisualStyleBackColor = true;
             this.btFmdConfig.Click += new System.EventHandler(this.btFmdConfig_Click);
             // 
-            // tabPage3
+            // tabPageAS01
             // 
-            this.tabPage3.Controls.Add(this.btAs01Show);
-            this.tabPage3.Controls.Add(this.btAs01Calibr);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(485, 384);
-            this.tabPage3.TabIndex = 4;
-            this.tabPage3.Text = "AS01";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPageAS01.Controls.Add(this.btAs01Show);
+            this.tabPageAS01.Controls.Add(this.btAs01Calibr);
+            this.tabPageAS01.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAS01.Name = "tabPageAS01";
+            this.tabPageAS01.Size = new System.Drawing.Size(485, 384);
+            this.tabPageAS01.TabIndex = 4;
+            this.tabPageAS01.Text = "AS01";
+            this.tabPageAS01.UseVisualStyleBackColor = true;
             // 
             // btAs01Show
             // 
@@ -325,16 +340,25 @@ namespace SMTLSoftwareTools
             this.btExit.UseVisualStyleBackColor = true;
             this.btExit.Click += new System.EventHandler(this.btExit_Click);
             // 
-            // rbtAutoCalibration
+            // tabPageAI24
             // 
-            this.rbtAutoCalibration.AutoSize = true;
-            this.rbtAutoCalibration.Location = new System.Drawing.Point(17, 72);
-            this.rbtAutoCalibration.Name = "rbtAutoCalibration";
-            this.rbtAutoCalibration.Size = new System.Drawing.Size(172, 17);
-            this.rbtAutoCalibration.TabIndex = 4;
-            this.rbtAutoCalibration.TabStop = true;
-            this.rbtAutoCalibration.Text = "Автоматическая калибровка";
-            this.rbtAutoCalibration.UseVisualStyleBackColor = true;
+            this.tabPageAI24.Controls.Add(this.btAiConfig);
+            this.tabPageAI24.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAI24.Name = "tabPageAI24";
+            this.tabPageAI24.Size = new System.Drawing.Size(485, 384);
+            this.tabPageAI24.TabIndex = 5;
+            this.tabPageAI24.Text = "AI24";
+            this.tabPageAI24.UseVisualStyleBackColor = true;
+            // 
+            // btAiConfig
+            // 
+            this.btAiConfig.Location = new System.Drawing.Point(170, 171);
+            this.btAiConfig.Name = "btAiConfig";
+            this.btAiConfig.Size = new System.Drawing.Size(145, 42);
+            this.btAiConfig.TabIndex = 2;
+            this.btAiConfig.Text = "Конфигурация прибора";
+            this.btAiConfig.UseVisualStyleBackColor = true;
+            this.btAiConfig.Click += new System.EventHandler(this.btAiConfig_Click);
             // 
             // MainForm
             // 
@@ -347,14 +371,15 @@ namespace SMTLSoftwareTools
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Программные инструменты ЛССИ";
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.tabPageAS02.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
+            this.tabPageRT24.ResumeLayout(false);
+            this.tabPageFMD2.ResumeLayout(false);
+            this.tabPageAS01.ResumeLayout(false);
+            this.tabPageAI24.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -362,12 +387,12 @@ namespace SMTLSoftwareTools
         #endregion
 
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabPageAS02;
+        private System.Windows.Forms.TabPage tabPageRT24;
+        private System.Windows.Forms.TabPage tabPageFMD2;
         private System.Windows.Forms.Button btExit;
         private System.Windows.Forms.Button btFmdConfig;
-        private System.Windows.Forms.Button btRAitConfig;
+        private System.Windows.Forms.Button btRtConfig;
         private System.Windows.Forms.RadioButton rbtDeviceConfig;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lbConnect;
@@ -383,10 +408,12 @@ namespace SMTLSoftwareTools
         private System.Windows.Forms.Label lbSerNum;
         private System.Windows.Forms.TextBox textBoxVersion;
         private System.Windows.Forms.Label lbVersion;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPageAS01;
         private System.Windows.Forms.Button btAs01Show;
         private System.Windows.Forms.Button btAs01Calibr;
         private System.Windows.Forms.RadioButton rbtAutoCalibration;
+        private System.Windows.Forms.TabPage tabPageAI24;
+        private System.Windows.Forms.Button btAiConfig;
     }
 }
 
