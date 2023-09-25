@@ -82,11 +82,11 @@ namespace SMTLSoftwareTools
 
         private void btRtConfig_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(Environment.CurrentDirectory, "MidasToolsRT24");
+            string path = Path.Combine(Environment.CurrentDirectory, "MidasTools");
             Process proc = new Process();
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.FileName = path + @"\Aean.MidasTools.exe";
-            proc.StartInfo.Arguments = "";
+            proc.StartInfo.Arguments = "RT24";
             proc.Start();
         }
 
@@ -150,11 +150,11 @@ namespace SMTLSoftwareTools
 
         private void btAiConfig_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(Environment.CurrentDirectory, "MidasToolsAI24");
+            string path = Path.Combine(Environment.CurrentDirectory, "MidasTools");
             Process proc = new Process();
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.FileName = path + @"\Aean.MidasTools.exe";
-            proc.StartInfo.Arguments = "";
+            proc.StartInfo.Arguments = "AI24";
             proc.Start();
 
         }
