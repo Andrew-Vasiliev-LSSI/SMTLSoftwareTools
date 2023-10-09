@@ -49,22 +49,23 @@ namespace SMTLSoftwareTools
             this.rbtSensorConfig = new System.Windows.Forms.RadioButton();
             this.tabPageRT24 = new System.Windows.Forms.TabPage();
             this.btRtConfig = new System.Windows.Forms.Button();
+            this.tabPageAI24 = new System.Windows.Forms.TabPage();
+            this.btAiConfig = new System.Windows.Forms.Button();
             this.tabPageFMD2 = new System.Windows.Forms.TabPage();
             this.btFmdConfig = new System.Windows.Forms.Button();
             this.tabPageAS01 = new System.Windows.Forms.TabPage();
             this.btAs01Show = new System.Windows.Forms.Button();
             this.btAs01Calibr = new System.Windows.Forms.Button();
             this.btExit = new System.Windows.Forms.Button();
-            this.tabPageAI24 = new System.Windows.Forms.TabPage();
-            this.btAiConfig = new System.Windows.Forms.Button();
+            this.rbtSerialNumber = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPageAS02.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabPageRT24.SuspendLayout();
+            this.tabPageAI24.SuspendLayout();
             this.tabPageFMD2.SuspendLayout();
             this.tabPageAS01.SuspendLayout();
-            this.tabPageAI24.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -77,7 +78,7 @@ namespace SMTLSoftwareTools
             this.tabControl1.Location = new System.Drawing.Point(50, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(493, 410);
+            this.tabControl1.Size = new System.Drawing.Size(493, 458);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageAS02
@@ -88,7 +89,7 @@ namespace SMTLSoftwareTools
             this.tabPageAS02.Location = new System.Drawing.Point(4, 22);
             this.tabPageAS02.Name = "tabPageAS02";
             this.tabPageAS02.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAS02.Size = new System.Drawing.Size(485, 384);
+            this.tabPageAS02.Size = new System.Drawing.Size(485, 432);
             this.tabPageAS02.TabIndex = 0;
             this.tabPageAS02.Text = "AS02";
             this.tabPageAS02.UseVisualStyleBackColor = true;
@@ -105,7 +106,7 @@ namespace SMTLSoftwareTools
             this.panel2.Controls.Add(this.lbIP);
             this.panel2.Location = new System.Drawing.Point(48, 6);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(389, 102);
+            this.panel2.Size = new System.Drawing.Size(389, 112);
             this.panel2.TabIndex = 2;
             // 
             // lbVersion
@@ -180,7 +181,7 @@ namespace SMTLSoftwareTools
             // 
             // btExecute
             // 
-            this.btExecute.Location = new System.Drawing.Point(184, 333);
+            this.btExecute.Location = new System.Drawing.Point(184, 384);
             this.btExecute.Name = "btExecute";
             this.btExecute.Size = new System.Drawing.Size(117, 23);
             this.btExecute.TabIndex = 1;
@@ -190,15 +191,16 @@ namespace SMTLSoftwareTools
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rbtSerialNumber);
             this.panel1.Controls.Add(this.rbtAutoCalibration);
             this.panel1.Controls.Add(this.rbtDeviceConfig);
             this.panel1.Controls.Add(this.rbtConfigManagement);
             this.panel1.Controls.Add(this.rbtSetpoint);
             this.panel1.Controls.Add(this.rbtSensorConfig);
             this.panel1.Enabled = false;
-            this.panel1.Location = new System.Drawing.Point(125, 137);
+            this.panel1.Location = new System.Drawing.Point(125, 171);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(235, 131);
+            this.panel1.Size = new System.Drawing.Size(235, 167);
             this.panel1.TabIndex = 0;
             // 
             // rbtAutoCalibration
@@ -216,7 +218,7 @@ namespace SMTLSoftwareTools
             // 
             this.rbtDeviceConfig.AutoSize = true;
             this.rbtDeviceConfig.Checked = true;
-            this.rbtDeviceConfig.Location = new System.Drawing.Point(17, 111);
+            this.rbtDeviceConfig.Location = new System.Drawing.Point(17, 137);
             this.rbtDeviceConfig.Name = "rbtDeviceConfig";
             this.rbtDeviceConfig.Size = new System.Drawing.Size(143, 17);
             this.rbtDeviceConfig.TabIndex = 3;
@@ -263,7 +265,7 @@ namespace SMTLSoftwareTools
             this.tabPageRT24.Location = new System.Drawing.Point(4, 22);
             this.tabPageRT24.Name = "tabPageRT24";
             this.tabPageRT24.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageRT24.Size = new System.Drawing.Size(485, 384);
+            this.tabPageRT24.Size = new System.Drawing.Size(485, 432);
             this.tabPageRT24.TabIndex = 1;
             this.tabPageRT24.Text = "RT24";
             this.tabPageRT24.UseVisualStyleBackColor = true;
@@ -278,13 +280,33 @@ namespace SMTLSoftwareTools
             this.btRtConfig.UseVisualStyleBackColor = true;
             this.btRtConfig.Click += new System.EventHandler(this.btRtConfig_Click);
             // 
+            // tabPageAI24
+            // 
+            this.tabPageAI24.Controls.Add(this.btAiConfig);
+            this.tabPageAI24.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAI24.Name = "tabPageAI24";
+            this.tabPageAI24.Size = new System.Drawing.Size(485, 432);
+            this.tabPageAI24.TabIndex = 5;
+            this.tabPageAI24.Text = "AI24";
+            this.tabPageAI24.UseVisualStyleBackColor = true;
+            // 
+            // btAiConfig
+            // 
+            this.btAiConfig.Location = new System.Drawing.Point(170, 171);
+            this.btAiConfig.Name = "btAiConfig";
+            this.btAiConfig.Size = new System.Drawing.Size(145, 42);
+            this.btAiConfig.TabIndex = 2;
+            this.btAiConfig.Text = "Конфигурация прибора";
+            this.btAiConfig.UseVisualStyleBackColor = true;
+            this.btAiConfig.Click += new System.EventHandler(this.btAiConfig_Click);
+            // 
             // tabPageFMD2
             // 
             this.tabPageFMD2.Controls.Add(this.btFmdConfig);
             this.tabPageFMD2.Location = new System.Drawing.Point(4, 22);
             this.tabPageFMD2.Name = "tabPageFMD2";
             this.tabPageFMD2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFMD2.Size = new System.Drawing.Size(485, 384);
+            this.tabPageFMD2.Size = new System.Drawing.Size(485, 432);
             this.tabPageFMD2.TabIndex = 3;
             this.tabPageFMD2.Text = "FMD2";
             this.tabPageFMD2.UseVisualStyleBackColor = true;
@@ -305,7 +327,7 @@ namespace SMTLSoftwareTools
             this.tabPageAS01.Controls.Add(this.btAs01Calibr);
             this.tabPageAS01.Location = new System.Drawing.Point(4, 22);
             this.tabPageAS01.Name = "tabPageAS01";
-            this.tabPageAS01.Size = new System.Drawing.Size(485, 384);
+            this.tabPageAS01.Size = new System.Drawing.Size(485, 432);
             this.tabPageAS01.TabIndex = 4;
             this.tabPageAS01.Text = "AS01";
             this.tabPageAS01.UseVisualStyleBackColor = true;
@@ -332,7 +354,7 @@ namespace SMTLSoftwareTools
             // 
             // btExit
             // 
-            this.btExit.Location = new System.Drawing.Point(259, 442);
+            this.btExit.Location = new System.Drawing.Point(259, 498);
             this.btExit.Name = "btExit";
             this.btExit.Size = new System.Drawing.Size(75, 23);
             this.btExit.TabIndex = 1;
@@ -340,31 +362,22 @@ namespace SMTLSoftwareTools
             this.btExit.UseVisualStyleBackColor = true;
             this.btExit.Click += new System.EventHandler(this.btExit_Click);
             // 
-            // tabPageAI24
+            // rbtSerialNumber
             // 
-            this.tabPageAI24.Controls.Add(this.btAiConfig);
-            this.tabPageAI24.Location = new System.Drawing.Point(4, 22);
-            this.tabPageAI24.Name = "tabPageAI24";
-            this.tabPageAI24.Size = new System.Drawing.Size(485, 384);
-            this.tabPageAI24.TabIndex = 5;
-            this.tabPageAI24.Text = "AI24";
-            this.tabPageAI24.UseVisualStyleBackColor = true;
-            // 
-            // btAiConfig
-            // 
-            this.btAiConfig.Location = new System.Drawing.Point(170, 171);
-            this.btAiConfig.Name = "btAiConfig";
-            this.btAiConfig.Size = new System.Drawing.Size(145, 42);
-            this.btAiConfig.TabIndex = 2;
-            this.btAiConfig.Text = "Конфигурация прибора";
-            this.btAiConfig.UseVisualStyleBackColor = true;
-            this.btAiConfig.Click += new System.EventHandler(this.btAiConfig_Click);
+            this.rbtSerialNumber.AutoSize = true;
+            this.rbtSerialNumber.Location = new System.Drawing.Point(17, 95);
+            this.rbtSerialNumber.Name = "rbtSerialNumber";
+            this.rbtSerialNumber.Size = new System.Drawing.Size(159, 17);
+            this.rbtSerialNumber.TabIndex = 5;
+            this.rbtSerialNumber.TabStop = true;
+            this.rbtSerialNumber.Text = "Запись серийного номера";
+            this.rbtSerialNumber.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 483);
+            this.ClientSize = new System.Drawing.Size(593, 533);
             this.Controls.Add(this.btExit);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
@@ -377,9 +390,9 @@ namespace SMTLSoftwareTools
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabPageRT24.ResumeLayout(false);
+            this.tabPageAI24.ResumeLayout(false);
             this.tabPageFMD2.ResumeLayout(false);
             this.tabPageAS01.ResumeLayout(false);
-            this.tabPageAI24.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -414,6 +427,7 @@ namespace SMTLSoftwareTools
         private System.Windows.Forms.RadioButton rbtAutoCalibration;
         private System.Windows.Forms.TabPage tabPageAI24;
         private System.Windows.Forms.Button btAiConfig;
+        private System.Windows.Forms.RadioButton rbtSerialNumber;
     }
 }
 

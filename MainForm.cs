@@ -17,6 +17,10 @@ using System.Runtime.CompilerServices;
 using System.Collections;
 using SMTLSoftwareTools.TCP;
 using SMTLSoftwareTools.AutoCalibration;
+using Renci.SshNet;
+using System.Threading;
+using System.Text.RegularExpressions;
+using SMTLSoftwareTools.SerialNumber;
 
 namespace SMTLSoftwareTools
 {
@@ -66,6 +70,11 @@ namespace SMTLSoftwareTools
             {
                 Form autoCalibration = new Calibration(client);
                 autoCalibration.Show();
+            }
+            else if (rbtSerialNumber.Checked == true)
+            {
+                Form recordSerialNumber = new RecordSerialNumber(textBoxIP.Text);               
+                recordSerialNumber.Show();
             }
         }
 
