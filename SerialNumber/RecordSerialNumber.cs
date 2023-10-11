@@ -108,7 +108,6 @@ namespace SMTLSoftwareTools.SerialNumber
                 }
 
                 lstPorts.SelectedIndex = 0;
-                btScan.Enabled = true;
             }
             else
             {
@@ -120,12 +119,13 @@ namespace SMTLSoftwareTools.SerialNumber
         private void btPortSelect_Click(object sender, EventArgs e)
         {
             PortName = lstPorts.SelectedItem as string;
+            btScan.Enabled = true;
         }
 
         private async void btScan_Click(object sender, EventArgs e)
         {
             
-            SerialPort port = new SerialPort("COM9", 9600, Parity.None, 8, StopBits.One);
+            SerialPort port = new SerialPort(PortName, 9600, Parity.None, 8, StopBits.One);
             if (port.IsOpen == true)
                 port.Close();
             port.Open();
