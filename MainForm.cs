@@ -73,7 +73,7 @@ namespace SMTLSoftwareTools
             }
             else if (rbtSerialNumber.Checked == true)
             {
-                Form recordSerialNumber = new RecordSerialNumber(textBoxIP.Text);               
+                Form recordSerialNumber = new RecordSerialNumber(client);               
                 recordSerialNumber.Show();
             }
         }

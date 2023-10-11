@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,19 +11,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Renci.SshNet;
+using SMTLSoftwareTools.SensorConfig;
+using BarCodeReader;
 
 namespace SMTLSoftwareTools.SerialNumber
 {
     public partial class RecordSerialNumber : Form
     {
         string IP { get; set; }
+        string PortName { get; set; }
         private readonly string DevCode = "56";
 
-        public RecordSerialNumber(string Ip)
+        public RecordSerialNumber(HttpClientClass client)
         {
             DevCode = "56";
-            IP = Ip;
+            IP = client.Ip;
             InitializeComponent();
+            LoadPortsName();
         }
         private void EnterSerialNumber()
         {
@@ -58,8 +63,16 @@ namespace SMTLSoftwareTools.SerialNumber
             }
         }
 
-        private  void btWriteManual_Click(object sender, EventArgs e)
+        private void btWriteManual_Click(object sender, EventArgs e)
         {
+            if (checkSerialNumber())
+                EnterSerialNumber();
+        }
+
+        private bool checkSerialNumber()
+        {
+            bool result = false;
+
             if (textBoxSerNum.TextLength == 0)
             {
                 MessageBox.Show("Пустое значение серийного номера!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -73,6 +86,54 @@ namespace SMTLSoftwareTools.SerialNumber
                 MessageBox.Show("Серийный номер не соответсвует типу прибора!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
+                result = true;
+
+            return result;
+        }
+
+
+        private void btExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void LoadPortsName()
+        {
+            string[] ports = SerialPort.GetPortNames();
+            if (ports.Length > 0)
+            {
+                foreach (string port in ports)
+                {
+                    lstPorts.Items.Add(port);
+                }
+
+                lstPorts.SelectedIndex = 0;
+                btScan.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("В системе отсутствует COM порт. Сканер не доступен.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btScan.Enabled = false;
+            }
+        }
+
+        private void btPortSelect_Click(object sender, EventArgs e)
+        {
+            PortName = lstPorts.SelectedItem as string;
+        }
+
+        private async void btScan_Click(object sender, EventArgs e)
+        {
+            
+            SerialPort port = new SerialPort("COM9", 9600, Parity.None, 8, StopBits.One);
+            if (port.IsOpen == true)
+                port.Close();
+            port.Open();
+            BarCodeReaderClass reader = new BarCodeReaderClass(port);
+            await reader.StartReadAsync();
+            port.Close();
+            textBoxSerNum.Text = reader.BarCode;
+            if (checkSerialNumber())
                 EnterSerialNumber();
         }
     }
