@@ -18,18 +18,20 @@ namespace SMTLSoftwareTools.SerialNumber
 {
     public partial class RecordSerialNumber : Form
     {
+        HttpClientClass httpClient;
         string IP { get; set; }
         string PortName { get; set; }
         private readonly string DevCode = "56";
 
         public RecordSerialNumber(HttpClientClass client)
         {
+            httpClient = client;
             DevCode = "56";
             IP = client.Ip;
             InitializeComponent();
             LoadPortsName();
         }
-        private void EnterSerialNumber()
+        private async Task EnterSerialNumber()
         {
             string Command, Username = "smtl", Password = "perseus";
 
@@ -52,9 +54,9 @@ namespace SMTLSoftwareTools.SerialNumber
                     output = shellStream.Expect(new Regex(@"([$#>:])"));
                     shellStream.WriteLine(Password);
                     Thread.Sleep(1000);
-                    output = shellStream.Expect(new Regex(@"([$#>:])"));
+                    output = shellStream.Expect(new Regex(@"([$#>:])"));                   
                     MessageBox.Show(output.Substring(output.IndexOf('\n'), output.LastIndexOf('\n') - output.IndexOf('\n')), "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    await waitRestartGateway();
                 }
                 catch (Exception ex)
                 {
@@ -63,10 +65,35 @@ namespace SMTLSoftwareTools.SerialNumber
             }
         }
 
-        private void btWriteManual_Click(object sender, EventArgs e)
+        private async Task waitRestartGateway()
+        {
+            Form form = new Form();
+            form.Text = "Окно ожидания";
+            Label label = new Label();
+            label.Text = "Подождите, выполняется перезагрузка шлюза...";
+            label.AutoSize = true;
+            label.Location = new System.Drawing.Point(10, 10);
+            form.Controls.Add(label);
+
+            // Показываем форму в отдельном потоке
+            Thread thread = new Thread(() => Application.Run(form));
+            thread.Start();
+
+            await restartGateway();
+
+            // Закрываем форму
+            form.Invoke(new Action(() => form.Close()));
+        }
+        private async Task restartGateway()
+        {
+            await httpClient.restartingCommunicationGateway();
+            await Task.Delay(10000);
+        }
+
+        private async void btWriteManual_Click(object sender, EventArgs e)
         {
             if (checkSerialNumber())
-                EnterSerialNumber();
+                await EnterSerialNumber();
         }
 
         private bool checkSerialNumber()
@@ -134,7 +161,7 @@ namespace SMTLSoftwareTools.SerialNumber
             port.Close();
             textBoxSerNum.Text = reader.BarCode;
             if (checkSerialNumber())
-                EnterSerialNumber();
+                await EnterSerialNumber();
         }
     }
 }
