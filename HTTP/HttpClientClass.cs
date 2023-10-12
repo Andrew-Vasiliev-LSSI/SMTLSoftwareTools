@@ -62,6 +62,12 @@ namespace SMTLSoftwareTools.SensorConfig
             await executingGetRequest(address);
         }
 
+        // Выполнение Http запроса для перезапуска коммуникационного шлюза
+        public async Task restartingCommunicationGateway()
+        {
+            string address = "http://" + Ip + "/api/attributedata?path=Application/LPHD1.ResetGw:Oper_ctlVal&value=true";
+            await executingGetRequest(address);
+        }
         // Подключение и авторизация
         public void authorization()
         {
