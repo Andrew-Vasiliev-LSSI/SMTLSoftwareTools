@@ -30,6 +30,7 @@
         {
             this.tabControlCalibr = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.cbEnableCheckErrors = new System.Windows.Forms.CheckBox();
             this.groupBoxConnect = new System.Windows.Forms.GroupBox();
             this.lbInfo = new System.Windows.Forms.Label();
             this.lbSpeed = new System.Windows.Forms.Label();
@@ -75,7 +76,6 @@
             this.btStartCurrentOutput = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.cbEnableCheckErrors = new System.Windows.Forms.CheckBox();
             this.tabControlCalibr.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxConnect.SuspendLayout();
@@ -113,6 +113,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Подключение к калибратору";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // cbEnableCheckErrors
+            // 
+            this.cbEnableCheckErrors.AutoSize = true;
+            this.cbEnableCheckErrors.Location = new System.Drawing.Point(452, 252);
+            this.cbEnableCheckErrors.Name = "cbEnableCheckErrors";
+            this.cbEnableCheckErrors.Size = new System.Drawing.Size(207, 17);
+            this.cbEnableCheckErrors.TabIndex = 4;
+            this.cbEnableCheckErrors.Text = "Разрешить проверку погрешностей";
+            this.cbEnableCheckErrors.UseVisualStyleBackColor = true;
             // 
             // groupBoxConnect
             // 
@@ -165,7 +175,7 @@
             this.btConnect.Name = "btConnect";
             this.btConnect.Size = new System.Drawing.Size(121, 23);
             this.btConnect.TabIndex = 2;
-            this.btConnect.Text = "Подключится";
+            this.btConnect.Text = "Подключиться";
             this.btConnect.UseVisualStyleBackColor = true;
             this.btConnect.Click += new System.EventHandler(this.btConnect_Click);
             // 
@@ -561,16 +571,6 @@
             this.btClose.Text = "Выход";
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
-            // 
-            // cbEnableCheckErrors
-            // 
-            this.cbEnableCheckErrors.AutoSize = true;
-            this.cbEnableCheckErrors.Location = new System.Drawing.Point(452, 252);
-            this.cbEnableCheckErrors.Name = "cbEnableCheckErrors";
-            this.cbEnableCheckErrors.Size = new System.Drawing.Size(207, 17);
-            this.cbEnableCheckErrors.TabIndex = 4;
-            this.cbEnableCheckErrors.Text = "Разрешить проверку погрешностей";
-            this.cbEnableCheckErrors.UseVisualStyleBackColor = true;
             // 
             // Calibration
             // 
