@@ -41,16 +41,20 @@ namespace SMTLSoftwareTools.SensorConfig
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lbSelected = new System.Windows.Forms.Label();
             this.btWrite = new System.Windows.Forms.Button();
-            this.comboBoxChannels = new System.Windows.Forms.ComboBox();
-            this.chLabel = new System.Windows.Forms.Label();
+            this.rbCh4 = new System.Windows.Forms.RadioButton();
+            this.rbCh3 = new System.Windows.Forms.RadioButton();
+            this.rbCh2 = new System.Windows.Forms.RadioButton();
+            this.rbCh1 = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSensors)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelected)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btExit
             // 
-            this.btExit.Location = new System.Drawing.Point(191, 477);
+            this.btExit.Location = new System.Drawing.Point(194, 535);
             this.btExit.Name = "btExit";
             this.btExit.Size = new System.Drawing.Size(75, 23);
             this.btExit.TabIndex = 0;
@@ -101,7 +105,7 @@ namespace SMTLSoftwareTools.SensorConfig
             // 
             this.panel2.Controls.Add(this.btSelectSensor);
             this.panel2.Controls.Add(this.dataGridViewSensors);
-            this.panel2.Location = new System.Drawing.Point(23, 60);
+            this.panel2.Location = new System.Drawing.Point(26, 118);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(431, 164);
             this.panel2.TabIndex = 5;
@@ -113,7 +117,7 @@ namespace SMTLSoftwareTools.SensorConfig
             this.Column1,
             this.Column3,
             this.Column2});
-            this.dataGridViewSelected.Location = new System.Drawing.Point(23, 246);
+            this.dataGridViewSelected.Location = new System.Drawing.Point(26, 304);
             this.dataGridViewSelected.Name = "dataGridViewSelected";
             this.dataGridViewSelected.Size = new System.Drawing.Size(428, 150);
             this.dataGridViewSelected.TabIndex = 6;
@@ -137,7 +141,7 @@ namespace SMTLSoftwareTools.SensorConfig
             // lbSelected
             // 
             this.lbSelected.AutoSize = true;
-            this.lbSelected.Location = new System.Drawing.Point(26, 227);
+            this.lbSelected.Location = new System.Drawing.Point(29, 285);
             this.lbSelected.Name = "lbSelected";
             this.lbSelected.Size = new System.Drawing.Size(89, 13);
             this.lbSelected.TabIndex = 7;
@@ -146,7 +150,7 @@ namespace SMTLSoftwareTools.SensorConfig
             // btWrite
             // 
             this.btWrite.Enabled = false;
-            this.btWrite.Location = new System.Drawing.Point(165, 436);
+            this.btWrite.Location = new System.Drawing.Point(168, 494);
             this.btWrite.Name = "btWrite";
             this.btWrite.Size = new System.Drawing.Size(146, 23);
             this.btWrite.TabIndex = 8;
@@ -154,37 +158,74 @@ namespace SMTLSoftwareTools.SensorConfig
             this.btWrite.UseVisualStyleBackColor = true;
             this.btWrite.Click += new System.EventHandler(this.btWrite_Click);
             // 
-            // comboBoxChannels
+            // rbCh4
             // 
-            this.comboBoxChannels.Enabled = false;
-            this.comboBoxChannels.FormattingEnabled = true;
-            this.comboBoxChannels.Items.AddRange(new object[] {
-            "Канал 1",
-            "Канал 2",
-            "Канал 3",
-            "Канал 4"});
-            this.comboBoxChannels.Location = new System.Drawing.Point(23, 33);
-            this.comboBoxChannels.Name = "comboBoxChannels";
-            this.comboBoxChannels.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxChannels.TabIndex = 9;
-            this.comboBoxChannels.SelectedIndexChanged += new System.EventHandler(this.comboBoxChannels_SelectedIndexChanged);
+            this.rbCh4.AutoSize = true;
+            this.rbCh4.Location = new System.Drawing.Point(321, 28);
+            this.rbCh4.Name = "rbCh4";
+            this.rbCh4.Size = new System.Drawing.Size(62, 17);
+            this.rbCh4.TabIndex = 3;
+            this.rbCh4.TabStop = true;
+            this.rbCh4.Text = "Канал4";
+            this.rbCh4.UseVisualStyleBackColor = true;
+            this.rbCh4.Click += new System.EventHandler(this.rbCh4_Click);
             // 
-            // chLabel
+            // rbCh3
             // 
-            this.chLabel.AutoSize = true;
-            this.chLabel.Location = new System.Drawing.Point(23, 17);
-            this.chLabel.Name = "chLabel";
-            this.chLabel.Size = new System.Drawing.Size(80, 13);
-            this.chLabel.TabIndex = 10;
-            this.chLabel.Text = "Номер канала";
+            this.rbCh3.AutoSize = true;
+            this.rbCh3.Location = new System.Drawing.Point(230, 28);
+            this.rbCh3.Name = "rbCh3";
+            this.rbCh3.Size = new System.Drawing.Size(62, 17);
+            this.rbCh3.TabIndex = 2;
+            this.rbCh3.TabStop = true;
+            this.rbCh3.Text = "Канал3";
+            this.rbCh3.UseVisualStyleBackColor = true;
+            this.rbCh3.Click += new System.EventHandler(this.rbCh3_Click);
+            // 
+            // rbCh2
+            // 
+            this.rbCh2.AutoSize = true;
+            this.rbCh2.Location = new System.Drawing.Point(139, 28);
+            this.rbCh2.Name = "rbCh2";
+            this.rbCh2.Size = new System.Drawing.Size(62, 17);
+            this.rbCh2.TabIndex = 1;
+            this.rbCh2.TabStop = true;
+            this.rbCh2.Text = "Канал2";
+            this.rbCh2.UseVisualStyleBackColor = true;
+            this.rbCh2.Click += new System.EventHandler(this.rbCh2_Click);
+            // 
+            // rbCh1
+            // 
+            this.rbCh1.AutoSize = true;
+            this.rbCh1.Checked = true;
+            this.rbCh1.Location = new System.Drawing.Point(48, 28);
+            this.rbCh1.Name = "rbCh1";
+            this.rbCh1.Size = new System.Drawing.Size(62, 17);
+            this.rbCh1.TabIndex = 0;
+            this.rbCh1.TabStop = true;
+            this.rbCh1.Text = "Канал1";
+            this.rbCh1.UseVisualStyleBackColor = true;
+            this.rbCh1.Click += new System.EventHandler(this.rbCh1_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.rbCh4);
+            this.groupBox1.Controls.Add(this.rbCh3);
+            this.groupBox1.Controls.Add(this.rbCh1);
+            this.groupBox1.Controls.Add(this.rbCh2);
+            this.groupBox1.Location = new System.Drawing.Point(26, 25);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(431, 64);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Номер канала";
             // 
             // SensorConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(476, 527);
-            this.Controls.Add(this.chLabel);
-            this.Controls.Add(this.comboBoxChannels);
+            this.ClientSize = new System.Drawing.Size(476, 572);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btWrite);
             this.Controls.Add(this.lbSelected);
             this.Controls.Add(this.dataGridViewSelected);
@@ -196,6 +237,8 @@ namespace SMTLSoftwareTools.SensorConfig
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSensors)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelected)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -215,7 +258,10 @@ namespace SMTLSoftwareTools.SensorConfig
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.Label lbSelected;
         private System.Windows.Forms.Button btWrite;
-        private System.Windows.Forms.ComboBox comboBoxChannels;
-        private System.Windows.Forms.Label chLabel;
+        private System.Windows.Forms.RadioButton rbCh4;
+        private System.Windows.Forms.RadioButton rbCh3;
+        private System.Windows.Forms.RadioButton rbCh2;
+        private System.Windows.Forms.RadioButton rbCh1;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

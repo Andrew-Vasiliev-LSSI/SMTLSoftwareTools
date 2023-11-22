@@ -29,20 +29,14 @@ namespace SMTLSoftwareTools.SensorConfig
         private Sensor currentSensor = new Sensor();
         private PropertyInfo[] sensorPropertyInfo;
         private string channelNumber;
-        
-        public  SensorConfigForm(HttpClientClass client)
+        private RadioButton[] channelsArray = new RadioButton[4];
+
+        public SensorConfigForm(HttpClientClass client)
         {
             InitializeComponent();
             ClientSensors = client;
-            channelNumberInRequest();
-            comboBoxChannels.DropDownStyle = ComboBoxStyle.DropDownList;            
-
         }
 
-        private void channelNumberInRequest()
-        {
-            channelNumber = (comboBoxChannels.SelectedIndex + 1).ToString() + ".";
-        }
         #region Интерфейс
         private void btExit_Click(object sender, EventArgs e)
         {
@@ -55,9 +49,7 @@ namespace SMTLSoftwareTools.SensorConfig
             try
             {
                 channelNumber = "1.";
-                comboBoxChannels.Enabled = true;
                 await sensorWriteRead("read");
-                comboBoxChannels.SelectedIndex = 0;
                 btWrite.Enabled = true;
             }
             catch (Exception ex)
@@ -69,8 +61,17 @@ namespace SMTLSoftwareTools.SensorConfig
 
         private void SensorConfigForm_Load(object sender, EventArgs e)
         {
+            fillCannelsArray();
             readJson();
             connected();
+        }
+
+        private void fillCannelsArray()
+        {
+            channelsArray[0] = rbCh1;
+            channelsArray[1] = rbCh2;
+            channelsArray[2] = rbCh3;
+            channelsArray[3] = rbCh4;
         }
 
         private void readJson()
@@ -111,6 +112,7 @@ namespace SMTLSoftwareTools.SensorConfig
         {
             await sensorWriteRead("write");
             await ClientSensors.restartingMeasuringServer();
+            MessageBox.Show("Параметры датчика для канала N" + channelNumber + " записаны в прбор");
         }
         #endregion
         #region Выбор датчика
@@ -236,10 +238,41 @@ namespace SMTLSoftwareTools.SensorConfig
             }
         }
 
-        private async void comboBoxChannels_SelectedIndexChanged(object sender, EventArgs e)
+ 
+        // Обработка радиокнопок
+        private async void rbCh1_Click(object sender, EventArgs e)
         {
-            channelNumberInRequest();
+            await readSelectedChannel();
+        }
+
+        private async void rbCh2_Click(object sender, EventArgs e)
+        {
+            await readSelectedChannel();
+        }
+
+        private async void rbCh3_Click(object sender, EventArgs e)
+        {
+            await readSelectedChannel();
+        }
+
+        private async void rbCh4_Click(object sender, EventArgs e)
+        {
+            await readSelectedChannel();
+        }
+
+        private async Task readSelectedChannel()
+        {
+            definitionSelectedChannel();
             await sensorWriteRead("read");
+        }
+
+        private void definitionSelectedChannel()
+        {
+            for (int i = 0; i < channelsArray.Length; ++i)
+            {
+                if (channelsArray[i].Checked == true)
+                    channelNumber = (i + 1).ToString() + ".";
+            }
         }
     }
     #endregion
