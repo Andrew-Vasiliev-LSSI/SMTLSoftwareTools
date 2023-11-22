@@ -21,7 +21,9 @@ namespace SMTLSoftwareTools.SerialNumber
         HttpClientClass httpClient;
         string IP { get; set; }
         string PortName { get; set; }
+        string MAC { get; set; }
         private readonly string DevCode = "56";
+        private string[] IFace = { "eth0", "eth1" };
 
         public RecordSerialNumber(HttpClientClass client)
         {
@@ -30,6 +32,7 @@ namespace SMTLSoftwareTools.SerialNumber
             IP = client.Ip;
             InitializeComponent();
             LoadPortsName();
+            generateAndShowMac();
         }
         private async Task EnterSerialNumber()
         {
@@ -61,6 +64,45 @@ namespace SMTLSoftwareTools.SerialNumber
                 catch (Exception ex)
                 {
                     MessageBox.Show("Ошибка записи серийного номера!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void EnterMacAddr(string iface)
+        {
+            string Command, Username = "smtl", Password = "perseus";
+
+            using (SshClient Client = new SshClient(IP, Username, Password))
+            {
+                try
+                {
+                   labelInterface.Text = iface;
+
+                    Client.Connect();
+                    Command = "sudo /usr/local/sbin/fix_mac_addr " + iface + " " + MAC;
+
+                    IDictionary<Renci.SshNet.Common.TerminalModes, uint> modes =
+                                        new Dictionary<Renci.SshNet.Common.TerminalModes, uint>();
+                    modes.Add(Renci.SshNet.Common.TerminalModes.ECHO, 53);
+
+                    ShellStream shellStream =
+                    Client.CreateShellStream("xterm", 80, 24, 800, 600, 1024, modes);
+                    var output = shellStream.Expect(new Regex(@"[$>]"));
+
+                    shellStream.WriteLine(Command);
+                    output = shellStream.Expect(new Regex(@"([$#>:])"));
+                    shellStream.WriteLine(Password);
+                    output = shellStream.Expect(new Regex(@"([$#>])"));
+                    if (!String.IsNullOrEmpty(output))
+                        MessageBox.Show(output.Substring(output.IndexOf(": \r\n") + 4, output.LastIndexOf('\n') - output.IndexOf(": \r\n") - 4), "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                    {
+                        throw new Exception("Пустой ответ");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка записи MAC адреса!", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -162,6 +204,38 @@ namespace SMTLSoftwareTools.SerialNumber
             textBoxSerNum.Text = reader.BarCode;
             if (checkSerialNumber())
                 await EnterSerialNumber();
+        }
+
+        private string GenerateMacAddress()
+        {
+            Random random = new Random();
+            byte[] macBytes = new byte[6];
+            random.NextBytes(macBytes);
+
+            string macAddress = string.Join(":", macBytes.Select(b => b.ToString("X2")));
+
+            return macAddress;
+        }
+
+        private void btMacGenerate_Click(object sender, EventArgs e)
+        {
+            generateAndShowMac();
+        }
+
+        private void generateAndShowMac()
+        {
+            MAC = GenerateMacAddress();
+            textBoxMacAddr.Text = MAC;
+        }
+
+        private void btWriteMac_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                generateAndShowMac();
+                EnterMacAddr(IFace[i]);
+                Thread.Sleep(1000);
+            }
         }
     }
 }

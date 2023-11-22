@@ -42,6 +42,7 @@ namespace SMTLSoftwareTools
             this.lbIP = new System.Windows.Forms.Label();
             this.btExecute = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbtSerialNumber = new System.Windows.Forms.RadioButton();
             this.rbtAutoCalibration = new System.Windows.Forms.RadioButton();
             this.rbtDeviceConfig = new System.Windows.Forms.RadioButton();
             this.rbtConfigManagement = new System.Windows.Forms.RadioButton();
@@ -57,7 +58,6 @@ namespace SMTLSoftwareTools
             this.btAs01Show = new System.Windows.Forms.Button();
             this.btAs01Calibr = new System.Windows.Forms.Button();
             this.btExit = new System.Windows.Forms.Button();
-            this.rbtSerialNumber = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPageAS02.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -198,10 +198,21 @@ namespace SMTLSoftwareTools
             this.panel1.Controls.Add(this.rbtSetpoint);
             this.panel1.Controls.Add(this.rbtSensorConfig);
             this.panel1.Enabled = false;
-            this.panel1.Location = new System.Drawing.Point(125, 171);
+            this.panel1.Location = new System.Drawing.Point(116, 171);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(235, 167);
+            this.panel1.Size = new System.Drawing.Size(252, 167);
             this.panel1.TabIndex = 0;
+            // 
+            // rbtSerialNumber
+            // 
+            this.rbtSerialNumber.AutoSize = true;
+            this.rbtSerialNumber.Location = new System.Drawing.Point(17, 95);
+            this.rbtSerialNumber.Name = "rbtSerialNumber";
+            this.rbtSerialNumber.Size = new System.Drawing.Size(233, 17);
+            this.rbtSerialNumber.TabIndex = 5;
+            this.rbtSerialNumber.TabStop = true;
+            this.rbtSerialNumber.Text = "Запись серийного номера и MAC адреса";
+            this.rbtSerialNumber.UseVisualStyleBackColor = true;
             // 
             // rbtAutoCalibration
             // 
@@ -361,17 +372,6 @@ namespace SMTLSoftwareTools
             this.btExit.Text = "Выход";
             this.btExit.UseVisualStyleBackColor = true;
             this.btExit.Click += new System.EventHandler(this.btExit_Click);
-            // 
-            // rbtSerialNumber
-            // 
-            this.rbtSerialNumber.AutoSize = true;
-            this.rbtSerialNumber.Location = new System.Drawing.Point(17, 95);
-            this.rbtSerialNumber.Name = "rbtSerialNumber";
-            this.rbtSerialNumber.Size = new System.Drawing.Size(159, 17);
-            this.rbtSerialNumber.TabIndex = 5;
-            this.rbtSerialNumber.TabStop = true;
-            this.rbtSerialNumber.Text = "Запись серийного номера";
-            this.rbtSerialNumber.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

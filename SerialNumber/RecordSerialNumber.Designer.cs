@@ -37,11 +37,15 @@ namespace SMTLSoftwareTools.SerialNumber
             this.lbPort = new System.Windows.Forms.Label();
             this.btPortSelect = new System.Windows.Forms.Button();
             this.btScan = new System.Windows.Forms.Button();
+            this.labelMacAddr = new System.Windows.Forms.Label();
+            this.textBoxMacAddr = new System.Windows.Forms.TextBox();
+            this.btWriteMac = new System.Windows.Forms.Button();
+            this.labelInterface = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxSerNum
             // 
-            this.textBoxSerNum.Location = new System.Drawing.Point(197, 98);
+            this.textBoxSerNum.Location = new System.Drawing.Point(199, 98);
             this.textBoxSerNum.Name = "textBoxSerNum";
             this.textBoxSerNum.Size = new System.Drawing.Size(214, 20);
             this.textBoxSerNum.TabIndex = 0;
@@ -49,7 +53,7 @@ namespace SMTLSoftwareTools.SerialNumber
             // labelSerNum
             // 
             this.labelSerNum.AutoSize = true;
-            this.labelSerNum.Location = new System.Drawing.Point(211, 82);
+            this.labelSerNum.Location = new System.Drawing.Point(196, 82);
             this.labelSerNum.Name = "labelSerNum";
             this.labelSerNum.Size = new System.Drawing.Size(138, 13);
             this.labelSerNum.TabIndex = 1;
@@ -57,7 +61,7 @@ namespace SMTLSoftwareTools.SerialNumber
             // 
             // btWriteManual
             // 
-            this.btWriteManual.Location = new System.Drawing.Point(197, 165);
+            this.btWriteManual.Location = new System.Drawing.Point(199, 137);
             this.btWriteManual.Name = "btWriteManual";
             this.btWriteManual.Size = new System.Drawing.Size(214, 23);
             this.btWriteManual.TabIndex = 2;
@@ -67,7 +71,7 @@ namespace SMTLSoftwareTools.SerialNumber
             // 
             // btExit
             // 
-            this.btExit.Location = new System.Drawing.Point(267, 270);
+            this.btExit.Location = new System.Drawing.Point(267, 346);
             this.btExit.Name = "btExit";
             this.btExit.Size = new System.Drawing.Size(75, 23);
             this.btExit.TabIndex = 3;
@@ -105,7 +109,7 @@ namespace SMTLSoftwareTools.SerialNumber
             // btScan
             // 
             this.btScan.Enabled = false;
-            this.btScan.Location = new System.Drawing.Point(197, 209);
+            this.btScan.Location = new System.Drawing.Point(199, 181);
             this.btScan.Name = "btScan";
             this.btScan.Size = new System.Drawing.Size(214, 23);
             this.btScan.TabIndex = 7;
@@ -113,11 +117,50 @@ namespace SMTLSoftwareTools.SerialNumber
             this.btScan.UseVisualStyleBackColor = true;
             this.btScan.Click += new System.EventHandler(this.btScan_Click);
             // 
+            // labelMacAddr
+            // 
+            this.labelMacAddr.AutoSize = true;
+            this.labelMacAddr.Location = new System.Drawing.Point(196, 220);
+            this.labelMacAddr.Name = "labelMacAddr";
+            this.labelMacAddr.Size = new System.Drawing.Size(129, 13);
+            this.labelMacAddr.TabIndex = 9;
+            this.labelMacAddr.Text = "MAC адрес. Интерфейс:";
+            // 
+            // textBoxMacAddr
+            // 
+            this.textBoxMacAddr.Location = new System.Drawing.Point(199, 236);
+            this.textBoxMacAddr.Name = "textBoxMacAddr";
+            this.textBoxMacAddr.Size = new System.Drawing.Size(214, 20);
+            this.textBoxMacAddr.TabIndex = 8;
+            // 
+            // btWriteMac
+            // 
+            this.btWriteMac.Location = new System.Drawing.Point(199, 275);
+            this.btWriteMac.Name = "btWriteMac";
+            this.btWriteMac.Size = new System.Drawing.Size(214, 23);
+            this.btWriteMac.TabIndex = 11;
+            this.btWriteMac.Text = "Запись MAC адреса";
+            this.btWriteMac.UseVisualStyleBackColor = true;
+            this.btWriteMac.Click += new System.EventHandler(this.btWriteMac_Click);
+            // 
+            // labelInterface
+            // 
+            this.labelInterface.AutoSize = true;
+            this.labelInterface.Location = new System.Drawing.Point(331, 220);
+            this.labelInterface.Name = "labelInterface";
+            this.labelInterface.Size = new System.Drawing.Size(16, 13);
+            this.labelInterface.TabIndex = 12;
+            this.labelInterface.Text = "   ";
+            // 
             // RecordSerialNumber
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(609, 381);
+            this.Controls.Add(this.labelInterface);
+            this.Controls.Add(this.btWriteMac);
+            this.Controls.Add(this.labelMacAddr);
+            this.Controls.Add(this.textBoxMacAddr);
             this.Controls.Add(this.btScan);
             this.Controls.Add(this.btPortSelect);
             this.Controls.Add(this.lbPort);
@@ -127,7 +170,7 @@ namespace SMTLSoftwareTools.SerialNumber
             this.Controls.Add(this.labelSerNum);
             this.Controls.Add(this.textBoxSerNum);
             this.Name = "RecordSerialNumber";
-            this.Text = "Запись серийного номера";
+            this.Text = "Запись серийного номера и MAC адреса";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,5 +186,9 @@ namespace SMTLSoftwareTools.SerialNumber
         private System.Windows.Forms.Label lbPort;
         private System.Windows.Forms.Button btPortSelect;
         private System.Windows.Forms.Button btScan;
+        private System.Windows.Forms.Label labelMacAddr;
+        private System.Windows.Forms.TextBox textBoxMacAddr;
+        private System.Windows.Forms.Button btWriteMac;
+        private System.Windows.Forms.Label labelInterface;
     }
 }
