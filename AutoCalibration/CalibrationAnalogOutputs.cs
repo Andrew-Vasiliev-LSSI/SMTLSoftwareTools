@@ -1,4 +1,5 @@
 ﻿using Aean.MidasTools.Services;
+using SMTLSoftwareTools.Http;
 using Renci.SshNet.Messages;
 using SMTLSoftwareTools.SensorConfig;
 using System;

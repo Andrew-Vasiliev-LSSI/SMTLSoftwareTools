@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using System.Net.Mime;
 using System.IO;
 
-namespace SMTLSoftwareTools.SensorConfig
+namespace SMTLSoftwareTools.Http
 {
     public class HttpClientClass
     {

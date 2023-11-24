@@ -18,6 +18,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using System.Reflection;
 using System.Globalization;
+using SMTLSoftwareTools.Http;
 
 namespace SMTLSoftwareTools.SensorConfig
 {

@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using Renci.SshNet;
 using SMTLSoftwareTools.SensorConfig;
 using BarCodeReader;
+using SMTLSoftwareTools.Http;
 
 namespace SMTLSoftwareTools.SerialNumber
 {

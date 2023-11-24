@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Aean.MidasTools.Services;
+using SMTLSoftwareTools.Http;
 using SMTLSoftwareTools.SensorConfig;
 using SMTLSoftwareTools.AutoCalibration;
 using System.Data.Common;

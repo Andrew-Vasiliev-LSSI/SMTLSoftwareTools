@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SMTLSoftwareTools.Http;
 
 namespace SMTLSoftwareTools.AutoCalibration
 {

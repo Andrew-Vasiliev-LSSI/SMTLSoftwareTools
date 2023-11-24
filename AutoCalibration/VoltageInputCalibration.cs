@@ -1,4 +1,5 @@
 ﻿using Aean.MidasTools.Services;
+using SMTLSoftwareTools.Http;
 using SMTLSoftwareTools.SensorConfig;
 using System;
 using System.Collections.Generic;
