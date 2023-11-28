@@ -21,6 +21,8 @@ using Renci.SshNet;
 using System.Threading;
 using System.Text.RegularExpressions;
 using SMTLSoftwareTools.SerialNumber;
+using SMTLSoftwareTools.Http;
+using SMTLSoftwareTools.LED;
 
 namespace SMTLSoftwareTools
 {
@@ -75,6 +77,11 @@ namespace SMTLSoftwareTools
             {
                 Form recordSerialNumber = new RecordSerialNumber(client);               
                 recordSerialNumber.Show();
+            }
+            else if (rbtLed.Checked == true)
+            {
+                Form testLed = new LedForm(client);
+                testLed.Show();
             }
         }
 

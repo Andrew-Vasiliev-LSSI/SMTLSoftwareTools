@@ -68,6 +68,14 @@ namespace SMTLSoftwareTools.Http
             string address = "http://" + Ip + "/api/attributedata?path=Application/LPHD1.ResetGw:Oper_ctlVal&value=true";
             await executingGetRequest(address);
         }
+
+        public async Task ledTest()
+        {
+            string address = "http://" + Ip + "/api/attributedata?path=Application/LPHD1.LEDTest:Oper_ctlVal&value=true";
+            await executingGetRequest(address);
+        }
+
+
         // Подключение и авторизация
         public void authorization()
         {
@@ -131,3 +139,5 @@ namespace SMTLSoftwareTools.Http
 }
 // Перезапуск измерительного сервера
 // http://192.168.0.1/api/attributedata?path=Application/LPHD1.ResetSrv:Oper_ctlVal&value=true
+// Тест светодиодов и выходных реле
+// http://192.168.0.1/api/attributedata?path=Application/LPHD1.LEDTest:Oper_ctlVal&value=true

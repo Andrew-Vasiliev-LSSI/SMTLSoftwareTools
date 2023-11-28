@@ -58,6 +58,7 @@ namespace SMTLSoftwareTools
             this.btAs01Show = new System.Windows.Forms.Button();
             this.btAs01Calibr = new System.Windows.Forms.Button();
             this.btExit = new System.Windows.Forms.Button();
+            this.rbtLed = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPageAS02.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -191,6 +192,7 @@ namespace SMTLSoftwareTools
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rbtLed);
             this.panel1.Controls.Add(this.rbtSerialNumber);
             this.panel1.Controls.Add(this.rbtAutoCalibration);
             this.panel1.Controls.Add(this.rbtDeviceConfig);
@@ -200,13 +202,13 @@ namespace SMTLSoftwareTools
             this.panel1.Enabled = false;
             this.panel1.Location = new System.Drawing.Point(116, 171);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(252, 167);
+            this.panel1.Size = new System.Drawing.Size(252, 190);
             this.panel1.TabIndex = 0;
             // 
             // rbtSerialNumber
             // 
             this.rbtSerialNumber.AutoSize = true;
-            this.rbtSerialNumber.Location = new System.Drawing.Point(17, 95);
+            this.rbtSerialNumber.Location = new System.Drawing.Point(10, 91);
             this.rbtSerialNumber.Name = "rbtSerialNumber";
             this.rbtSerialNumber.Size = new System.Drawing.Size(233, 17);
             this.rbtSerialNumber.TabIndex = 5;
@@ -217,7 +219,7 @@ namespace SMTLSoftwareTools
             // rbtAutoCalibration
             // 
             this.rbtAutoCalibration.AutoSize = true;
-            this.rbtAutoCalibration.Location = new System.Drawing.Point(17, 72);
+            this.rbtAutoCalibration.Location = new System.Drawing.Point(10, 69);
             this.rbtAutoCalibration.Name = "rbtAutoCalibration";
             this.rbtAutoCalibration.Size = new System.Drawing.Size(172, 17);
             this.rbtAutoCalibration.TabIndex = 4;
@@ -229,7 +231,7 @@ namespace SMTLSoftwareTools
             // 
             this.rbtDeviceConfig.AutoSize = true;
             this.rbtDeviceConfig.Checked = true;
-            this.rbtDeviceConfig.Location = new System.Drawing.Point(17, 137);
+            this.rbtDeviceConfig.Location = new System.Drawing.Point(10, 154);
             this.rbtDeviceConfig.Name = "rbtDeviceConfig";
             this.rbtDeviceConfig.Size = new System.Drawing.Size(143, 17);
             this.rbtDeviceConfig.TabIndex = 3;
@@ -240,7 +242,7 @@ namespace SMTLSoftwareTools
             // rbtConfigManagement
             // 
             this.rbtConfigManagement.AutoSize = true;
-            this.rbtConfigManagement.Location = new System.Drawing.Point(17, 49);
+            this.rbtConfigManagement.Location = new System.Drawing.Point(10, 47);
             this.rbtConfigManagement.Name = "rbtConfigManagement";
             this.rbtConfigManagement.Size = new System.Drawing.Size(211, 17);
             this.rbtConfigManagement.TabIndex = 3;
@@ -251,7 +253,7 @@ namespace SMTLSoftwareTools
             // rbtSetpoint
             // 
             this.rbtSetpoint.AutoSize = true;
-            this.rbtSetpoint.Location = new System.Drawing.Point(17, 26);
+            this.rbtSetpoint.Location = new System.Drawing.Point(10, 25);
             this.rbtSetpoint.Name = "rbtSetpoint";
             this.rbtSetpoint.Size = new System.Drawing.Size(111, 17);
             this.rbtSetpoint.TabIndex = 2;
@@ -262,7 +264,7 @@ namespace SMTLSoftwareTools
             // rbtSensorConfig
             // 
             this.rbtSensorConfig.AutoSize = true;
-            this.rbtSensorConfig.Location = new System.Drawing.Point(17, 3);
+            this.rbtSensorConfig.Location = new System.Drawing.Point(10, 3);
             this.rbtSensorConfig.Name = "rbtSensorConfig";
             this.rbtSensorConfig.Size = new System.Drawing.Size(147, 17);
             this.rbtSensorConfig.TabIndex = 1;
@@ -373,6 +375,17 @@ namespace SMTLSoftwareTools
             this.btExit.UseVisualStyleBackColor = true;
             this.btExit.Click += new System.EventHandler(this.btExit_Click);
             // 
+            // rbtLed
+            // 
+            this.rbtLed.AutoSize = true;
+            this.rbtLed.Location = new System.Drawing.Point(10, 114);
+            this.rbtLed.Name = "rbtLed";
+            this.rbtLed.Size = new System.Drawing.Size(209, 17);
+            this.rbtLed.TabIndex = 6;
+            this.rbtLed.TabStop = true;
+            this.rbtLed.Text = "Тест светодиодов и выходных  реле";
+            this.rbtLed.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -428,6 +441,7 @@ namespace SMTLSoftwareTools
         private System.Windows.Forms.TabPage tabPageAI24;
         private System.Windows.Forms.Button btAiConfig;
         private System.Windows.Forms.RadioButton rbtSerialNumber;
+        private System.Windows.Forms.RadioButton rbtLed;
     }
 }
 
