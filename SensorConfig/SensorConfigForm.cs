@@ -113,7 +113,7 @@ namespace SMTLSoftwareTools.SensorConfig
         {
             await sensorWriteRead("write");
             await ClientSensors.restartingMeasuringServer();
-            MessageBox.Show("Параметры датчика для канала N" + channelNumber + " записаны в прбор");
+            MessageBox.Show("Параметры датчика для канала N" + channelNumber + " записаны в прибор");
         }
         #endregion
         #region Выбор датчика
