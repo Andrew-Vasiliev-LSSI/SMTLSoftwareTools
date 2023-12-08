@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Renci.SshNet;
 using SMTLSoftwareTools.SensorConfig;
-using BarCodeReader;
 using SMTLSoftwareTools.Http;
 
 namespace SMTLSoftwareTools.SerialNumber
@@ -21,7 +20,6 @@ namespace SMTLSoftwareTools.SerialNumber
     {
         HttpClientClass httpClient;
         string IP { get; set; }
-        string PortName { get; set; }
         string MAC { get; set; }
         private readonly string DevCode = "56";
         private string[] IFace = { "eth0", "eth1" };
@@ -32,7 +30,6 @@ namespace SMTLSoftwareTools.SerialNumber
             DevCode = "56";
             IP = client.Ip;
             InitializeComponent();
-            LoadPortsName();
             generateAndShowMac();
         }
         private async Task EnterSerialNumber()
@@ -167,44 +164,29 @@ namespace SMTLSoftwareTools.SerialNumber
             this.Close();
         }
 
-        private void LoadPortsName()
-        {
-            string[] ports = SerialPort.GetPortNames();
-            if (ports.Length > 0)
-            {
-                foreach (string port in ports)
-                {
-                    lstPorts.Items.Add(port);
-                }
 
-                lstPorts.SelectedIndex = 0;
-            }
-            else
-            {
-                MessageBox.Show("В системе отсутствует COM порт. Сканер не доступен.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                btScan.Enabled = false;
-            }
-        }
 
-        private void btPortSelect_Click(object sender, EventArgs e)
+        private async Task CycleTextCodeRead()
         {
-            PortName = lstPorts.SelectedItem as string;
-            btScan.Enabled = true;
+            while (textBoxSerNum.Text.Length == 0)
+            {
+                await Task.Delay(500);
+            };
         }
 
         private async void btScan_Click(object sender, EventArgs e)
         {
-            
-            SerialPort port = new SerialPort(PortName, 9600, Parity.None, 8, StopBits.One);
-            if (port.IsOpen == true)
-                port.Close();
-            port.Open();
-            BarCodeReaderClass reader = new BarCodeReaderClass(port);
-            await reader.StartReadAsync();
-            port.Close();
-            textBoxSerNum.Text = reader.BarCode;
-            if (checkSerialNumber())
+            btScan.Enabled = false;
+            textBoxSerNum.Focus();
+            textBoxSerNum.Clear();
+            await CycleTextCodeRead();         
+
+            // Удалить символы перевода строки, если они есть
+            textBoxSerNum.Text = textBoxSerNum.Text.Trim('\r', '\n');
+            textBoxSerNum.Text = "0" + textBoxSerNum.Text;
+                if (checkSerialNumber())
                 await EnterSerialNumber();
+            btScan.Enabled = true;
         }
 
         private string GenerateMacAddress()

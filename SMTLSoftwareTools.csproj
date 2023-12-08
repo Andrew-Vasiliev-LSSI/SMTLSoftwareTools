@@ -204,12 +204,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="BarCodeReader\BarCodeReader.csproj">
-      <Project>{43df657b-f36e-40dc-bbd6-290dcb3da5c4}</Project>
-      <Name>BarCodeReader</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
