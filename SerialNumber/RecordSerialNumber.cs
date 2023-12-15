@@ -181,7 +181,7 @@ namespace SMTLSoftwareTools.SerialNumber
             else
             {
                 MessageBox.Show("В системе отсутствует COM порт. Сканер не доступен.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                btScan.Enabled = false;
+                panelVCOM.Visible = false;
             }
         }
 
