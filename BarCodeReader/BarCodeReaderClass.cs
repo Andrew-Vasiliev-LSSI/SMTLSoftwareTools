@@ -43,7 +43,11 @@ namespace BarCodeReader
         {
             int totalBytes = Port.BytesToRead;
 
-            if (totalBytes > 0)
+            if (totalBytes < 12)
+            {
+                BarCode = "Ошибка сканирования";
+            }
+            else
             {
                 byte[] buffer = new byte[totalBytes];
                 Port.Read(buffer, 0, totalBytes);
@@ -51,8 +55,8 @@ namespace BarCodeReader
                 Encoding encoding = Encoding.GetEncoding("iso-8859-1");
                 string barcodeText = encoding.GetString(buffer);
 
-                // Trim /r
-                BarCode = barcodeText.Substring(0, 12);
+                // Удалить символы перевода строки, если они есть
+                BarCode = barcodeText.Trim('\r', '\n');
                 BarCode = "0" + BarCode;
             }
         }
