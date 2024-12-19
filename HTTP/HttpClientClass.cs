@@ -141,3 +141,5 @@ namespace SMTLSoftwareTools.Http
 // http://192.168.0.1/api/attributedata?path=Application/LPHD1.ResetSrv:Oper_ctlVal&value=true
 // Тест светодиодов и выходных реле
 // http://192.168.0.1/api/attributedata?path=Application/LPHD1.LEDTest:Oper_ctlVal&value=true
+// Режим работы прибора
+// http://192.168.0.1/api/attributedata?path=Vibro/SCVS1.DeviceMode&value

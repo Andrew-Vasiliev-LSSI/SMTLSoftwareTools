@@ -73,17 +73,17 @@ namespace SMTLSoftwareTools.AutoCalibration
 
         public async Task restartAs02Server()
         {
-            LabelInfo.Text = "Перезапуск измерительного сервера. (10 сек.)";
+            LabelInfo.Text = "Перезапуск измерительного сервера. (15 сек.)";
             await ClientCalibration.restartingMeasuringServer();
-            await Task.Delay(10000);
+            await Task.Delay(15000);
         }
 
         public async Task calibratorOutputSet(double value, FlukeUnit unit)
         {
-            LabelInfo.Text = "Установка выходного значения калибратора (20 сек.)";
+            LabelInfo.Text = "Установка выходного значения калибратора (25 сек.)";
             Calibrator.SetOutput(value, unit);
             Calibrator.SetOperMode();
-            await Task.Delay(20000);
+            await Task.Delay(25000);
         }
         public async Task<int[]> calculateCoefficients()
         {

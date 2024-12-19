@@ -218,7 +218,7 @@ namespace SMTLSoftwareTools.SerialNumber
                     btScan.Enabled = false;
                     textBoxSerNum.Focus();
                     textBoxSerNum.Clear();
-                    await CycleTextCodeRead();
+                    await CycleTextCodeRead();      
 
                     // Удалить символы перевода строки, если они есть
                     textBoxSerNum.Text = textBoxSerNum.Text.Trim('\r', '\n');
