@@ -34,6 +34,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             InitializeComponent();
             HttpClientCalibration = client;
             LoadListboxes();
+            LoadChoice();
             dataGridViewResultVoltage.RowCount = numberChannels;
             dataGridViewResultCurrent.RowCount = numberChannels;
 
@@ -60,8 +61,6 @@ namespace SMTLSoftwareTools.AutoCalibration
                     lstPorts.Items.Add(port);
                 }
 
-                lstPorts.SelectedIndex = 0;
-
                 //2) Baudrates:
                 string[] baudrates = { "230400", "115200", "57600", "38400", "19200", "9600" };
 
@@ -70,7 +69,6 @@ namespace SMTLSoftwareTools.AutoCalibration
                     lstBaudrate.Items.Add(baudrate);
                 }
 
-                lstBaudrate.SelectedIndex = 5;
             }
             else
             {
@@ -386,6 +384,37 @@ namespace SMTLSoftwareTools.AutoCalibration
             }
 
         }
+        // Сохранение и чтение параметров COM порта
+        private void LoadChoice()
+        {
+            string choiсePort, choiceBaudrate;
+            ManageParameters Loader = new ManageParameters();
+            choiсePort = Loader.LoadParameter("lstPortsChoiсe");
+            lstPorts.SelectedItem = choiсePort;
+            choiceBaudrate = Loader.LoadParameter("lstBaudrateChoice");
+            lstBaudrate.SelectedItem = choiceBaudrate;
+        }
+        private void SaveChoicePort()
+        {
+            ManageParameters Saver = new ManageParameters();
+            Saver.SaveParameter("lstPortsChoice", lstPorts.SelectedItem.ToString());
+        }
+        private void SaveChoiceBaudrate()
+        {
+            ManageParameters Saver = new ManageParameters();
+            Saver.SaveParameter("lstBaudrateChoice", lstBaudrate.SelectedItem.ToString());
+        }
+
+        private void lstPorts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveChoicePort();
+        }
+        private void lstBaudrate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveChoiceBaudrate();           
+        }
+
+
     }
-    }
+}
 

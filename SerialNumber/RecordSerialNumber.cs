@@ -14,6 +14,7 @@ using Renci.SshNet;
 using SMTLSoftwareTools.SensorConfig;
 using BarCodeReader;
 using SMTLSoftwareTools.Http;
+using SMTLSoftwareTools.AutoCalibration;
 
 namespace SMTLSoftwareTools.SerialNumber
 {
@@ -33,6 +34,8 @@ namespace SMTLSoftwareTools.SerialNumber
             IP = client.Ip;
             InitializeComponent();
             generateAndShowMac();
+            LoadPortsName();
+            LoadChoice();
         }
         private async Task EnterSerialNumber()
         {
@@ -176,7 +179,7 @@ namespace SMTLSoftwareTools.SerialNumber
                     lstPorts.Items.Add(port);
                 }
 
-                lstPorts.SelectedIndex = 0;
+               // lstPorts.SelectedIndex = 0;
             }
             else
             {
@@ -270,13 +273,28 @@ namespace SMTLSoftwareTools.SerialNumber
         {
             btScan.Enabled = false;
             panelVCOM.Visible = true;
-            LoadPortsName();
         }
 
         private void rbHid_Click(object sender, EventArgs e)
         {
             panelVCOM.Visible = false;
             btScan.Enabled = true;
+        }
+
+        // Сохранение и чтение параметров COM порта
+        private void LoadChoice()
+        {
+            string choiсePort = Properties.Settings.Default.lstPortsChoiceScaner;
+            lstPorts.SelectedItem = choiсePort;
+        }
+        private void SaveChoicePort()
+        {
+            Properties.Settings.Default.lstPortsChoiceScaner = lstPorts.SelectedItem.ToString();
+        }
+
+        private void lstPorts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveChoicePort();
         }
     }
 }

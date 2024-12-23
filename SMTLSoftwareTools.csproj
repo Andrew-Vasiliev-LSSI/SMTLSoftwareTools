@@ -101,6 +101,7 @@
     <Compile Include="AutoCalibration\CalibrationAnalogOutputs.cs" />
     <Compile Include="AutoCalibration\CurrentInputCalibration.cs" />
     <Compile Include="AutoCalibration\FlukeConnect.cs" />
+    <Compile Include="AutoCalibration\ManageParameters.cs" />
     <Compile Include="AutoCalibration\VoltageInputCalibration.cs" />
     <Compile Include="ConfigManagment\ConfigManagmentForm.cs">
       <SubType>Form</SubType>
@@ -144,6 +145,7 @@
     <Compile Include="SetpointsConfig\SetpointsConfigForms.Designer.cs">
       <DependentUpon>SetpointsConfigForms.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="SSH\SSHClient.cs" />
     <Compile Include="TCP\TcpClientClass.cs" />
     <EmbeddedResource Include="AutoCalibration\Calibration.resx">
@@ -167,6 +169,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SensorConfig\SensorConfigForm.resx">
       <DependentUpon>SensorConfigForm.cs</DependentUpon>
@@ -178,6 +181,7 @@
     <EmbeddedResource Include="SetpointsConfig\SetpointsConfigForms.resx">
       <DependentUpon>SetpointsConfigForms.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -188,9 +192,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

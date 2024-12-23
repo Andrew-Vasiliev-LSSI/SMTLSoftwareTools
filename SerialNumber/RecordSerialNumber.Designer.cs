@@ -43,8 +43,8 @@ namespace SMTLSoftwareTools.SerialNumber
             this.labelInterface = new System.Windows.Forms.Label();
             this.panelVCOM = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbHid = new System.Windows.Forms.RadioButton();
             this.rbVcom = new System.Windows.Forms.RadioButton();
+            this.rbHid = new System.Windows.Forms.RadioButton();
             this.panelVCOM.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +92,7 @@ namespace SMTLSoftwareTools.SerialNumber
             this.lstPorts.Name = "lstPorts";
             this.lstPorts.Size = new System.Drawing.Size(121, 21);
             this.lstPorts.TabIndex = 4;
+            this.lstPorts.SelectedIndexChanged += new System.EventHandler(this.lstPorts_SelectedIndexChanged);
             // 
             // lbPort
             // 
@@ -179,6 +180,17 @@ namespace SMTLSoftwareTools.SerialNumber
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Выбор интерфейса для сканера";
             // 
+            // rbVcom
+            // 
+            this.rbVcom.AutoSize = true;
+            this.rbVcom.Location = new System.Drawing.Point(152, 18);
+            this.rbVcom.Name = "rbVcom";
+            this.rbVcom.Size = new System.Drawing.Size(56, 17);
+            this.rbVcom.TabIndex = 1;
+            this.rbVcom.Text = "VCOM";
+            this.rbVcom.UseVisualStyleBackColor = true;
+            this.rbVcom.Click += new System.EventHandler(this.rbVcom_Click);
+            // 
             // rbHid
             // 
             this.rbHid.AutoSize = true;
@@ -191,17 +203,6 @@ namespace SMTLSoftwareTools.SerialNumber
             this.rbHid.Text = "USB HID";
             this.rbHid.UseVisualStyleBackColor = true;
             this.rbHid.Click += new System.EventHandler(this.rbHid_Click);
-            // 
-            // rbVcom
-            // 
-            this.rbVcom.AutoSize = true;
-            this.rbVcom.Location = new System.Drawing.Point(152, 18);
-            this.rbVcom.Name = "rbVcom";
-            this.rbVcom.Size = new System.Drawing.Size(56, 17);
-            this.rbVcom.TabIndex = 1;
-            this.rbVcom.Text = "VCOM";
-            this.rbVcom.UseVisualStyleBackColor = true;
-            this.rbVcom.Click += new System.EventHandler(this.rbVcom_Click);
             // 
             // RecordSerialNumber
             // 

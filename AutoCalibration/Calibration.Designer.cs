@@ -186,6 +186,7 @@
             this.lstPorts.Name = "lstPorts";
             this.lstPorts.Size = new System.Drawing.Size(121, 21);
             this.lstPorts.TabIndex = 0;
+            this.lstPorts.SelectedIndexChanged += new System.EventHandler(this.lstPorts_SelectedIndexChanged);
             // 
             // lstBaudrate
             // 
@@ -194,6 +195,7 @@
             this.lstBaudrate.Name = "lstBaudrate";
             this.lstBaudrate.Size = new System.Drawing.Size(121, 21);
             this.lstBaudrate.TabIndex = 1;
+            this.lstBaudrate.SelectedIndexChanged += new System.EventHandler(this.lstBaudrate_SelectedIndexChanged);
             // 
             // tabPage2
             // 
