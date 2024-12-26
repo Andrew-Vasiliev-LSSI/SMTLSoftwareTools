@@ -81,9 +81,9 @@ namespace SMTLSoftwareTools.Http
         {
             try
             {
-                var username = "rakurs";
-                var password = "20_Com_05";
-                var blobCreds = ASCIIEncoding.ASCII.GetBytes($"{username}:{password}");
+                string username = "rakurs";
+                string password = "20_Com_05";
+                byte[] blobCreds = ASCIIEncoding.ASCII.GetBytes($"{username}:{password}");
                 string b64Creds = Convert.ToBase64String(blobCreds);
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", b64Creds);
                 LabelConnect.Text = "Подключен";

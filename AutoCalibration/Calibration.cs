@@ -418,3 +418,84 @@ namespace SMTLSoftwareTools.AutoCalibration
     }
 }
 
+//Установите пакет NuGet EPPlus в ваш проект, если еще не сделали этого
+
+//using OfficeOpenXml;
+//using System.IO;
+
+//public void ExportToExcel(DataGridView dataGridView, string filePath)
+//{
+//    using (var package = new ExcelPackage(new FileInfo(filePath)))
+//    {
+//        var worksheet = package.Workbook.Worksheets.Add("Data");
+
+//        // Запись заголовков столбцов из DataGridView
+//        for (int i = 0; i < dataGridView.ColumnCount; i++)
+//        {
+//            worksheet.Cells[1, i + 1].Value = dataGridView.Columns[i].HeaderText;
+//        }
+
+//        // Запись данных из DataGridView
+//        for (int i = 0; i < dataGridView.RowCount; i++)
+//        {
+//            for (int j = 0; j < dataGridView.ColumnCount; j++)
+//            {
+//                worksheet.Cells[i + 2, j + 1].Value = dataGridView.Rows[i].Cells[j].Value;
+//            }
+//        }
+
+//        // Сохранение файла
+//        package.Save();
+//    }
+
+//    string filePath = @"C:\temp\data.xlsx";
+//    ExportToExcel(dataGridView1, filePath);
+//}
+
+
+
+//public void ExportToExcel(params DataGridView[] dataGridViews)
+//{
+//    using (var package = new ExcelPackage())
+//    {
+//        int worksheetIndex = 1;
+
+//        // Перебор всех DataGridView и добавление их данных в файл Excel
+//        foreach (var dataGridView in dataGridViews)
+//        {
+//            var worksheet = package.Workbook.Worksheets.Add("Data" + worksheetIndex);
+
+//            // Запись заголовков столбцов из DataGridView
+//            for (int i = 0; i < dataGridView.ColumnCount; i++)
+//            {
+//                worksheet.Cells[1, i + 1].Value = dataGridView.Columns[i].HeaderText;
+//            }
+
+//            // Запись данных из DataGridView
+//            for (int i = 0; i < dataGridView.RowCount; i++)
+//            {
+//                for (int j = 0; j < dataGridView.ColumnCount; j++)
+//                {
+//                    worksheet.Cells[i + 2, j + 1].Value = dataGridView.Rows[i].Cells[j].Value;
+//                }
+//            }
+
+//            worksheetIndex++;
+//        }
+
+//        // Сохранение файла
+//        SaveFileDialog saveFileDialog = new SaveFileDialog
+//        {
+//            Filter = "Excel Files|*.xlsx",
+//            Title = "Save Excel File"
+//        };
+
+//        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+//        {
+//            package.SaveAs(new FileInfo(saveFileDialog.FileName));
+//        }
+//    }
+//}
+
+//DataGridView[] dataGridViews = new DataGridView[] { dataGridView1, dataGridView2, dataGridView3 };
+//ExportToExcel(dataGridViews);

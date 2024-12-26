@@ -44,7 +44,7 @@ namespace SMTLSoftwareTools.SSH
                 commandValue = "cat /opt/share/sernum";
             else if (deviceType == "OpenSCADA")
                 commandValue = "cat /home/as02server/sernum";
-            var Command = Client.CreateCommand(commandValue);
+            SshCommand Command = Client.CreateCommand(commandValue);
             rez = Command.Execute();
             return rez;
         }

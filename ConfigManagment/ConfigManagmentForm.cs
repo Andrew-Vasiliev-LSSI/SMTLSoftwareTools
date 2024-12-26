@@ -46,7 +46,7 @@ namespace SMTLSoftwareTools.ConfigManagment
                 FileDialog.Filter = "DataBase (*.db)|*.db";
                 if (FileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    using (var fileStream = new FileStream(Path.Combine(FileDialog.FileName), FileMode.Create, FileAccess.Write))
+                    using (FileStream fileStream = new FileStream(Path.Combine(FileDialog.FileName), FileMode.Create, FileAccess.Write))
                     {
                         fileStream.Write(data, 0, data.Length);
                     }

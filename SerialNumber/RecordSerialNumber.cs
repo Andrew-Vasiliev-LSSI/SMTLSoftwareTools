@@ -90,7 +90,7 @@ namespace SMTLSoftwareTools.SerialNumber
 
                     ShellStream shellStream =
                     Client.CreateShellStream("xterm", 80, 24, 800, 600, 1024, modes);
-                    var output = shellStream.Expect(new Regex(@"[$>]"));
+                    string output = shellStream.Expect(new Regex(@"[$>]"));
 
                     shellStream.WriteLine(Command);
                     output = shellStream.Expect(new Regex(@"([$#>:])"));

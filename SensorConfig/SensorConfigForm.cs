@@ -82,7 +82,7 @@ namespace SMTLSoftwareTools.SensorConfig
                 string data = File.ReadAllText("sensors.json");
                 sensors = JsonSerializer.Deserialize<List<Sensor>>(data);
 
-                foreach (var item in sensors)
+                foreach (Sensor item in sensors)
                 {
                     dataGridViewSensors.Rows.Add(item.SensorName, item.MeasurementType);
                 }
