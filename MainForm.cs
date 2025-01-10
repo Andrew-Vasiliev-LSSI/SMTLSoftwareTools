@@ -47,6 +47,7 @@ namespace SMTLSoftwareTools
             if (rbtDeviceConfig.Checked == true)
             {
                 string path = Path.Combine(Environment.CurrentDirectory, "Communicator");
+                Directory.SetCurrentDirectory(path);
                 Process proc = new Process();
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.FileName = path + @"\Aean.Communicator.exe";
