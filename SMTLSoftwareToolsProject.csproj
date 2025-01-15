@@ -146,6 +146,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HTTP\HttpClientClass.cs" />
+    <Compile Include="ReportGeneration\CalibrationType.cs" />
     <Compile Include="ReportGeneration\ReportGeneration.cs" />
     <Compile Include="SensorConfig\Sensor.cs" />
     <Compile Include="SensorConfig\SensorConfigForm.cs">
