@@ -22,7 +22,7 @@ namespace SMTLSoftwareTools.ReportGeneration
         {
         new List<int> { 5, 1 }, // Начальные координаты для DataGridViewVoltage
         new List<int> { 5, 5 }, // Начальные координаты для DataGridViewCurrent
-        new List<int> { 5, 9 },  // Начальные координаты для DataGridViewAnalogOutput1
+        new List<int> { 5, 9 }  // Начальные координаты для DataGridViewAnalogOutput1
         };
 
          public ReportGeneration(string serialNumber, string executor)
