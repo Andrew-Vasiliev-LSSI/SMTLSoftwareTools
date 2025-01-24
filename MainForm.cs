@@ -71,7 +71,7 @@ namespace SMTLSoftwareTools
             }
             else if (rbtAutoCalibration.Checked == true)
             {
-                Form autoCalibration = new Calibration(client);
+                Form autoCalibration = new Calibration(client, textBoxSerNum.Text);
                 autoCalibration.Show();
             }
             else if (rbtSerialNumber.Checked == true)
