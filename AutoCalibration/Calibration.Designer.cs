@@ -29,6 +29,15 @@
         private void InitializeComponent()
         {
             this.tabControlCalibr = new System.Windows.Forms.TabControl();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.lbPathReport = new System.Windows.Forms.Label();
+            this.lbExecutor = new System.Windows.Forms.Label();
+            this.lbSerNum = new System.Windows.Forms.Label();
+            this.btPathReport = new System.Windows.Forms.Button();
+            this.textBoxExecutor = new System.Windows.Forms.TextBox();
+            this.textBoxPathReport = new System.Windows.Forms.TextBox();
+            this.textBoxSerNum = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.cbEnableCheckErrors = new System.Windows.Forms.CheckBox();
             this.groupBoxConnect = new System.Windows.Forms.GroupBox();
@@ -76,7 +85,10 @@
             this.btStartCurrentOutput = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.btReport = new System.Windows.Forms.Button();
+            this.btSerialZero = new System.Windows.Forms.Button();
             this.tabControlCalibr.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxConnect.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -92,6 +104,7 @@
             // 
             // tabControlCalibr
             // 
+            this.tabControlCalibr.Controls.Add(this.tabPage5);
             this.tabControlCalibr.Controls.Add(this.tabPage1);
             this.tabControlCalibr.Controls.Add(this.tabPage2);
             this.tabControlCalibr.Controls.Add(this.tabPage3);
@@ -101,6 +114,103 @@
             this.tabControlCalibr.SelectedIndex = 0;
             this.tabControlCalibr.Size = new System.Drawing.Size(1119, 580);
             this.tabControlCalibr.TabIndex = 3;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.button1);
+            this.tabPage5.Controls.Add(this.lbPathReport);
+            this.tabPage5.Controls.Add(this.lbExecutor);
+            this.tabPage5.Controls.Add(this.lbSerNum);
+            this.tabPage5.Controls.Add(this.btPathReport);
+            this.tabPage5.Controls.Add(this.textBoxExecutor);
+            this.tabPage5.Controls.Add(this.textBoxPathReport);
+            this.tabPage5.Controls.Add(this.textBoxSerNum);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(1111, 554);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Начальные параметры";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            this.tabPage5.UseWaitCursor = true;
+            // 
+            // button1
+            // 
+            this.button1.AutoSize = true;
+            this.button1.Location = new System.Drawing.Point(744, 115);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(113, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Записать";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseWaitCursor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lbPathReport
+            // 
+            this.lbPathReport.AutoSize = true;
+            this.lbPathReport.Location = new System.Drawing.Point(387, 150);
+            this.lbPathReport.Name = "lbPathReport";
+            this.lbPathReport.Size = new System.Drawing.Size(177, 13);
+            this.lbPathReport.TabIndex = 6;
+            this.lbPathReport.Text = "Путь к папке сохранения отчетов";
+            this.lbPathReport.UseWaitCursor = true;
+            // 
+            // lbExecutor
+            // 
+            this.lbExecutor.AutoSize = true;
+            this.lbExecutor.Location = new System.Drawing.Point(387, 99);
+            this.lbExecutor.Name = "lbExecutor";
+            this.lbExecutor.Size = new System.Drawing.Size(140, 13);
+            this.lbExecutor.TabIndex = 5;
+            this.lbExecutor.Text = "Кто выполнил калибровку";
+            this.lbExecutor.UseWaitCursor = true;
+            // 
+            // lbSerNum
+            // 
+            this.lbSerNum.AutoSize = true;
+            this.lbSerNum.Location = new System.Drawing.Point(387, 45);
+            this.lbSerNum.Name = "lbSerNum";
+            this.lbSerNum.Size = new System.Drawing.Size(138, 13);
+            this.lbSerNum.TabIndex = 4;
+            this.lbSerNum.Text = "Серийный номер прибора";
+            this.lbSerNum.UseWaitCursor = true;
+            // 
+            // btPathReport
+            // 
+            this.btPathReport.AutoSize = true;
+            this.btPathReport.Location = new System.Drawing.Point(744, 166);
+            this.btPathReport.Name = "btPathReport";
+            this.btPathReport.Size = new System.Drawing.Size(232, 23);
+            this.btPathReport.TabIndex = 3;
+            this.btPathReport.Text = "Выбрать путь к папке сохранения отчетов";
+            this.btPathReport.UseVisualStyleBackColor = true;
+            this.btPathReport.UseWaitCursor = true;
+            this.btPathReport.Click += new System.EventHandler(this.btPathReport_Click);
+            // 
+            // textBoxExecutor
+            // 
+            this.textBoxExecutor.Location = new System.Drawing.Point(387, 115);
+            this.textBoxExecutor.Name = "textBoxExecutor";
+            this.textBoxExecutor.Size = new System.Drawing.Size(336, 20);
+            this.textBoxExecutor.TabIndex = 2;
+            this.textBoxExecutor.UseWaitCursor = true;
+            // 
+            // textBoxPathReport
+            // 
+            this.textBoxPathReport.Location = new System.Drawing.Point(387, 166);
+            this.textBoxPathReport.Name = "textBoxPathReport";
+            this.textBoxPathReport.Size = new System.Drawing.Size(336, 20);
+            this.textBoxPathReport.TabIndex = 1;
+            this.textBoxPathReport.UseWaitCursor = true;
+            // 
+            // textBoxSerNum
+            // 
+            this.textBoxSerNum.Location = new System.Drawing.Point(387, 64);
+            this.textBoxSerNum.Name = "textBoxSerNum";
+            this.textBoxSerNum.ReadOnly = true;
+            this.textBoxSerNum.Size = new System.Drawing.Size(336, 20);
+            this.textBoxSerNum.TabIndex = 0;
+            this.textBoxSerNum.UseWaitCursor = true;
             // 
             // tabPage1
             // 
@@ -574,16 +684,40 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
+            // btReport
+            // 
+            this.btReport.Location = new System.Drawing.Point(656, 599);
+            this.btReport.Name = "btReport";
+            this.btReport.Size = new System.Drawing.Size(75, 23);
+            this.btReport.TabIndex = 5;
+            this.btReport.Text = "Отчеты";
+            this.btReport.UseVisualStyleBackColor = true;
+            this.btReport.Click += new System.EventHandler(this.btReport_Click);
+            // 
+            // btSerialZero
+            // 
+            this.btSerialZero.Location = new System.Drawing.Point(769, 599);
+            this.btSerialZero.Name = "btSerialZero";
+            this.btSerialZero.Size = new System.Drawing.Size(150, 23);
+            this.btSerialZero.TabIndex = 6;
+            this.btSerialZero.Text = "Обнуление серийника";
+            this.btSerialZero.UseVisualStyleBackColor = true;
+            this.btSerialZero.Click += new System.EventHandler(this.btSerialZero_Click);
+            // 
             // Calibration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1126, 634);
+            this.Controls.Add(this.btSerialZero);
+            this.Controls.Add(this.btReport);
             this.Controls.Add(this.btClose);
             this.Controls.Add(this.tabControlCalibr);
             this.Name = "Calibration";
             this.Text = "Автоматическая калибровка ";
             this.tabControlCalibr.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.groupBoxConnect.ResumeLayout(false);
@@ -654,5 +788,16 @@
         private System.Windows.Forms.Button btCheckCurrent;
         private System.Windows.Forms.Button btCheckAnalog;
         private System.Windows.Forms.CheckBox cbEnableCheckErrors;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TextBox textBoxExecutor;
+        private System.Windows.Forms.TextBox textBoxPathReport;
+        private System.Windows.Forms.TextBox textBoxSerNum;
+        private System.Windows.Forms.Label lbPathReport;
+        private System.Windows.Forms.Label lbExecutor;
+        private System.Windows.Forms.Label lbSerNum;
+        private System.Windows.Forms.Button btPathReport;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btReport;
+        private System.Windows.Forms.Button btSerialZero;
     }
 }

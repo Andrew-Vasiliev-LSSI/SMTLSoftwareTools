@@ -58,5 +58,29 @@ namespace SMTLSoftwareTools.Properties {
                 this["lstPortsChoiceScaner"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Executor {
+            get {
+                return ((string)(this["Executor"]));
+            }
+            set {
+                this["Executor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PathReport {
+            get {
+                return ((string)(this["PathReport"]));
+            }
+            set {
+                this["PathReport"] = value;
+            }
+        }
     }
 }

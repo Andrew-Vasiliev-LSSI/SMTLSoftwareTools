@@ -37,7 +37,7 @@ namespace SMTLSoftwareTools.SerialNumber
             LoadPortsName();
             LoadChoice();
         }
-        private async Task EnterSerialNumber()
+        public async Task EnterSerialNumber(string serial)
         {
             string Command, Username = "smtl", Password = "perseus";
 
@@ -45,7 +45,7 @@ namespace SMTLSoftwareTools.SerialNumber
             {
                 try
                 {
-                    Command = "sudo /usr/local/sbin/serial_number_update " + textBoxSerNum.Text;
+                    Command = "sudo /usr/local/sbin/serial_number_update " + serial;
                     Client.Connect();
 
                     IDictionary<Renci.SshNet.Common.TerminalModes, uint> modes =
@@ -60,7 +60,7 @@ namespace SMTLSoftwareTools.SerialNumber
                     output = shellStream.Expect(new Regex(@"([$#>:])"));
                     shellStream.WriteLine(Password);
                     Thread.Sleep(1000);
-                    output = shellStream.Expect(new Regex(@"([$#>:])"));                   
+                    output = shellStream.Expect(new Regex(@"([$#>:])"));
                     MessageBox.Show(output.Substring(output.IndexOf('\n'), output.LastIndexOf('\n') - output.IndexOf('\n')), "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     await waitRestartGateway();
                 }
@@ -79,7 +79,7 @@ namespace SMTLSoftwareTools.SerialNumber
             {
                 try
                 {
-                   labelInterface.Text = iface;
+                    labelInterface.Text = iface;
 
                     Client.Connect();
                     Command = "sudo /usr/local/sbin/fix_mac_addr " + iface + " " + MAC;
@@ -138,7 +138,7 @@ namespace SMTLSoftwareTools.SerialNumber
         private async void btWriteManual_Click(object sender, EventArgs e)
         {
             if (checkSerialNumber())
-                await EnterSerialNumber();
+                await WaitSeialNumberRecord();
         }
 
         private bool checkSerialNumber()
@@ -179,7 +179,7 @@ namespace SMTLSoftwareTools.SerialNumber
                     lstPorts.Items.Add(port);
                 }
 
-               // lstPorts.SelectedIndex = 0;
+                // lstPorts.SelectedIndex = 0;
             }
             else
             {
@@ -221,7 +221,7 @@ namespace SMTLSoftwareTools.SerialNumber
                     btScan.Enabled = false;
                     textBoxSerNum.Focus();
                     textBoxSerNum.Clear();
-                    await CycleTextCodeRead();      
+                    await CycleTextCodeRead();
 
                     // Удалить символы перевода строки, если они есть
                     textBoxSerNum.Text = textBoxSerNum.Text.Trim('\r', '\n');
@@ -229,11 +229,34 @@ namespace SMTLSoftwareTools.SerialNumber
                     btScan.Enabled = true;
                 }
                 if (checkSerialNumber())
-                    await EnterSerialNumber();
-            } 
+                    await WaitSeialNumberRecord();
+
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private async Task WaitSeialNumberRecord()
+        {
+            if (checkSerialNumber())
+            {
+                Form form = new Form();
+                form.Text = "Окно ожидания";
+                Label label = new Label();
+                label.Text = "Запись серийного номера...";
+                label.AutoSize = true;
+                label.Location = new System.Drawing.Point(10, 10);
+                form.Controls.Add(label);
+
+                // Показываем форму в отдельном потоке
+                Thread thread = new Thread(() => Application.Run(form));
+                thread.Start();
+                // Записываем серийный номер
+                await EnterSerialNumber(textBoxSerNum.Text);
+                // Закрываем форму
+                form.Invoke(new Action(() => form.Close()));
             }
         }
 
@@ -264,9 +287,28 @@ namespace SMTLSoftwareTools.SerialNumber
             for (int i = 0; i < 2; i++)
             {
                 generateAndShowMac();
-                EnterMacAddr(IFace[i]);
+                WaitMacAddresRecord(IFace[i]);
                 Thread.Sleep(1000);
             }
+        }
+
+        private void WaitMacAddresRecord(string iface)
+        {
+            Form form = new Form();
+            form.Text = "Окно ожидания";
+            Label label = new Label();
+            label.Text = "Запись MAC адреса...";
+            label.AutoSize = true;
+            label.Location = new System.Drawing.Point(10, 10);
+            form.Controls.Add(label);
+
+            // Показываем форму в отдельном потоке
+            Thread thread = new Thread(() => Application.Run(form));
+            thread.Start();
+            // Записываем серийный номер
+            EnterMacAddr(iface);
+            // Закрываем форму
+            form.Invoke(new Action(() => form.Close()));
         }
 
         private void rbVcom_Click(object sender, EventArgs e)
