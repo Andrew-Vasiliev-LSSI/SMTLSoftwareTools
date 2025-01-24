@@ -16,6 +16,9 @@ using SMTLSoftwareTools.AutoCalibration;
 using System.Data.Common;
 using System.Linq.Expressions;
 using System.IO;
+using SMTLSoftwareTools.ReportGeneration;
+using SMTLSoftwareTools.SerialNumber;
+using System.Threading;
 
 namespace SMTLSoftwareTools.AutoCalibration
 {
@@ -24,15 +27,22 @@ namespace SMTLSoftwareTools.AutoCalibration
         public const int numberChannels = 4;
         private static HttpClientClass HttpClientCalibration;
         private static FlukeConnect Calibrator = new FlukeConnect();
-        VoltageInputCalibration voltageInputCalibration;
-        CurrentInputCalibration currentInputCalibration;
-        CalibrationAnalogOutputs calibrationAnalogOutputs;
+        private VoltageInputCalibration voltageInputCalibration;
+        private CurrentInputCalibration currentInputCalibration;
+        private CalibrationAnalogOutputs calibrationAnalogOutputs;
+        private string SerialNumber;
+        private string Executor;
+        private string PathReport;
 
         DataGridView[] viewArray = new DataGridView[4];
-        public Calibration(HttpClientClass client)
+        public Calibration(HttpClientClass client, string serial)
         {
             InitializeComponent();
             HttpClientCalibration = client;
+            SerialNumber = serial;
+            textBoxSerNum.Text = SerialNumber;
+            Executor = "";
+            textBoxExecutor.Text = Executor;
             LoadListboxes();
             LoadChoice();
             dataGridViewResultVoltage.RowCount = numberChannels;
@@ -43,9 +53,9 @@ namespace SMTLSoftwareTools.AutoCalibration
             viewArray[2] = dataGridViewResultOutput3;
             viewArray[3] = dataGridViewResultOutput4;
 
-            disableControlsPage(1);
             disableControlsPage(2);
             disableControlsPage(3);
+            disableControlsPage(4);
 
         }
 
@@ -113,15 +123,15 @@ namespace SMTLSoftwareTools.AutoCalibration
                 calibrationAnalogOutputs.ViewArray = this.viewArray;
                 if (cbEnableCheckErrors.Checked == true)
                 {
-                    enableControlsPage(1);
                     enableControlsPage(2);
                     enableControlsPage(3);
+                    enableControlsPage(4);
 
                 }
                 else
                 {
-                    enableControlsPage(1);
-                    enableControlsPage(3);
+                    enableControlsPage(2);
+                    enableControlsPage(4);
                 }
 
                 string path = Path.Combine(Environment.CurrentDirectory, "Communicator");
@@ -165,7 +175,7 @@ namespace SMTLSoftwareTools.AutoCalibration
 
                 errorCheck(errors, dataGridViewResultVoltage, 2, 20);
                 btRepeatVoltage.Enabled = true;
-                enableControlsPage(2);
+                enableControlsPage(3);
             }
             catch (Exception ex)
             {
@@ -384,7 +394,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             }
 
         }
-        // Сохранение и чтение параметров COM порта
+        // Сохранение и чтение параметров порта
         private void LoadChoice()
         {
             string choiсePort, choiceBaudrate;
@@ -393,6 +403,10 @@ namespace SMTLSoftwareTools.AutoCalibration
             lstPorts.SelectedItem = choiсePort;
             choiceBaudrate = Loader.LoadParameter("lstBaudrateChoice");
             lstBaudrate.SelectedItem = choiceBaudrate;
+            Executor = Loader.LoadParameter("Executor");
+            textBoxExecutor.Text = Executor;
+            PathReport = Loader.LoadParameter("PathReport");
+            textBoxPathReport.Text = PathReport;
         }
         private void SaveChoicePort()
         {
@@ -405,97 +419,87 @@ namespace SMTLSoftwareTools.AutoCalibration
             Saver.SaveParameter("lstBaudrateChoice", lstBaudrate.SelectedItem.ToString());
         }
 
+        private void SaveExeutor()
+        {
+            Properties.Settings.Default.Executor = Executor;
+        }
         private void lstPorts_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveChoicePort();
         }
         private void lstBaudrate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveChoiceBaudrate();           
+            SaveChoiceBaudrate();    
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Executor = textBoxExecutor.Text;
+            SaveExeutor();
+            MessageBox.Show("Записано");
+        }
 
+       private string FolderBrowserDialog(string initialDirectory)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
+            {
+                Description = "Выберите папку для сохранения отчетов о калибровке",
+                SelectedPath = initialDirectory
+            };
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                return folderBrowserDialog.SelectedPath;
+            }
+
+            return null;
+        }
+
+        private void btPathReport_Click(object sender, EventArgs e)
+        {
+            PathReport = FolderBrowserDialog(@"C:\");
+            if (PathReport != null)
+            {
+                textBoxPathReport.Text = PathReport;
+                Properties.Settings.Default.PathReport = PathReport;
+            }
+        }
+
+        private void btReport_Click(object sender, EventArgs e)
+        {
+            CreatingReport report = new CreatingReport();
+            report.SerialNumber = SerialNumber;
+            report.PathReport = PathReport;
+            report.Executor = Executor;
+            report.DataGridViews = new DataGridView[] {dataGridViewResultVoltage, dataGridViewResultCurrent, dataGridViewResultOutput1,
+                                                       dataGridViewResultOutput2, dataGridViewResultOutput3, dataGridViewResultOutput4};
+            report.Create();
+        }
+
+        private async void btSerialZero_Click(object sender, EventArgs e)
+        {
+           await ResetSerialNumber();
+        }
+        private async Task ResetSerialNumber()
+        {
+            Form form = new Form();
+            form.Text = "Окно ожидания";
+            Label label = new Label();
+            label.Text = "Обнуление серийного номера...";
+            label.AutoSize = true;
+            label.Location = new System.Drawing.Point(10, 10);
+            form.Controls.Add(label);
+
+            // Показываем форму в отдельном потоке
+            Thread thread = new Thread(() => Application.Run(form));
+            thread.Start();
+            // Обнуляем серийный номер
+            RecordSerialNumber record = new RecordSerialNumber(HttpClientCalibration);
+            await record.EnterSerialNumber("0000000000000");
+            // Закрываем форму
+            form.Invoke(new Action(() => form.Close()));
+        }
     }
 }
 
-//Установите пакет NuGet EPPlus в ваш проект, если еще не сделали этого
-
-//using OfficeOpenXml;
-//using System.IO;
-
-//public void ExportToExcel(DataGridView dataGridView, string filePath)
-//{
-//    using (var package = new ExcelPackage(new FileInfo(filePath)))
-//    {
-//        var worksheet = package.Workbook.Worksheets.Add("Data");
-
-//        // Запись заголовков столбцов из DataGridView
-//        for (int i = 0; i < dataGridView.ColumnCount; i++)
-//        {
-//            worksheet.Cells[1, i + 1].Value = dataGridView.Columns[i].HeaderText;
-//        }
-
-//        // Запись данных из DataGridView
-//        for (int i = 0; i < dataGridView.RowCount; i++)
-//        {
-//            for (int j = 0; j < dataGridView.ColumnCount; j++)
-//            {
-//                worksheet.Cells[i + 2, j + 1].Value = dataGridView.Rows[i].Cells[j].Value;
-//            }
-//        }
-
-//        // Сохранение файла
-//        package.Save();
-//    }
-
-//    string filePath = @"C:\temp\data.xlsx";
-//    ExportToExcel(dataGridView1, filePath);
-//}
-
-
-
-//public void ExportToExcel(params DataGridView[] dataGridViews)
-//{
-//    using (var package = new ExcelPackage())
-//    {
-//        int worksheetIndex = 1;
-
-//        // Перебор всех DataGridView и добавление их данных в файл Excel
-//        foreach (var dataGridView in dataGridViews)
-//        {
-//            var worksheet = package.Workbook.Worksheets.Add("Data" + worksheetIndex);
-
-//            // Запись заголовков столбцов из DataGridView
-//            for (int i = 0; i < dataGridView.ColumnCount; i++)
-//            {
-//                worksheet.Cells[1, i + 1].Value = dataGridView.Columns[i].HeaderText;
-//            }
-
-//            // Запись данных из DataGridView
-//            for (int i = 0; i < dataGridView.RowCount; i++)
-//            {
-//                for (int j = 0; j < dataGridView.ColumnCount; j++)
-//                {
-//                    worksheet.Cells[i + 2, j + 1].Value = dataGridView.Rows[i].Cells[j].Value;
-//                }
-//            }
-
-//            worksheetIndex++;
-//        }
-
-//        // Сохранение файла
-//        SaveFileDialog saveFileDialog = new SaveFileDialog
-//        {
-//            Filter = "Excel Files|*.xlsx",
-//            Title = "Save Excel File"
-//        };
-
-//        if (saveFileDialog.ShowDialog() == DialogResult.OK)
-//        {
-//            package.SaveAs(new FileInfo(saveFileDialog.FileName));
-//        }
-//    }
-//}
-
-//DataGridView[] dataGridViews = new DataGridView[] { dataGridView1, dataGridView2, dataGridView3 };
-//ExportToExcel(dataGridViews);
+//  0025681104212
