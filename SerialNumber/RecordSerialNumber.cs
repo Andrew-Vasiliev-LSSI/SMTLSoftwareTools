@@ -164,8 +164,9 @@ namespace SMTLSoftwareTools.SerialNumber
         }
 
 
-        private void btExit_Click(object sender, EventArgs e)
+        private async void btExit_Click(object sender, EventArgs e)
         {
+            await WaitFinal();
             this.Close();
         }
 
@@ -178,8 +179,6 @@ namespace SMTLSoftwareTools.SerialNumber
                 {
                     lstPorts.Items.Add(port);
                 }
-
-                // lstPorts.SelectedIndex = 0;
             }
             else
             {
@@ -258,6 +257,24 @@ namespace SMTLSoftwareTools.SerialNumber
                 // Закрываем форму
                 form.Invoke(new Action(() => form.Close()));
             }
+        }
+
+        private async Task WaitFinal()
+        {
+                Form form = new Form();
+                form.Text = "Окно ожидания";
+                Label label = new Label();
+                label.Text = "Ожидание окончания...";
+                label.AutoSize = true;
+                label.Location = new System.Drawing.Point(10, 10);
+                form.Controls.Add(label);
+
+                // Показываем форму в отдельном потоке
+                Thread thread = new Thread(() => Application.Run(form));
+                thread.Start();
+                await Task.Delay(5000);
+                // Закрываем форму
+                form.Invoke(new Action(() => form.Close()));
         }
 
         private string GenerateMacAddress()
