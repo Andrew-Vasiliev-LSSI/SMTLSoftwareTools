@@ -85,8 +85,6 @@
             this.btStartCurrentOutput = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.btReport = new System.Windows.Forms.Button();
-            this.btSerialZero = new System.Windows.Forms.Button();
             this.tabControlCalibr.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -684,33 +682,11 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
-            // btReport
-            // 
-            this.btReport.Location = new System.Drawing.Point(656, 599);
-            this.btReport.Name = "btReport";
-            this.btReport.Size = new System.Drawing.Size(75, 23);
-            this.btReport.TabIndex = 5;
-            this.btReport.Text = "Отчеты";
-            this.btReport.UseVisualStyleBackColor = true;
-            this.btReport.Click += new System.EventHandler(this.btReport_Click);
-            // 
-            // btSerialZero
-            // 
-            this.btSerialZero.Location = new System.Drawing.Point(769, 599);
-            this.btSerialZero.Name = "btSerialZero";
-            this.btSerialZero.Size = new System.Drawing.Size(150, 23);
-            this.btSerialZero.TabIndex = 6;
-            this.btSerialZero.Text = "Обнуление серийника";
-            this.btSerialZero.UseVisualStyleBackColor = true;
-            this.btSerialZero.Click += new System.EventHandler(this.btSerialZero_Click);
-            // 
             // Calibration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1126, 634);
-            this.Controls.Add(this.btSerialZero);
-            this.Controls.Add(this.btReport);
             this.Controls.Add(this.btClose);
             this.Controls.Add(this.tabControlCalibr);
             this.Name = "Calibration";
@@ -797,7 +773,5 @@
         private System.Windows.Forms.Label lbSerNum;
         private System.Windows.Forms.Button btPathReport;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button btReport;
-        private System.Windows.Forms.Button btSerialZero;
     }
 }
