@@ -42,7 +42,7 @@ namespace SMTLSoftwareTools
             Application.Exit();
         }
 
-        private void btExecute_Click(object sender, EventArgs e)
+        private async void btExecute_Click(object sender, EventArgs e)
         {
             if (rbtDeviceConfig.Checked == true)
             {
@@ -57,32 +57,51 @@ namespace SMTLSoftwareTools
             else if (rbtSensorConfig.Checked == true)
             {
                 Form sencorConfig = new SensorConfigForm(client);
-                sencorConfig.Show();
+                sencorConfig.ShowDialog();
             }
             else if (rbtSetpoint.Checked == true)
             {
                 Form setpointsConfig = new SetpointsConfigForms(client);
-                setpointsConfig.Show();
+                setpointsConfig.ShowDialog();
             }
             else if (rbtConfigManagement.Checked == true)
             {
                 Form configManagement = new ConfigManagmentForm(client);
-                configManagement.Show();
+                configManagement.ShowDialog();
             }
             else if (rbtAutoCalibration.Checked == true)
             {
-                Form autoCalibration = new Calibration(client, textBoxSerNum.Text);
-                autoCalibration.Show();
+                if (textBoxSerNum.Text == "0000000000000")
+                {
+                    MessageBox.Show("Перед калибровкой необходимо записать серийный номер", "Нет серийного номера");
+                }
+                else
+                {
+                    Form autoCalibration = new Calibration(client, textBoxSerNum.Text);
+                    autoCalibration.ShowDialog();
+                    string serNum = await serialNumber();
+                    textBoxSerNum.Text = serNum;
+                }
             }
             else if (rbtSerialNumber.Checked == true)
             {
-                Form recordSerialNumber = new RecordSerialNumber(client);               
-                recordSerialNumber.Show();
+                using (Form recordSerialNumber = new RecordSerialNumber(client))
+                {
+                    // Показываем форму как модальное окно и ждем закрытия
+                    recordSerialNumber.ShowDialog();
+                }
+
+                // Проверяем значение после закрытия формы
+                if (textBoxSerNum.Text == "0000000000000")
+                {
+                    string serNum = await serialNumber();
+                    textBoxSerNum.Text = serNum;
+                }
             }
             else if (rbtLed.Checked == true)
             {
                 Form testLed = new LedForm(client);
-                testLed.Show();
+                testLed.ShowDialog();
             }
         }
 
@@ -107,8 +126,13 @@ namespace SMTLSoftwareTools
             proc.Start();
         }
 
-  
+
         private async void btConnect_Click(object sender, EventArgs e)
+        {
+            await Connect();
+        }
+
+        private async Task Connect()
         {
             try
             {
@@ -125,7 +149,6 @@ namespace SMTLSoftwareTools
                 lbConnect.Text = "Отключен";
                 MessageBox.Show(ex.Message);
             }
-
         }
 
         private async Task<string> softwareVersion()
@@ -176,5 +199,6 @@ namespace SMTLSoftwareTools
 
         }
     }
- 
+
 }
+// 0025671103553
