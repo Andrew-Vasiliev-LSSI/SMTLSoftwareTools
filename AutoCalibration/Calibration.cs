@@ -33,7 +33,8 @@ namespace SMTLSoftwareTools.AutoCalibration
         private string SerialNumber;
         private string Executor;
         private string PathReport;
-
+        private bool[] StatusCalibration = {false, false, false, false, false, false}; 
+ 
         DataGridView[] viewArray = new DataGridView[4];
         public Calibration(HttpClientClass client, string serial)
         {
@@ -148,9 +149,54 @@ namespace SMTLSoftwareTools.AutoCalibration
 
         }
 
-        private void btClose_Click(object sender, EventArgs e)
+        private async void btClose_Click(object sender, EventArgs e)
         {
+
+            bool hasFalse = Array.Exists(StatusCalibration, x => !x);
+            if (hasFalse)
+            {
+               DialogResult result = MessageBox.Show("Обнулить серийный номер?", "Неудачная калибровка", MessageBoxButtons.OKCancel);
+                if (result == DialogResult.OK)
+                {
+                    await ResetSerialNumber();
+                    await WaitFinal();
+                }
+                else
+                {
+                    MessageBox.Show("Серийный номер не обнулён");
+                }
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show("Сформировать отчет?", "Удачная калибровка", MessageBoxButtons.OKCancel);
+                if (result == DialogResult.OK)
+                {
+                    ReportGeneration();
+                }
+                else
+                {
+                    MessageBox.Show("Отчет не сформирован");
+                }
+            }
             this.Close();
+        }
+
+        private async Task WaitFinal()
+        {
+            Form form = new Form();
+            form.Text = "Окно ожидания";
+            Label label = new Label();
+            label.Text = "Ожидание окончания...";
+            label.AutoSize = true;
+            label.Location = new System.Drawing.Point(10, 10);
+            form.Controls.Add(label);
+
+            // Показываем форму в отдельном потоке
+            Thread thread = new Thread(() => Application.Run(form));
+            thread.Start();
+            await Task.Delay(5000);
+            // Закрываем форму
+            form.Invoke(new Action(() => form.Close()));
         }
 
         private async void btStartVoltageInput_Click(object sender, EventArgs e)
@@ -465,7 +511,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             }
         }
 
-        private void btReport_Click(object sender, EventArgs e)
+        private void ReportGeneration()
         {
             CreatingReport report = new CreatingReport();
             report.SerialNumber = SerialNumber;
@@ -474,11 +520,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             report.DataGridViews = new DataGridView[] {dataGridViewResultVoltage, dataGridViewResultCurrent, dataGridViewResultOutput1,
                                                        dataGridViewResultOutput2, dataGridViewResultOutput3, dataGridViewResultOutput4};
             report.Create();
-        }
 
-        private async void btSerialZero_Click(object sender, EventArgs e)
-        {
-           await ResetSerialNumber();
         }
         private async Task ResetSerialNumber()
         {
