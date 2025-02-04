@@ -28,23 +28,32 @@ namespace SMTLSoftwareTools.AutoCalibration
             PathReport = PathReport + @"\as02_" + SerialNumber;
             if (!Directory.Exists(PathReport))
             {
-                Directory.CreateDirectory(PathReport);
-                ReportGen reportgen = new ReportGen(SerialNumber, Executor, PathReport);
-
-                DataGridView[] dataGridViewsVoltage = new DataGridView[] { DataGridViews[0] };
-                reportgen.ExportToExcel(CalibrationType.Voltage, dataGridViewsVoltage);
-                DataGridView[] dataGridViewsCurrent = new DataGridView[] { DataGridViews[1] };
-                reportgen.ExportToExcel(CalibrationType.Current, dataGridViewsCurrent);
-                DataGridView[] dataGridViewsOutput = new DataGridView[] { DataGridViews[2], DataGridViews[3], DataGridViews[4], DataGridViews[5] };
-                reportgen.ExportToExcel(CalibrationType.AnalogOutput, dataGridViewsOutput);
-                reportgen.SaveReport();
-                CopyFilesFromPscp();
-
+                ReportCreate();
             }
             else
             {
-                MessageBox.Show("Директория " + PathReport + " уже существует");
+               DialogResult result = MessageBox.Show("Директория " + PathReport + " уже существует\n Перезаписать?","Директория существует",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                if (result == DialogResult.OK)
+                {
+                    Directory.Delete(PathReport, true);
+                    ReportCreate();
+                }
             }
+        }
+        private void ReportCreate()
+        {
+            Directory.CreateDirectory(PathReport);
+            ReportGen reportgen = new ReportGen(SerialNumber, Executor, PathReport);
+
+            DataGridView[] dataGridViewsVoltage = new DataGridView[] { DataGridViews[0] };
+            reportgen.ExportToExcel(CalibrationType.Voltage, dataGridViewsVoltage);
+            DataGridView[] dataGridViewsCurrent = new DataGridView[] { DataGridViews[1] };
+            reportgen.ExportToExcel(CalibrationType.Current, dataGridViewsCurrent);
+            DataGridView[] dataGridViewsOutput = new DataGridView[] { DataGridViews[2], DataGridViews[3], DataGridViews[4], DataGridViews[5] };
+            reportgen.ExportToExcel(CalibrationType.AnalogOutput, dataGridViewsOutput);
+            reportgen.SaveReport();
+            CopyFilesFromPscp();
         }
         public void CopyFilesFromPscp()
         {
