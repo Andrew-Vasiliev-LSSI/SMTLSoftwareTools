@@ -166,7 +166,7 @@ namespace SMTLSoftwareTools.SerialNumber
 
         private async void btExit_Click(object sender, EventArgs e)
         {
-            await WaitFinal();
+            await WaitFinal(5000);
             this.Close();
         }
 
@@ -259,7 +259,7 @@ namespace SMTLSoftwareTools.SerialNumber
             }
         }
 
-        private async Task WaitFinal()
+        private async Task WaitFinal(int delay)
         {
                 Form form = new Form();
                 form.Text = "Окно ожидания";
@@ -272,7 +272,7 @@ namespace SMTLSoftwareTools.SerialNumber
                 // Показываем форму в отдельном потоке
                 Thread thread = new Thread(() => Application.Run(form));
                 thread.Start();
-                await Task.Delay(5000);
+                await Task.Delay(delay);
                 // Закрываем форму
                 form.Invoke(new Action(() => form.Close()));
         }
@@ -349,6 +349,7 @@ namespace SMTLSoftwareTools.SerialNumber
         private void SaveChoicePort()
         {
             Properties.Settings.Default.lstPortsChoiceScaner = lstPorts.SelectedItem.ToString();
+            Properties.Settings.Default.Save();
         }
 
         private void lstPorts_SelectedIndexChanged(object sender, EventArgs e)

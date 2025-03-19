@@ -81,10 +81,10 @@ namespace SMTLSoftwareTools.ReportGeneration
             }          
             FillBorders("A5:C9");
             FillBorders("E5:F9");
-            FillBorders("H5:I9");
-            FillBorders("K5:L9");
-            FillBorders("N5:O9");
-            FillBorders("Q5:R9");
+            FillBorders("H5:I10");
+            FillBorders("K5:L10");
+            FillBorders("N5:O10");
+            FillBorders("Q5:R10");
         }
 
         public void SaveReport()

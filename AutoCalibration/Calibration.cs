@@ -33,9 +33,15 @@ namespace SMTLSoftwareTools.AutoCalibration
         private string SerialNumber;
         private string Executor;
         private string PathReport;
-        private bool[] StatusCalibration = {false, false, false, false, false, false}; 
+        private enum Regim
+        {
+            Voltage,
+            Current
+        }
  
         DataGridView[] viewArray = new DataGridView[4];
+        private SummaryCalibrationResults summaryCalibrationResults = new SummaryCalibrationResults();
+
         public Calibration(HttpClientClass client, string serial)
         {
             InitializeComponent();
@@ -151,15 +157,14 @@ namespace SMTLSoftwareTools.AutoCalibration
 
         private async void btClose_Click(object sender, EventArgs e)
         {
-
-            bool hasFalse = Array.Exists(StatusCalibration, x => !x);
-            if (hasFalse)
+            if (summaryCalibrationResults.PresenceOfError())
             {
                DialogResult result = MessageBox.Show("Обнулить серийный номер?", "Неудачная калибровка", MessageBoxButtons.OKCancel);
+
                 if (result == DialogResult.OK)
                 {
                     await ResetSerialNumber();
-                    await WaitFinal();
+                    await WaitFinal(5000);
                 }
                 else
                 {
@@ -171,7 +176,21 @@ namespace SMTLSoftwareTools.AutoCalibration
                 DialogResult result = MessageBox.Show("Сформировать отчет?", "Удачная калибровка", MessageBoxButtons.OKCancel);
                 if (result == DialogResult.OK)
                 {
+                    Form form = new Form();
+                    form.Text = "Окно ожидания";
+                    Label label = new Label();
+                    label.Text = "Форирование отчета...";
+                    label.AutoSize = true;
+                    label.Location = new System.Drawing.Point(10, 10);
+                    form.Controls.Add(label);
+                    // Показываем форму в отдельном потоке
+                    Thread thread = new Thread(() => Application.Run(form));
+                    thread.Start();
+
                     ReportGeneration();
+
+                    // Закрываем форму
+                    form.Invoke(new Action(() => form.Close()));
                 }
                 else
                 {
@@ -181,7 +200,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             this.Close();
         }
 
-        private async Task WaitFinal()
+        private async Task WaitFinal(int delay)
         {
             Form form = new Form();
             form.Text = "Окно ожидания";
@@ -194,7 +213,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             // Показываем форму в отдельном потоке
             Thread thread = new Thread(() => Application.Run(form));
             thread.Start();
-            await Task.Delay(5000);
+            await Task.Delay(delay);
             // Закрываем форму
             form.Invoke(new Action(() => form.Close()));
         }
@@ -219,7 +238,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                 showResults(dataGridViewResultVoltage, 1, offsets);
                 showResults(dataGridViewResultVoltage, 2, errors);
 
-                errorCheck(errors, dataGridViewResultVoltage, 2, 20);
+                errorCheck(Regim.Voltage,errors, dataGridViewResultVoltage, 2, 20);
                 btRepeatVoltage.Enabled = true;
                 enableControlsPage(3);
             }
@@ -229,7 +248,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             }
         }
 
-        private void errorCheck(double[] errors, DataGridView view, int column, double threshold)
+        private void errorCheck(Regim regim, double[] errors, DataGridView view, int column, double threshold)
         {
             for (int i = 0; i < errors.Length; i++)
             {
@@ -237,10 +256,28 @@ namespace SMTLSoftwareTools.AutoCalibration
                 if (errors[i] > threshold)
                 {
                     cell.Style.BackColor = Color.Red;
+
+                    if (regim == Regim.Voltage)
+                    {
+                        summaryCalibrationResults.CalibrationResultsVoltage[i] = false;
+                    }
+                    else if (regim == Regim.Current)
+                    {
+                        summaryCalibrationResults.CalibrationResultsCurrent[i] = false;
+                    }
                 }
                 else
                 {
                     cell.Style.BackColor = Color.Green;
+
+                    if (regim == Regim.Voltage)
+                    {
+                        summaryCalibrationResults.CalibrationResultsVoltage[i] = true;
+                    }
+                    else if (regim == Regim.Current)
+                    {
+                        summaryCalibrationResults.CalibrationResultsCurrent[i] = true;
+                    }
 
                 }
             }
@@ -276,7 +313,7 @@ namespace SMTLSoftwareTools.AutoCalibration
                 showResults(dataGridViewResultCurrent, 0, compensations);
                 showResults(dataGridViewResultCurrent, 1, errors);
 
-                errorCheck(errors, dataGridViewResultCurrent, 1, 80);
+                errorCheck(Regim.Current, errors, dataGridViewResultCurrent, 1, 80);
                 btRepeatCurrent.Enabled = true;
             }
             catch (Exception ex)
@@ -286,6 +323,11 @@ namespace SMTLSoftwareTools.AutoCalibration
         }
 
         private async void btStartCurrentOutput_Click(object sender, EventArgs e)
+        {
+            await currentOutputCalibration();
+        }
+
+        private async Task currentOutputCalibration()
         {
             try
             {
@@ -306,11 +348,13 @@ namespace SMTLSoftwareTools.AutoCalibration
                             if (error <= 20.0)
                             {
                                 viewArray[ch - 1].Rows[4].Cells[1].Style.BackColor = Color.Green;
+                                summaryCalibrationResults.CalibrationResultsAnalog[ch - 1] = true;
                                 repeat = false;
                             }
                             else
                             {
                                 viewArray[ch - 1].Rows[4].Cells[1].Style.BackColor = Color.Red;
+                                summaryCalibrationResults.CalibrationResultsAnalog[ch - 1] = false;
                                 repeat = true;
                             }
 
@@ -346,7 +390,6 @@ namespace SMTLSoftwareTools.AutoCalibration
                 MessageBox.Show(ex.Message);
             }
         }
-
         private async void btVoltageRepeat_Click(object sender, EventArgs e)
         {
             dataGridViewResultVoltage.Rows.Clear();
@@ -378,7 +421,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             {
                 double[] errors = await voltageInputCalibration.errorCalculation();
                 showResults(dataGridViewResultVoltage, 2, errors);
-                errorCheck(errors, dataGridViewResultVoltage, 2, 20);
+                errorCheck(Regim.Voltage, errors, dataGridViewResultVoltage, 2, 20);
             }
             catch (Exception ex)
             {
@@ -395,7 +438,7 @@ namespace SMTLSoftwareTools.AutoCalibration
 
                 showResults(dataGridViewResultCurrent, 1, errors);
 
-                errorCheck(errors, dataGridViewResultCurrent, 1, 80);
+                errorCheck(Regim.Current, errors, dataGridViewResultCurrent, 1, 80);
             }
             catch (Exception ex)
             {
@@ -419,10 +462,12 @@ namespace SMTLSoftwareTools.AutoCalibration
                         if (error <= 20.0)
                         {
                             viewArray[ch - 1].Rows[0].Cells[1].Style.BackColor = Color.Green;
+                            summaryCalibrationResults.CalibrationResultsAnalog[ch - 1] = true;
                         }
                         else
                         {
                             viewArray[ch - 1].Rows[0].Cells[1].Style.BackColor = Color.Red;
+                            summaryCalibrationResults.CalibrationResultsAnalog[ch - 1] = false;
                         }
                         ch++;
                     }
@@ -456,18 +501,26 @@ namespace SMTLSoftwareTools.AutoCalibration
         }
         private void SaveChoicePort()
         {
-            ManageParameters Saver = new ManageParameters();
-            Saver.SaveParameter("lstPortsChoice", lstPorts.SelectedItem.ToString());
+            //ManageParameters Saver = new ManageParameters();
+            //Saver.SaveParameter("lstPortsChoice", lstPorts.SelectedItem.ToString());
+            Properties.Settings.Default.lstPortsChoiсe = lstPorts.SelectedItem.ToString();
+            Properties.Settings.Default.Save();
         }
         private void SaveChoiceBaudrate()
         {
-            ManageParameters Saver = new ManageParameters();
-            Saver.SaveParameter("lstBaudrateChoice", lstBaudrate.SelectedItem.ToString());
+            //ManageParameters Saver = new ManageParameters();
+            //Saver.SaveParameter("lstBaudrateChoice", lstBaudrate.SelectedItem.ToString());
+            Properties.Settings.Default.lstBaudrateChoice = lstBaudrate.SelectedItem.ToString();
+            Properties.Settings.Default.Save();
+
         }
 
         private void SaveExeutor()
         {
+            //ManageParameters Saver = new ManageParameters();
+            //Saver.SaveParameter("Executor", Executor);
             Properties.Settings.Default.Executor = Executor;
+            Properties.Settings.Default.Save();
         }
         private void lstPorts_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -508,6 +561,7 @@ namespace SMTLSoftwareTools.AutoCalibration
             {
                 textBoxPathReport.Text = PathReport;
                 Properties.Settings.Default.PathReport = PathReport;
+                Properties.Settings.Default.Save();
             }
         }
 

@@ -131,6 +131,7 @@
     <Compile Include="AutoCalibration\CurrentInputCalibration.cs" />
     <Compile Include="AutoCalibration\FlukeConnect.cs" />
     <Compile Include="AutoCalibration\ManageParameters.cs" />
+    <Compile Include="AutoCalibration\SummaryCalibrationResults.cs" />
     <Compile Include="AutoCalibration\VoltageInputCalibration.cs" />
     <Compile Include="ConfigManagment\ConfigManagmentForm.cs">
       <SubType>Form</SubType>
