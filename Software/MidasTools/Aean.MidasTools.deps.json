@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "Aean.MidasTools/1.5.0.24": {
+      "Aean.MidasTools/1.5.0.25": {
         "dependencies": {
           "CommonServiceLocator": "2.0.7",
           "CommunityToolkit.Mvvm": "8.3.0",
@@ -1137,7 +1137,7 @@
     }
   },
   "libraries": {
-    "Aean.MidasTools/1.5.0.24": {
+    "Aean.MidasTools/1.5.0.25": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

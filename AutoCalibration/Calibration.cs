@@ -157,7 +157,7 @@ namespace SMTLSoftwareTools.AutoCalibration
 
         private async void btClose_Click(object sender, EventArgs e)
         {
-            if (summaryCalibrationResults.PresenceOfError())
+            if (false)
             {
                DialogResult result = MessageBox.Show("Обнулить серийный номер?", "Неудачная калибровка", MessageBoxButtons.OKCancel);
 
